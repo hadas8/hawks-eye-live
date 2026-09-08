@@ -6,9 +6,9 @@ import { register } from '../ui/actions.js';
 
 export const viewVault = () => `<div class="stack">
   <div>
-    <div class="eyebrow">פתיחת הקופסה</div>
+    <div class="eyebrow">שחרור התפוסה</div>
     <h1>שבע ספרות, סדר אחד</h1>
-    <p class="lead">הזינו את הקוד כפי שנאסף, מתחנה 1 עד תחנה 7.</p>
+    <p class="lead">הקופסה שנתפסה בשיירה נמצאת בחדר, סגורה. היא נפתחת רק לצוות שאיתר אותה, בקוד שהרכבתם בעצמכם — מתחנה 1 עד תחנה 7.</p>
   </div>
   <form class="lockform" style="max-width:470px" data-submit="vault">
     <input type="text" id="vin" class="vin" dir="ltr" inputmode="numeric" maxlength="7"

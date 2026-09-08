@@ -147,23 +147,38 @@ Dramatic moments in the prototype, to be pushed further here:
 
 Hadas has assets to bring in. The Cowork artifact is a look-and-feel reference; do not port it wholesale. What carries over is the token values, the state machine, the answer-engine shape, the Hebrew normalization, and station 1's data, rules and interaction.
 
-## The closing reveal — unattributed copy
+## What the box is, and the closing reveal
 
-**Every word on the reveal screen was written by the Cowork prototype, not by the content author, and has no source in the draft.** The draft ends at `דף הקוד הסופי — למנחה בלבד`, a facilitator-only table of the seven digits and the lock code. It contains no closing screen, no debrief copy and no description of what the box is. `נראות התחנות` covers the interaction for stations 1 to 6 and stops; it says nothing about an ending either.
+**Status: proposed by Claude Code 2026-09-08, not yet approved by the content author.** The draft never said what the box is — it gives only `שבע תחנות. שבע ספרות. קופסה אחת.` and the lock code, and `נראות התחנות` stops at station 6. Everything below fills that gap and needs Lotem's sign-off before the event.
 
-So the most important emotional beat of the event currently runs on invented text. It needs the content author's eye before the event. The lines in question are `לא פתרתם חידות — הפעלתם אלגוריתמים`, the lead paragraph, `כל זה יחד נקרא למידת מכונה`, and `הנתונים היו כאן מההתחלה — מה שחסר היה מישהו שיודע מה לשאול אותם.`
+### The box
 
-Material in the draft that a real closing screen could be built from, none of it currently used:
+**The seized crate, not the enemy's.** The convoy was stopped because of the group's analysis; the crate came back and sits in the room, and it opens to the code their seven answers produced because that is the analysing desk's authorization. This matters: if the box were Hezbollah's, the lock would open to the enemy's own combination, and a sharp participant would ask why their crate opens to our conclusion. Framing it as the seized item removes that hole. The vault screen states it explicitly before they type anything.
 
-- The cover line **נתונים זה הזהב החדש**, which is the seminar's own framing and outranks anything invented here.
-- Station 5's and station 7's `לדיון אחרי הפתרון` cards, which are written debrief prompts.
-- Station 7's line: *שמונה בינוניים שרואים דברים שונים מנצחים שני מומחים טובים שרואים אותו דבר.*
+### What the מטען אסטרטגי is
 
-## What the box is
+**ערכות הכוונה — precision-guidance kits.** Not explosives: the components that convert an unguided rocket into a precision weapon. This is the real, publicly reported rationale for interdicting the Syria-to-Lebanon route, so it costs nothing in plausibility, and it is why one truckload is worth a night of analysis.
 
-Undefined, and this is the reason the ending does not land. The draft says only `שבע תחנות. שבע ספרות. קופסה אחת.` and gives the lock code `3274227`. It never says what the box is, what is inside it, who opens it, or whether every group opens one or the room shares a single one. The app therefore ends by announcing that something opened without ever having said what.
+It also carries the lesson without straining, which is the whole reason to choose it: **the difference between a statistical rocket and a precise one is not explosive, it is information.** The cargo the group hunted all evening turns out to be data. That lands the seminar's own cover line, `נתונים זה הזהב החדש`, without having to say it.
 
-Open question, previously filed under props and now blocking the reveal copy.
+Rejected: **מטען חבלה.** A bomb implies a countdown, and the timer design deliberately refuses a speed incentive; it makes the payoff kinetic where the reveal is epistemic; and it is a poor prop for a room of high-schoolers.
+
+### The reveal's shape
+
+Two beats, in order: the operation, then the lesson.
+
+1. `השיירה נעצרה במעבר ג'נתא` — seven answers narrowed hundreds of dirty reports to one vehicle of sixteen, one crossing of three.
+2. What was inside, and what it would have done.
+3. The turn: *שני הצדדים של הלילה הזה עבדו על אותו חומר גלם. הם ניסו להפוך מידע לנשק, ואתם הפכתם מידע לתפיסה שלהם.*
+4. `לא פתרתם חידות — הפעלתם אלגוריתמים` over the station-to-concept list.
+5. Score, then `כל זה יחד נקרא למידת מכונה`.
+
+### Dependencies and open points
+
+- The reveal names **מעבר ג'נתא** (station 7's answer) and **רכב 4 מתוך 16** (station 4's). Both are solid in the draft's own working, and ג'נתא is load-bearing for digit 7. If either station's answer changes, this copy changes with it.
+- **What physically goes in the box is still undecided.** It should read as the seized guidance kit — a component in foam, a drive, something that looks like a part rather than a prize — plus a card carrying `נתונים זה הזהב החדש`.
+- One box for the room or one per group is still unanswered.
+- Unused draft material a real closing screen could still draw on: the `לדיון אחרי הפתרון` cards on stations 5 and 7, and station 7's line *שמונה בינוניים שרואים דברים שונים מנצחים שני מומחים טובים שרואים אותו דבר.*
 
 ## Blockers on stations 2 to 7
 

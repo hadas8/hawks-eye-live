@@ -39,6 +39,10 @@
 .solved .next{margin:0 auto 26px;max-width:46ch}
 
 /* ── reveal ──────────────────────────────── */
+/* The hinge from the operation to the lesson, sitting directly above the
+   station-to-concept list it introduces. */
+.turn{font-weight:800;font-size:clamp(17px,2.4vw,22px);color:var(--ink);
+  margin:0 0 17px;max-width:none;letter-spacing:-.01em}
 /* The screen assembles block by block instead of landing in one frame. */
 .reveal-in > *{animation:riseIn .55s cubic-bezier(.2,.9,.3,1) both}
 .reveal-in > *:nth-child(1){animation-delay:.02s}
