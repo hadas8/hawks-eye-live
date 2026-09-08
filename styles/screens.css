@@ -39,8 +39,21 @@
 .solved .next{margin:0 auto 26px;max-width:46ch}
 
 /* ── reveal ──────────────────────────────── */
+/* The screen assembles block by block instead of landing in one frame. */
+.reveal-in > *{animation:riseIn .55s cubic-bezier(.2,.9,.3,1) both}
+.reveal-in > *:nth-child(1){animation-delay:.02s}
+.reveal-in > *:nth-child(2){animation-delay:.14s}
+.reveal-in > *:nth-child(3){animation-delay:.26s}
+.reveal-in > *:nth-child(4){animation-delay:.40s}
+.reveal-in > *:nth-child(5){animation-delay:.54s}
+@keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .finale{font-weight:800;font-size:clamp(24px,4.6vw,40px);color:var(--amber);
-  text-align:center;margin:28px 0 6px;letter-spacing:-.015em}
+  text-align:center;margin:28px 0 6px;letter-spacing:-.015em;
+  animation:finaleGlow 2.6s ease-in-out .7s both}
+@keyframes finaleGlow{
+  0%{text-shadow:0 0 0 transparent}
+  30%{text-shadow:0 0 38px var(--amber-dim)}
+  100%{text-shadow:0 0 14px rgba(255,178,56,.22)}}
 .finale-sub{text-align:center;margin:0 auto;max-width:52ch}
 .scorebox{text-align:center;border:1px solid var(--amber);padding:22px;background:var(--amber-soft)}
 .scorebox .n{font-family:var(--mono);font-size:56px;font-weight:600;color:var(--amber);line-height:1}

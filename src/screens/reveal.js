@@ -18,7 +18,7 @@ export function viewReveal() {
       <span class="v">${esc(s.concept)}<small>${esc(s.name)}${given ? ' · נמסרה' : ''}</small></span>`;
   }).join('');
 
-  return `<div class="stack">
+  return `<div class="stack reveal-in">
     <div>
       <div class="eyebrow">הקופסה נפתחה</div>
       <h1>לא פתרתם חידות — הפעלתם אלגוריתמים</h1>

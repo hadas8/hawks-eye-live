@@ -143,8 +143,27 @@ Dramatic moments in the prototype, to be pushed further here:
 - Correct submit: amber shockwave expanding from centre, the digit slamming in at scale with bloom, the ribbon slot igniting
 - Under 60 seconds: clock goes red and pulses, a red vignette breathes at the screen edges
 - Station closes unsolved: cold black flood, נגמר הזמן or נגמרו הניסיונות, shake, digit arrives struck through
+- **The vault opening, the loudest moment in the app:** the seven ribbon slots verify left to right at 95ms intervals, in the order the digits go into the physical lock; then a white-hot core flash, two amber shockwave rings, a shake, and הקוד אומת / המנעול נפתח stamping in. The reveal assembles block by block while the afterglow is still fading, so the two read as one movement. ~1.9s to the reveal, ~2.8s to rest. This is the only moment that earns a white flash — everything else stays amber.
 
 Hadas has assets to bring in. The Cowork artifact is a look-and-feel reference; do not port it wholesale. What carries over is the token values, the state machine, the answer-engine shape, the Hebrew normalization, and station 1's data, rules and interaction.
+
+## The closing reveal — unattributed copy
+
+**Every word on the reveal screen was written by the Cowork prototype, not by the content author, and has no source in the draft.** The draft ends at `דף הקוד הסופי — למנחה בלבד`, a facilitator-only table of the seven digits and the lock code. It contains no closing screen, no debrief copy and no description of what the box is. `נראות התחנות` covers the interaction for stations 1 to 6 and stops; it says nothing about an ending either.
+
+So the most important emotional beat of the event currently runs on invented text. It needs the content author's eye before the event. The lines in question are `לא פתרתם חידות — הפעלתם אלגוריתמים`, the lead paragraph, `כל זה יחד נקרא למידת מכונה`, and `הנתונים היו כאן מההתחלה — מה שחסר היה מישהו שיודע מה לשאול אותם.`
+
+Material in the draft that a real closing screen could be built from, none of it currently used:
+
+- The cover line **נתונים זה הזהב החדש**, which is the seminar's own framing and outranks anything invented here.
+- Station 5's and station 7's `לדיון אחרי הפתרון` cards, which are written debrief prompts.
+- Station 7's line: *שמונה בינוניים שרואים דברים שונים מנצחים שני מומחים טובים שרואים אותו דבר.*
+
+## What the box is
+
+Undefined, and this is the reason the ending does not land. The draft says only `שבע תחנות. שבע ספרות. קופסה אחת.` and gives the lock code `3274227`. It never says what the box is, what is inside it, who opens it, or whether every group opens one or the room shares a single one. The app therefore ends by announcing that something opened without ever having said what.
+
+Open question, previously filed under props and now blocking the reveal copy.
 
 ## Blockers on stations 2 to 7
 

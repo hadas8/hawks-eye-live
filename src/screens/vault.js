@@ -1,7 +1,7 @@
 import { CFG } from '../config.js';
 import { S, set } from '../state.js';
 import { esc } from '../lib/text.js';
-import { shake } from '../ui/fx.js';
+import { shake, vaultUnlock } from '../ui/fx.js';
 import { register } from '../ui/actions.js';
 
 export const viewVault = () => `<div class="stack">
@@ -21,7 +21,7 @@ export const viewVault = () => `<div class="stack">
 register('submit', {
   vault() {
     const value = document.getElementById('vin').value.replace(/\D/g, '');
-    if (value === CFG.lockCode) return set({ screen: 'reveal', vaultErr: '' });
+    if (value === CFG.lockCode) return vaultUnlock(() => set({ screen: 'reveal', vaultErr: '' }));
     shake();
     set({ vaultErr: 'הקוד נדחה, בדקו את הסדר.' });
   }
