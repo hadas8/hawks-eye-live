@@ -1,0 +1,89 @@
+/* Station 1 — הטבלאות המשקרות. The "tables" station kind:
+   tabbed tables, row marking, and a union sheet of eight numbers.
+
+   Deliberately plain. An earlier version colour-coded the columns per rule
+   (identifier / status / weight) and tested worse than this; amber and the
+   coral missing-value dash are the only colours in here. */
+
+/* ── the instruction panel ────────────────── */
+.ask{background:var(--amber-soft);border-inline-start:3px solid var(--amber);padding:18px 22px}
+.ask .q{font-size:clamp(19px,2.8vw,25px);font-weight:800;color:var(--ink);margin:0 0 5px;
+  letter-spacing:-.01em;max-width:none}
+.ask .sub{margin:0 0 13px;color:var(--ink);font-size:15.5px;max-width:none}
+.keys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.keys li{font-size:14.5px;color:var(--ink-dim);padding-inline-start:15px;position:relative;line-height:1.5}
+.keys li::before{content:"·";position:absolute;inset-inline-start:0;color:var(--amber);font-weight:800}
+.keys b{color:var(--ink);font-weight:500}
+.keys .dash{font-family:var(--mono);color:var(--miss);font-weight:600}
+.ask .cap{margin:13px 0 0;font-size:15px;color:var(--ink);max-width:none;
+  border-top:1px solid var(--amber-dim);padding-top:11px}
+.ask .cap b{color:var(--amber);font-weight:800}
+
+/* ── table tabs ───────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:7px}
+.tab{background:var(--panel);border:1px solid var(--hair);color:var(--muted);
+  padding:9px 13px;font-family:var(--mono);font-size:13px;min-width:50px;min-height:var(--tap)}
+.tab:hover{border-color:var(--muted);color:var(--ink)}
+.tab.on{border-color:var(--amber);color:var(--amber);background:var(--amber-soft)}
+.tab.done{color:var(--ink)}
+.tab.done::after{content:" ●";color:var(--ok);font-size:10px}
+.tab.on.done::after{color:var(--amber)}
+
+/* ── the table itself ─────────────────────── */
+.tablewrap{overflow-x:auto;border:1px solid var(--hair);background:var(--panel);
+  -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:14.5px}
+th{font-size:9px;letter-spacing:var(--ls);text-transform:uppercase;text-align:right;
+  padding:9px 13px;white-space:nowrap;font-weight:500;color:var(--muted);
+  border-bottom:1px solid var(--hair)}
+td{padding:11px 13px;border-bottom:1px solid rgba(28,40,51,.55);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+td.m{font-family:var(--mono);font-size:13.5px}
+td.pick{width:38px;text-align:center;font-family:var(--mono);color:var(--muted)}
+td.miss{color:var(--miss);font-family:var(--mono);font-weight:600}
+.miss{color:var(--miss)}
+
+tbody tr{cursor:pointer;transition:background .1s}
+tbody tr:hover{background:var(--panel-2)}
+tbody tr.mk{background:var(--amber-soft);box-shadow:inset 3px 0 0 var(--amber)}
+tbody tr.mk td{color:var(--ink)}
+tbody tr.mk td.pick{color:var(--amber);font-weight:600}
+tbody tr.junk td{color:var(--muted);font-style:italic}
+
+.tfoot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+  padding:11px 14px;border:1px solid var(--hair);border-top:0;background:var(--panel-2)}
+.tfoot .cnt{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tfoot .cnt b{color:var(--amber);font-size:21px}
+
+/* ── the union sheet ──────────────────────── */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(98px,1fr));gap:9px}
+.cell{background:var(--panel-2);border:1px solid var(--hair);padding:8px 9px;
+  display:flex;flex-direction:column;gap:3px;position:relative}
+.cell .k{font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.cell input{padding:4px 6px;font-size:16px;text-align:center;background:transparent;
+  border:0;min-height:32px}
+.cell .src{font-size:9px;letter-spacing:.08em;text-transform:uppercase;text-align:center;min-height:12px}
+.cell .src.auto{color:var(--amber)}
+.cell .src.man{color:var(--ink-dim)}
+.cell .src.good{color:var(--ok);font-weight:500}
+.cell .src.wrong{color:var(--bad);font-weight:500}
+.cell.cur{border-color:var(--amber)}
+.cell.hit{border-color:var(--ok)}
+.cell.miss{border-color:var(--bad)}
+
+.sums{display:flex;gap:26px;flex-wrap:wrap;align-items:baseline}
+.sums .b{font-family:var(--mono);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.sums .b.good{color:var(--ok)}
+.sums .b.off{color:var(--bad)}
+.sums .b.small{font-size:15px}
+
+.verdict{font-family:var(--mono);font-size:14px;margin:0}
+.verdict.bad{color:var(--bad)}
+.verdict.ok{color:var(--ok)}
+.note{font-size:14.5px;margin:0;color:var(--muted)}
+.hintbar{border-inline-start:2px solid var(--amber);padding:2px 13px;margin:0;
+  color:var(--ink-dim);font-size:14.5px;max-width:66ch}
+
+@media (max-width:620px){
+  .ask{padding:15px 16px}
+}

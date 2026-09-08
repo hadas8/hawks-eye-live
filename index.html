@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>מבצע עין הנץ</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;500;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/effects.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="styles/screens.css">
+<link rel="stylesheet" href="styles/station-tables.css">
+</head>
+<body>
+
+<div id="app">
+  <div class="atmos scan"></div>
+  <div class="atmos sweep"></div>
+  <div class="atmos vign"></div>
+  <div class="atmos alarm"></div>
+
+  <header class="bar">
+    <div class="insignia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M1 12s4-6.5 11-6.5S23 12 23 12s-4 6.5-11 6.5S1 12 1 12z"/>
+        <circle cx="12" cy="12" r="3.2"/>
+        <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      <b>עין הנץ</b>
+    </div>
+    <div class="bar-mid">
+      <span class="groupchip" id="groupchip" hidden></span>
+      <div class="meter">
+        <span class="v" id="scoreval">0</span>
+        <span class="label">נקודות</span>
+      </div>
+      <div class="meter" id="clock">
+        <span class="v" id="clockval">--:--</span>
+        <span class="label" id="clocklab">תחנה</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage" id="stage"></main>
+
+  <div class="ribbon" id="ribbon"></div>
+
+  <div id="fx" aria-hidden="true">
+    <div class="bg"></div>
+    <div class="txt" id="fxtxt"></div>
+    <div class="sub" id="fxsub"></div>
+  </div>
+</div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

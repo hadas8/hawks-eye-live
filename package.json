@@ -1,0 +1,11 @@
+{
+  "name": "hawks-eye-live",
+  "private": true,
+  "version": "1.0.0",
+  "description": "מבצע עין הנץ — a digital escape room for a live data science seminar. Static site, no build step, no backend.",
+  "type": "module",
+  "scripts": {
+    "start": "node tools/dev-server.js",
+    "dev": "node tools/dev-server.js"
+  }
+}

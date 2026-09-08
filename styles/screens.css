@@ -1,0 +1,52 @@
+/* Screen-level furniture: boot, briefing, locked, solved/expired, vault, reveal. */
+
+/* ── boot terminal ────────────────────────── */
+.term{font-family:var(--mono);font-size:14px;line-height:2;color:var(--ink-dim);
+  white-space:pre-wrap;min-height:210px}
+.term .ok{color:var(--ok)}
+.term .no{color:var(--bad)}
+.term .hi{color:var(--amber)}
+.caret{display:inline-block;width:8px;height:15px;background:var(--amber);
+  vertical-align:-2px;animation:blink 1s steps(2) infinite}
+
+/* ── password gate ───────────────────────── */
+.lockwrap{display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:5px;padding:40px 0 20px}
+.lockwrap .glyph{width:58px;height:58px;color:var(--muted);margin-bottom:10px}
+.lockwrap p{text-align:center;max-width:46ch}
+.lockform{display:flex;gap:10px;margin-top:14px;width:100%;max-width:400px}
+.lockform input{text-align:center;letter-spacing:.1em;font-family:var(--body);font-size:18px}
+
+/* ── briefing / reveal list ──────────────── */
+.faculty{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;align-items:baseline}
+.faculty .k{font-family:var(--mono);font-size:13px;color:var(--amber);white-space:nowrap}
+.faculty .k.g{color:var(--muted)}
+.faculty .v{color:var(--ink)}
+.faculty .v small{display:block;color:var(--muted);font-size:13px}
+
+/* ── solved / expired ────────────────────── */
+.solved{text-align:center;padding:30px 0}
+.bigdigit{font-family:var(--mono);font-weight:600;font-size:clamp(96px,21vw,180px);
+  line-height:1;color:var(--amber);text-shadow:0 0 60px var(--amber-dim);
+  animation:slam .8s cubic-bezier(.2,1.5,.35,1) both}
+.bigdigit.grey{color:var(--muted);text-shadow:none;text-decoration:line-through;
+  text-decoration-thickness:5px;text-decoration-color:var(--bad)}
+@keyframes slam{0%{opacity:0;transform:scale(2.2);filter:blur(9px)}
+  60%{opacity:1;transform:scale(.95);filter:blur(0)}100%{transform:scale(1)}}
+.pts{font-family:var(--mono);font-size:19px;color:var(--ok);margin:8px 0 0}
+.pts.zero{color:var(--muted)}
+.solved .say{margin:16px auto 4px;max-width:46ch;color:var(--ink)}
+.solved .next{margin:0 auto 26px;max-width:46ch}
+
+/* ── reveal ──────────────────────────────── */
+.finale{font-weight:800;font-size:clamp(24px,4.6vw,40px);color:var(--amber);
+  text-align:center;margin:28px 0 6px;letter-spacing:-.015em}
+.finale-sub{text-align:center;margin:0 auto;max-width:52ch}
+.scorebox{text-align:center;border:1px solid var(--amber);padding:22px;background:var(--amber-soft)}
+.scorebox .n{font-family:var(--mono);font-size:56px;font-weight:600;color:var(--amber);line-height:1}
+.scorebox p{max-width:none;text-align:center;margin:8px 0 0}
+.scorebox .fine{margin:6px 0 0;color:var(--muted);font-size:14px}
+.vin{font-family:var(--mono);letter-spacing:.45em;text-align:center;font-size:24px}
+
+/* ── station not yet built (stations 2 to 7) ── */
+.unbuilt p{color:var(--muted)}

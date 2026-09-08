@@ -1,0 +1,65 @@
+/* Persistent chrome: the top bar (clock + score) and the 7-slot code ribbon.
+   Both are present on every screen. */
+
+/* ── top bar ──────────────────────────────── */
+.bar{position:sticky;top:0;z-index:6;display:flex;align-items:center;gap:18px;
+  padding:11px 22px;background:rgba(5,8,12,.88);border-bottom:1px solid var(--hair);
+  backdrop-filter:blur(8px)}
+.insignia{display:flex;align-items:center;gap:9px}
+.insignia svg{width:21px;height:21px;flex:none;color:var(--amber)}
+.insignia b{font-size:15px;font-weight:800;letter-spacing:-.01em}
+
+.bar-mid{margin-inline-start:auto;display:flex;align-items:center;gap:20px}
+.meter{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.meter .v{font-family:var(--mono);font-weight:600;font-size:24px;line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.meter.warn .v{color:var(--amber)}
+.meter.crit .v{color:var(--bad);animation:blink 1s steps(2) infinite}
+.groupchip{font-size:13px;color:var(--ink-dim);border:1px solid var(--hair);
+  padding:4px 12px;border-radius:999px}
+
+/* ── code ribbon ──────────────────────────── */
+.ribbon{position:fixed;bottom:0;inset-inline:0;z-index:6;display:flex;align-items:center;
+  justify-content:center;gap:14px;flex-wrap:wrap;
+  padding:11px 18px calc(11px + env(safe-area-inset-bottom));
+  background:rgba(5,8,12,.92);border-top:1px solid var(--hair);backdrop-filter:blur(8px)}
+
+/* The code itself runs left to right — station 1 leftmost — because that is
+   the order the seven digits are entered into the physical lock. The rest of
+   the ribbon, and the rest of the app, stays RTL. */
+.slots{direction:ltr;display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.slot{width:44px;height:54px;border:1px solid var(--hair);background:var(--panel);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.slot .n{position:absolute;top:2px;font-size:9px;color:var(--muted);font-family:var(--mono)}
+.slot .d{font-family:var(--mono);font-weight:600;font-size:23px;color:var(--muted)}
+
+.slot.earned{border-color:var(--amber)}
+.slot.earned .d{color:var(--amber)}
+.slot.earned.fresh{animation:ignite 1s ease-out both}
+@keyframes ignite{0%{box-shadow:0 0 0 0 var(--amber)}
+  40%{box-shadow:0 0 26px 3px var(--amber-dim)}100%{box-shadow:0 0 0 0 transparent}}
+
+/* given: the station closed unsolved, the digit was handed over, it scored 0 */
+.slot.given{border-color:#3a2a2e;border-style:dashed}
+.slot.given .d{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--bad)}
+
+.slot.current{border-color:var(--ink-dim)}
+.slot.current .d{animation:blink 1.4s steps(2) infinite}
+
+/* ── dev strip (?dev only — remove before the event) ── */
+.dev{position:fixed;top:56px;inset-inline-end:10px;z-index:30;background:#2a0f14;
+  border:1px dashed var(--bad);padding:8px;display:flex;flex-direction:column;gap:6px}
+.dev button{background:none;border:1px solid var(--bad);color:var(--bad);font-size:11px;padding:4px 8px}
+.dev .label{color:var(--bad)}
+.proto{font-size:9px;letter-spacing:var(--ls);text-transform:uppercase;color:var(--muted);
+  border:1px dashed var(--hair);padding:4px 9px}
+
+@media (max-width:620px){
+  .bar{gap:12px;padding:9px 14px}
+  .bar-mid{gap:13px}
+  .meter .v{font-size:19px}
+  .groupchip{display:none}
+  .slot{width:36px;height:46px}
+  .slot .d{font-size:18px}
+  .ribbon,.slots{gap:8px}
+}

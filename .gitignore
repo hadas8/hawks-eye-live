@@ -1,0 +1,16 @@
+# OS / editor
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+.idea/
+
+# tooling, if a dev server or build gets added later
+node_modules/
+npm-debug.log*
+.env
+.env.local
+
+# local scratch
+*.local
+/tmp/

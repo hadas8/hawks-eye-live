@@ -1,0 +1,36 @@
+/* מארג — design tokens. Single dark theme, committed. No light theme.
+   Amber is the ONLY UI accent. The coral --miss glyph is the one exception,
+   so a missing value stays scannable inside a dense table. Do not add
+   per-column or per-rule colours: that was tried and reverted. */
+:root{
+  /* ground and surfaces */
+  --ground:#05080c;
+  --panel:#0b1118;
+  --panel-2:#0e161f;
+  --hair:#1c2833;
+
+  /* type */
+  --ink:#d6e2ea;
+  --ink-dim:#9db0bf;
+  --muted:#6b8395;
+
+  /* the accent */
+  --amber:#ffb238;
+  --amber-soft:rgba(255,178,56,.14);
+  --amber-dim:rgba(255,178,56,.4);
+
+  /* verdict states only — never decoration */
+  --ok:#3ad48c;
+  --bad:#ff4a5e;
+  --bad-soft:rgba(255,74,94,.15);
+
+  /* the single sanctioned exception: the missing-value dash */
+  --miss:#ff7a59;
+
+  --body:"Heebo",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+  --ls:.22em;
+
+  --stage-max:1020px;
+  --tap:44px;
+}

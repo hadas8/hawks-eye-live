@@ -1,0 +1,853 @@
+<title>מבצע עין הנץ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;500;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#05080c; --panel:#0b1118; --panel-2:#0e161f; --hair:#1c2833;
+  --ink:#d6e2ea; --ink-dim:#9db0bf; --muted:#6b8395;
+  --amber:#ffb238; --amber-soft:rgba(255,178,56,.14); --amber-dim:rgba(255,178,56,.4);
+  --ok:#3ad48c; --bad:#ff4a5e; --bad-soft:rgba(255,74,94,.15);
+  /* rule colours: each maps to a column group in the table */
+  --c-id:#4fd6e8;      --c-id-soft:rgba(79,214,232,.12);
+  --c-st:#b48cff;      --c-st-soft:rgba(180,140,255,.12);
+  --c-wt:#c9b06a;      --c-wt-soft:rgba(201,176,106,.12);
+  --c-miss:#ff7a59;    --c-miss-soft:rgba(255,122,89,.13);
+  --body:"Heebo",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ls:.22em;
+}
+*{box-sizing:border-box}
+body{margin:0;direction:rtl;background:var(--ground);color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.6;min-height:100vh}
+#app{position:relative;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+#app.shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes shake{10%,90%{transform:translateX(-3px)}20%,80%{transform:translateX(6px)}
+  30%,50%,70%{transform:translateX(-11px)}40%,60%{transform:translateX(11px)}}
+
+.atmos{position:fixed;inset:0;pointer-events:none;z-index:0}
+.scan{background:repeating-linear-gradient(to bottom,rgba(255,255,255,.028) 0 1px,transparent 1px 3px)}
+.sweep{background:conic-gradient(from 0deg,var(--amber-soft) 0deg,transparent 42deg,transparent 360deg);
+  opacity:.45;animation:sweep 9s linear infinite;mix-blend-mode:screen}
+.vign{background:radial-gradient(ellipse at 50% 35%,transparent 42%,rgba(0,0,0,.55) 100%)}
+.alarm{background:radial-gradient(ellipse at 50% 50%,transparent 45%,var(--bad-soft) 100%);
+  opacity:0;transition:opacity .4s;z-index:1}
+#app.critical .alarm{opacity:1;animation:breathe 1.6s ease-in-out infinite}
+@keyframes sweep{to{transform:rotate(360deg)}}
+@keyframes breathe{50%{opacity:.35}}
+
+#fx{position:fixed;inset:0;z-index:40;pointer-events:none;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;opacity:0}
+#fx.on{opacity:1}
+#fx .bg{position:absolute;inset:0}
+#fx .txt{position:relative;font-family:var(--mono);font-weight:600;
+  font-size:clamp(22px,6vw,58px);letter-spacing:.4em;text-align:center;padding:0 20px}
+#fx .sub{position:relative;font-family:var(--body);font-weight:800;color:#fff;
+  font-size:clamp(17px,3.2vw,29px);text-align:center;padding:0 20px;opacity:0}
+#fx .sub:empty{display:none}
+#fx.wipe .bg{background:var(--ground);animation:wipeIn .9s cubic-bezier(.7,0,.3,1) forwards}
+#fx.wipe .txt{color:var(--amber);animation:txtIn .9s cubic-bezier(.2,1,.3,1) both}
+@keyframes wipeIn{0%{clip-path:inset(0 0 100% 0)}45%{clip-path:inset(0)}100%{clip-path:inset(100% 0 0 0)}}
+@keyframes txtIn{0%{opacity:0;letter-spacing:1.2em}35%{opacity:1;letter-spacing:.4em}
+  75%{opacity:1}100%{opacity:0}}
+#fx.reject{background:rgba(0,0,0,.5)}
+#fx.reject .bg{background:var(--bad);animation:rejBg 2.1s ease-out forwards}
+@keyframes rejBg{0%{opacity:.3}7%{opacity:0}14%{opacity:.3}21%{opacity:0}28%{opacity:.3}
+  36%{opacity:.11}86%{opacity:.11}100%{opacity:0}}
+#fx.reject .txt{color:#fff;animation:stampHold 2.1s cubic-bezier(.2,1.6,.3,1) both}
+@keyframes stampHold{0%{opacity:0;transform:scale(2.4)}11%{opacity:1;transform:scale(1)}
+  86%{opacity:1;transform:scale(1)}100%{opacity:0}}
+#fx.reject .sub{animation:subHold 2.1s ease-out both}
+@keyframes subHold{0%,13%{opacity:0;transform:translateY(12px)}
+  25%{opacity:1;transform:translateY(0)}86%{opacity:1}100%{opacity:0}}
+#fx.accept .bg{background:radial-gradient(circle at 50% 50%,var(--amber-soft),transparent 60%);
+  animation:shock .95s cubic-bezier(.2,.9,.3,1) both}
+#fx.accept .txt{color:var(--amber);animation:txtIn 1.1s cubic-bezier(.2,1,.3,1) both}
+@keyframes shock{0%{opacity:0;transform:scale(.2)}30%{opacity:1}100%{opacity:0;transform:scale(2.6)}}
+#fx.timeout .bg{background:#000;animation:coldIn 1.4s ease-out forwards}
+#fx.timeout .txt{color:var(--bad);letter-spacing:.5em;animation:txtIn 1.4s ease-out both}
+@keyframes coldIn{0%{opacity:0}30%{opacity:.86}100%{opacity:0}}
+
+.bar{position:sticky;top:0;z-index:6;display:flex;align-items:center;gap:18px;padding:11px 22px;
+  background:rgba(5,8,12,.88);border-bottom:1px solid var(--hair);backdrop-filter:blur(8px)}
+.insignia{display:flex;align-items:center;gap:9px}
+.insignia svg{width:21px;height:21px;flex:none;color:var(--amber)}
+.insignia b{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.bar-mid{margin-inline-start:auto;display:flex;align-items:center;gap:20px}
+.meter{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.meter .v{font-family:var(--mono);font-weight:600;font-size:24px;line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.meter.warn .v{color:var(--amber)}
+.meter.crit .v{color:var(--bad);animation:blink 1s steps(2) infinite}
+.label{font-size:9px;letter-spacing:var(--ls);text-transform:uppercase;color:var(--muted);font-weight:500}
+.groupchip{font-size:13px;color:var(--ink-dim);border:1px solid var(--hair);padding:4px 12px;border-radius:999px}
+@keyframes blink{50%{opacity:.35}}
+
+.stage{position:relative;z-index:2;flex:1;width:100%;max-width:1020px;margin:0 auto;padding:36px 22px 132px}
+.eyebrow{font-size:9px;letter-spacing:var(--ls);text-transform:uppercase;color:var(--amber);
+  font-weight:500;margin-bottom:13px}
+h1{font-size:clamp(28px,5vw,48px);font-weight:800;line-height:1.08;margin:0 0 15px;
+  letter-spacing:-.015em;text-wrap:balance}
+p{margin:0 0 13px;max-width:62ch;color:var(--ink-dim)}
+.lead{font-size:18px;color:var(--ink)}
+.panel{background:var(--panel);border:1px solid var(--hair);padding:22px}
+.stack{display:flex;flex-direction:column;gap:20px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+button{font-family:var(--body);font-size:15px;cursor:pointer}
+.btn{background:var(--amber);color:#0a0a0a;border:0;padding:12px 28px;font-weight:800;
+  transition:filter .15s,transform .1s}
+.btn:hover{filter:brightness(1.13)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.35;cursor:not-allowed;filter:none}
+.btn-ghost{background:none;color:var(--ink-dim);border:1px solid var(--hair);padding:11px 20px;font-weight:500}
+.btn-ghost:hover{border-color:var(--muted);color:var(--ink)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+input[type="text"],input[type="number"]{font-family:var(--mono);font-size:17px;background:var(--panel-2);
+  color:var(--ink);border:1px solid var(--hair);padding:11px 13px;width:100%}
+input:focus{border-color:var(--amber);outline:none}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.field{display:flex;flex-direction:column;gap:6px;max-width:320px}
+
+.term{font-family:var(--mono);font-size:14px;line-height:2;color:var(--ink-dim);
+  white-space:pre-wrap;min-height:210px}
+.term .ok{color:var(--ok)} .term .no{color:var(--bad)} .term .hi{color:var(--amber)}
+.caret{display:inline-block;width:8px;height:15px;background:var(--amber);vertical-align:-2px;
+  animation:blink 1s steps(2) infinite}
+
+.lockwrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;padding:40px 0 20px}
+.lockwrap .glyph{width:58px;height:58px;color:var(--muted);margin-bottom:10px}
+.lockwrap p{text-align:center;max-width:46ch}
+.lockform{display:flex;gap:10px;margin-top:14px;width:100%;max-width:400px}
+.lockform input{text-align:center;letter-spacing:.1em;font-family:var(--body);font-size:18px}
+.err{color:var(--bad);font-size:14px;min-height:22px;margin:0}
+
+/* ═══ instruction block ═══════════════════════ */
+.ask{background:var(--amber-soft);border-inline-start:3px solid var(--amber);padding:18px 22px}
+.ask .q{font-size:clamp(19px,2.8vw,25px);font-weight:800;color:var(--ink);margin:0 0 5px;
+  letter-spacing:-.01em;max-width:none}
+.ask .sub{margin:0 0 13px;color:var(--ink);font-size:15.5px;max-width:none}
+.keys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.keys li{font-size:14.5px;color:var(--ink-dim);padding-inline-start:15px;position:relative;line-height:1.5}
+.keys li::before{content:"·";position:absolute;inset-inline-start:0;color:var(--amber);font-weight:800}
+.keys b{color:var(--ink);font-weight:500}
+.keys .dash{font-family:var(--mono);color:var(--c-miss);font-weight:600}
+.ask .cap{margin:13px 0 0;font-size:15px;color:var(--ink);max-width:none;
+  border-top:1px solid var(--amber-dim);padding-top:11px}
+.ask .cap b{color:var(--amber);font-weight:800}
+
+/* ═══ tables ══════════════════════════════════ */
+.tabs{display:flex;flex-wrap:wrap;gap:7px}
+.tab{background:var(--panel);border:1px solid var(--hair);color:var(--muted);padding:9px 13px;
+  font-family:var(--mono);font-size:13px;min-width:50px}
+.tab:hover{border-color:var(--muted);color:var(--ink)}
+.tab.on{border-color:var(--amber);color:var(--amber);background:var(--amber-soft)}
+.tab.done{color:var(--ink)}
+.tab.done::after{content:" ●";color:var(--ok);font-size:10px}
+.tab.on.done::after{color:var(--amber)}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--hair);background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:14.5px}
+th{font-size:9px;letter-spacing:var(--ls);text-transform:uppercase;text-align:right;padding:9px 13px;
+  white-space:nowrap;font-weight:500;color:var(--muted);border-bottom:1px solid var(--hair)}
+td{padding:8px 13px;border-bottom:1px solid rgba(28,40,51,.55);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.m{font-family:var(--mono);font-size:13.5px}
+td.pick{width:38px;text-align:center;font-family:var(--mono);color:var(--muted)}
+td.miss{color:var(--c-miss);font-family:var(--mono);font-weight:600}
+tbody tr{cursor:pointer;transition:background .1s}
+tbody tr:hover{background:var(--panel-2)}
+tbody tr.mk{background:var(--amber-soft);box-shadow:inset 3px 0 0 var(--amber)}
+tbody tr.mk td{color:var(--ink)}
+tbody tr.mk td.pick{color:var(--amber);font-weight:600}
+tbody tr.junk td{color:var(--muted);font-style:italic}
+.tfoot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+  padding:11px 14px;border:1px solid var(--hair);border-top:0;background:var(--panel-2)}
+.tfoot .cnt{font-family:var(--mono);font-size:15px;color:var(--ink)}
+.tfoot .cnt b{color:var(--amber);font-size:21px}
+.btn-mini{background:none;border:1px solid var(--hair);color:var(--muted);padding:5px 11px;font-size:12px}
+.btn-mini:hover{color:var(--ink);border-color:var(--muted)}
+
+/* ═══ answer strip ════════════════════════════ */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(98px,1fr));gap:9px}
+.cell{background:var(--panel-2);border:1px solid var(--hair);padding:8px 9px;
+  display:flex;flex-direction:column;gap:3px;position:relative}
+.cell .k{font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.cell input{padding:4px 6px;font-size:16px;text-align:center;background:transparent;border:0}
+.cell .src{font-size:9px;letter-spacing:.08em;text-transform:uppercase;text-align:center;min-height:12px}
+.cell .src.auto{color:var(--amber)} .cell .src.man{color:var(--c-id)}
+.cell .src.good{color:var(--ok);font-weight:500} .cell .src.wrong{color:var(--bad);font-weight:500}
+.cell.cur{border-color:var(--amber)}
+.cell.hit{border-color:var(--ok)} .cell.miss{border-color:var(--bad)}
+.sums{display:flex;gap:26px;flex-wrap:wrap;align-items:baseline}
+.sums .b{font-family:var(--mono);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.sums .b.good{color:var(--ok)} .sums .b.off{color:var(--bad)}
+.verdict{font-family:var(--mono);font-size:14px;margin:0}
+.verdict.bad{color:var(--bad)} .verdict.ok{color:var(--ok)}
+.hintbar{border-inline-start:2px solid var(--amber);padding:2px 13px;margin:0;color:var(--ink-dim);
+  font-size:14.5px;max-width:66ch}
+
+.solved{text-align:center;padding:30px 0}
+.bigdigit{font-family:var(--mono);font-weight:600;font-size:clamp(96px,21vw,180px);line-height:1;
+  color:var(--amber);text-shadow:0 0 60px var(--amber-dim);animation:slam .8s cubic-bezier(.2,1.5,.35,1) both}
+.bigdigit.grey{color:var(--muted);text-shadow:none;text-decoration:line-through;
+  text-decoration-thickness:5px;text-decoration-color:var(--bad)}
+@keyframes slam{0%{opacity:0;transform:scale(2.2);filter:blur(9px)}
+  60%{opacity:1;transform:scale(.95);filter:blur(0)}100%{transform:scale(1)}}
+.pts{font-family:var(--mono);font-size:19px;color:var(--ok);margin:8px 0 0}
+.pts.zero{color:var(--muted)}
+
+.ribbon{position:fixed;bottom:0;inset-inline:0;z-index:6;display:flex;align-items:center;
+  justify-content:center;gap:12px;padding:11px 18px;background:rgba(5,8,12,.92);
+  border-top:1px solid var(--hair);backdrop-filter:blur(8px);flex-wrap:wrap}
+.slot{width:44px;height:54px;border:1px solid var(--hair);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;background:var(--panel);position:relative}
+.slot .n{position:absolute;top:2px;font-size:9px;color:var(--muted);font-family:var(--mono)}
+.slot .d{font-family:var(--mono);font-weight:600;font-size:23px;color:var(--muted)}
+.slot.earned{border-color:var(--amber)}
+.slot.earned .d{color:var(--amber)}
+.slot.earned.fresh{animation:ignite 1s ease-out both}
+@keyframes ignite{0%{box-shadow:0 0 0 0 var(--amber)}40%{box-shadow:0 0 26px 3px var(--amber-dim)}
+  100%{box-shadow:0 0 0 0 transparent}}
+.slot.given{border-color:#3a2a2e;border-style:dashed}
+.slot.given .d{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--bad)}
+.slot.current{border-color:var(--ink-dim)}
+.slot.current .d{animation:blink 1.4s steps(2) infinite}
+
+.faculty{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;align-items:baseline}
+.faculty .k{font-family:var(--mono);font-size:13px;color:var(--amber);white-space:nowrap}
+.faculty .k.g{color:var(--muted)}
+.faculty .v{color:var(--ink)}
+.faculty .v small{display:block;color:var(--muted);font-size:13px}
+.finale{font-weight:800;font-size:clamp(24px,4.6vw,40px);color:var(--amber);text-align:center;
+  margin:28px 0 6px;letter-spacing:-.015em}
+.scorebox{text-align:center;border:1px solid var(--amber);padding:22px;background:var(--amber-soft)}
+.scorebox .n{font-family:var(--mono);font-size:56px;font-weight:600;color:var(--amber);line-height:1}
+
+.dev{position:fixed;top:56px;inset-inline-end:10px;z-index:30;background:#2a0f14;
+  border:1px dashed var(--bad);padding:8px;display:flex;flex-direction:column;gap:6px}
+.dev button{background:none;border:1px solid var(--bad);color:var(--bad);font-size:11px;padding:4px 8px}
+.dev .label{color:var(--bad)}
+.proto{font-size:9px;letter-spacing:var(--ls);text-transform:uppercase;color:var(--muted);
+  border:1px dashed var(--hair);padding:4px 9px}
+
+@media (max-width:620px){
+  .bar{gap:12px;padding:9px 14px} .bar-mid{gap:13px} .meter .v{font-size:19px}
+  .stage{padding:24px 15px 140px} .slot{width:36px;height:46px} .slot .d{font-size:18px}
+  .groupchip{display:none} .ask{flex-direction:column;align-items:flex-start;gap:7px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important}
+  .sweep{display:none} #fx{display:none}
+}
+</style>
+
+<div id="app">
+  <div class="atmos scan"></div><div class="atmos sweep"></div>
+  <div class="atmos vign"></div><div class="atmos alarm"></div>
+
+  <header class="bar">
+    <div class="insignia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M1 12s4-6.5 11-6.5S23 12 23 12s-4 6.5-11 6.5S1 12 1 12z"/>
+        <circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+      </svg><b>עין הנץ</b>
+    </div>
+    <div class="bar-mid">
+      <span class="groupchip" id="groupchip" hidden></span>
+      <div class="meter"><span class="v" id="scoreval">0</span><span class="label">נקודות</span></div>
+      <div class="meter" id="clock"><span class="v" id="clockval">--:--</span><span class="label" id="clocklab">תחנה</span></div>
+    </div>
+  </header>
+
+  <main class="stage" id="stage"></main>
+  <div class="ribbon" id="ribbon"></div>
+  <div id="fx"><div class="bg"></div><div class="txt" id="fxtxt"></div>
+    <div class="sub" id="fxsub"></div></div>
+</div>
+
+<script>
+"use strict";
+
+const CFG = {
+  stationSeconds: 7 * 60,
+  pointsPerStation: 10,
+  bonusQuestPoints: 5,
+  revealWhichWrong: true,   // mark each table ✓/✗ after a submit
+  maxAttempts: 3            // station closes when these run out
+};
+
+/* ── station 1 data (תחנה_1_שמונה_טבלאות.xlsx) ──
+   row = [id, date, crossing, weight, unit, status]        */
+const T = (rows, answer) => ({ rows, answer });
+const KG = 'ק"ג', TON = "טון", JUNK = ["— שורת זבל —","","","","",""];
+const G = "ג'נתא", Q = "קוסייא", A = "אסאל אל-וורד";
+
+const S1_TABLES = [
+  T([["S-06","12/01/2026",A,"15000",KG,"בוטל"],["S-10","20/01/2026",G,"","","חצה"],
+     ["S-03","2026-01-06",G,"22500",KG,"חצה"],["S-02","2026-01-04",A,"23",TON,"CROSSED"],
+     ["S-11","22/01/2026",Q,"","","הושלם"],["S-09","18/01/2026",A,"17",TON,"ממתין"],
+     ["S-01","2026-01-02",Q,"22",TON,"הושלם"],["S-03","06/01/2026",G,"22500",KG,"חצה"],
+     ["S-07","14/01/2026",G,"15",TON,"כשל"],["S-04","08/01/2026",Q,"25",TON,"הושלם"],
+     ["S-05","10/01/2026",A,"26",TON,"CROSSED"],["S-01","02/01/2026",Q,"22",TON,"הושלם"],
+     ["S-02","04/01/2026",A,"23",TON,"CROSSED"],["S-08","16/01/2026",Q,"17000",KG,"נכשל"],JUNK], 5),
+  T([["T-03","06/02/2026",G,"22500",KG,"חצה"],["T-10","20/02/2026",G,"17",TON,"ממתין"],
+     ["T-07","14/02/2026",G,"15000",KG,"בוטל"],["T-02","2026-02-04",A,"23",TON,"CROSSED"],
+     ["T-05","10/02/2026",A,"26",TON,"CROSSED"],["T-01","2026-02-02",Q,"22",TON,"הושלם"],
+     ["T-06","12/02/2026",G,"24000",KG,"חצה"],["T-08","16/02/2026",Q,"15",TON,"כשל"],
+     ["T-11","22/02/2026",Q,"","","חצה"],["T-03","2026-02-06",G,"22500",KG,"חצה"],
+     ["T-09","18/02/2026",A,"17000",KG,"נכשל"],["T-04","08/02/2026",Q,"25",TON,"הושלם"],
+     ["T-02","04/02/2026",A,"23",TON,"CROSSED"],["T-12","24/02/2026",A,"","","הושלם"],
+     ["T-01","02/02/2026",Q,"22",TON,"הושלם"],JUNK], 6),
+  T([["U-09","18/03/2026",A,"","","חצה"],["U-04","08/03/2026",Q,"25",TON,"הושלם"],
+     ["U-08","16/03/2026",Q,"17",TON,"ממתין"],["U-06","12/03/2026",A,"15",TON,"כשל"],
+     ["U-05","10/03/2026",Q,"15000",KG,"בוטל"],["U-02","04/03/2026",A,"23",TON,"CROSSED"],
+     ["U-10","20/03/2026",G,"","","הושלם"],["U-02","2026-03-04",A,"23",TON,"CROSSED"],
+     ["U-03","2026-03-06",G,"22500",KG,"חצה"],["U-03","06/03/2026",G,"22500",KG,"חצה"],
+     ["U-01","02/03/2026",Q,"22",TON,"הושלם"],["U-01","2026-03-02",Q,"22",TON,"הושלם"],
+     ["U-07","14/03/2026",G,"17000",KG,"נכשל"],JUNK], 4),
+  T([["V-14","28/04/2026",Q,"","","הושלם"],["V-01","2026-04-02",Q,"22",TON,"הושלם"],
+     ["V-07","14/04/2026",Q,"28",TON,"הושלם"],["V-03","06/04/2026",G,"22500",KG,"חצה"],
+     ["V-03","2026-04-06",G,"22500",KG,"חצה"],["V-09","18/04/2026",A,"15000",KG,"בוטל"],
+     ["V-13","26/04/2026",G,"","","חצה"],["V-02","04/04/2026",A,"23",TON,"CROSSED"],
+     ["V-08","16/04/2026",A,"29",TON,"CROSSED"],["V-01","02/04/2026",Q,"22",TON,"הושלם"],
+     ["V-05","10/04/2026",A,"26",TON,"CROSSED"],["V-02","2026-04-04",A,"23",TON,"CROSSED"],
+     ["V-12","24/04/2026",A,"17",TON,"ממתין"],["V-11","22/04/2026",Q,"17000",KG,"נכשל"],
+     ["V-06","12/04/2026",G,"24000",KG,"חצה"],["V-04","08/04/2026",Q,"25",TON,"הושלם"],
+     ["V-10","20/04/2026",G,"15",TON,"כשל"],JUNK], 8),
+  T([["W-06","12/05/2026",G,"24000",KG,"חצה"],["W-03","2026-05-06",G,"22500",KG,"חצה"],
+     ["W-02","2026-05-04",A,"23",TON,"CROSSED"],["W-03","06/05/2026",G,"22500",KG,"חצה"],
+     ["W-01","2026-05-02",Q,"22",TON,"הושלם"],["W-10","20/05/2026",G,"17000",KG,"נכשל"],
+     ["W-13","26/05/2026",G,"","","הושלם"],["W-12","24/05/2026",A,"","","חצה"],
+     ["W-11","22/05/2026",Q,"17",TON,"ממתין"],["W-05","10/05/2026",A,"26",TON,"CROSSED"],
+     ["W-04","08/05/2026",Q,"25",TON,"הושלם"],["W-08","16/05/2026",Q,"15000",KG,"בוטל"],
+     ["W-01","02/05/2026",Q,"22",TON,"הושלם"],["W-02","04/05/2026",A,"23",TON,"CROSSED"],
+     ["W-09","18/05/2026",A,"15",TON,"כשל"],["W-07","14/05/2026",Q,"28",TON,"הושלם"],JUNK], 7),
+  T([["X-06","12/06/2026",A,"17000",KG,"נכשל"],["X-05","10/06/2026",Q,"15",TON,"כשל"],
+     ["X-09","18/06/2026",A,"","","הושלם"],["X-02","04/06/2026",A,"23",TON,"CROSSED"],
+     ["X-01","02/06/2026",Q,"22",TON,"הושלם"],["X-04","08/06/2026",G,"15000",KG,"בוטל"],
+     ["X-07","14/06/2026",G,"17",TON,"ממתין"],["X-02","2026-06-04",A,"23",TON,"CROSSED"],
+     ["X-01","2026-06-02",Q,"22",TON,"הושלם"],["X-08","16/06/2026",Q,"","","חצה"],
+     ["X-03","2026-06-06",G,"22500",KG,"חצה"],["X-03","06/06/2026",G,"22500",KG,"חצה"],JUNK], 3),
+  T([["Y-07","14/07/2026",G,"15000",KG,"בוטל"],["Y-12","24/07/2026",A,"","","הושלם"],
+     ["Y-09","18/07/2026",A,"17000",KG,"נכשל"],["Y-11","22/07/2026",Q,"","","חצה"],
+     ["Y-02","04/07/2026",A,"23",TON,"CROSSED"],["Y-01","02/07/2026",Q,"22",TON,"הושלם"],
+     ["Y-10","20/07/2026",G,"17",TON,"ממתין"],["Y-06","12/07/2026",G,"24000",KG,"חצה"],
+     ["Y-04","08/07/2026",Q,"25",TON,"הושלם"],["Y-03","2026-07-06",G,"22500",KG,"חצה"],
+     ["Y-08","16/07/2026",Q,"15",TON,"כשל"],["Y-05","10/07/2026",A,"26",TON,"CROSSED"],
+     ["Y-01","2026-07-02",Q,"22",TON,"הושלם"],["Y-02","2026-07-04",A,"23",TON,"CROSSED"],
+     ["Y-03","06/07/2026",G,"22500",KG,"חצה"],JUNK], 6),
+  T([["Z-01","02/08/2026",Q,"22",TON,"הושלם"],["Z-02","2026-08-04",A,"23",TON,"CROSSED"],
+     ["Z-10","20/08/2026",G,"15000",KG,"בוטל"],["Z-05","10/08/2026",A,"26",TON,"CROSSED"],
+     ["Z-15","30/08/2026",A,"","","הושלם"],["Z-14","28/08/2026",Q,"","","חצה"],
+     ["Z-02","04/08/2026",A,"23",TON,"CROSSED"],["Z-11","22/08/2026",Q,"15",TON,"כשל"],
+     ["Z-13","26/08/2026",G,"17",TON,"ממתין"],["Z-08","16/08/2026",A,"29",TON,"CROSSED"],
+     ["Z-04","08/08/2026",Q,"25",TON,"הושלם"],["Z-06","12/08/2026",G,"24000",KG,"חצה"],
+     ["Z-03","2026-08-06",G,"22500",KG,"חצה"],["Z-01","2026-08-02",Q,"22",TON,"הושלם"],
+     ["Z-12","24/08/2026",A,"17000",KG,"נכשל"],["Z-07","14/08/2026",Q,"28",TON,"הושלם"],
+     ["Z-03","06/08/2026",G,"22500",KG,"חצה"],["Z-09","18/08/2026",G,"25500",KG,"חצה"],JUNK], 9)
+];
+
+const STATIONS = [
+  { n:1, name:"הטבלאות המשקרות", concept:"ניקוי נתונים", password:["נוצה"], digit:3, kind:"tables",
+    brief:'קלטנו מאות דיווחים על תנועה בגבול הלילה, וכולם מלוכלכים. בלי לנקות אותם קודם, לא נזהה את השיירה האמיתית.',
+    truth:{ min:30, max:60 },
+    hints:[
+      'התחילו מהסטטוס. סמנו בראש רק שורות שחצו, ורק אחר כך טפלו בכפילויות.',
+      'שני פורמטי תאריך מסתירים את אותה שיירה. השוו לפי המזהה, לא לפי התאריך.',
+      'שורה עם — לא נספרת, גם אם הסטטוס שלה חצה. זה תופס גם כשזו השורה היחידה של אותה שיירה.',
+      'עמודות המשקל והיחידה הן רעש בתחנה הזאת. השאלה היא כמה שיירות, לא כמה טון.'
+    ]
+  },
+  { n:2, name:"הגרפים המשקרים",       concept:"ויזואליזציית מידע",         password:["אופק"], digit:2, kind:null },
+  { n:3, name:"הכלל הנסתר",           concept:"סיווג מול חיזוי",           password:["מדף"],  digit:7, kind:null },
+  { n:4, name:"השאלה ששווה לשאול",    concept:"עצי החלטה",                 password:["ענף"],  digit:4, kind:null },
+  { n:5, name:"מי קיבל תשובות ומי לא", concept:"למידה מפוקחת ולא מפוקחת",  password:["מצפן"], digit:2, kind:null },
+  { n:6, name:"ארבעה כוכבים",         concept:"KNN — שכנים קרובים",        password:["גדר"],  digit:2, kind:null },
+  { n:7, name:"שמונה אנליסטים",       concept:"Random Forest — יער אקראי", password:["חורש"], digit:7, kind:null }
+];
+const CODE = STATIONS.map(s => s.digit).join("");
+const MAX_TECH = STATIONS.length * CFG.pointsPerStation;
+
+/* ── engine ─────────────────────────────────── */
+const FINALS = { "ם":"מ","ן":"נ","ץ":"צ","ף":"פ","ך":"כ" };
+const norm = s => String(s ?? "").replace(/[֑-ׇ]/g,"").replace(/[‎‏‪-‮]/g,"")
+  .replace(/["'׳״`]/g,"").trim().toLowerCase().replace(/\s+/g," ")
+  .replace(/[םןץףך]/g, c => FINALS[c]);
+const matchAny = (v,l) => l.some(a => norm(a) === norm(v));
+const digitalRoot = n => n <= 0 ? 0 : 1 + ((n - 1) % 9);
+
+let store = { get:()=>null, set:()=>{} };
+try{
+  localStorage.setItem("__t","1"); localStorage.removeItem("__t");
+  store = { get(){ try{ return JSON.parse(localStorage.getItem("hawkseye.v3")) }catch(e){ return null } },
+            set(v){ try{ localStorage.setItem("hawkseye.v3", JSON.stringify(v)) }catch(e){} } };
+}catch(e){}
+const DEV = new URLSearchParams(location.search).has("dev");
+
+const fresh = () => ({
+  screen:"boot", group:"", idx:0, phase:"locked",
+  startedAt:{}, digits:{}, given:{}, score:0,
+  draft:{}, tab:0, attempts:{}, hints:{},
+  submitBlocked:false, lastResult:null, fresh:null, vaultErr:"", closedBy:null
+});
+let S = Object.assign(fresh(), store.get() || {});
+const save = () => store.set(S);
+const set = p => { Object.assign(S,p); save(); render(); };
+const st = () => STATIONS[S.idx];
+const draft = n => (S.draft[n] ||= {});
+
+/* marks: draft(n).marks[tableIdx] = { rowIdx:true }
+   manual: draft(n).man[tableIdx] = true, typed value in .t<idx> */
+function marksOf(ti){ const d = draft(st().n); d.marks ||= {}; d.marks[ti] ||= {}; return d.marks[ti]; }
+function markCount(ti){ return Object.keys(marksOf(ti)).length; }
+function isManual(ti){ const d = draft(st().n); return !!(d.man && d.man[ti]); }
+/* sticky per-table verdicts: a table confirmed correct stays ticked until it changes */
+function verdictOf(ti){ const d = draft(st().n); return d.v ? d.v[ti] : undefined; }
+function clearVerdict(ti){ const d = draft(st().n); if(d.v) delete d.v[ti]; }
+const attemptsLeft = () => CFG.maxAttempts - (S.attempts[st().n] || 0);
+function valueOf(ti){
+  const d = draft(st().n);
+  if(isManual(ti)) return String(d["t"+ti] ?? "");
+  const c = markCount(ti);
+  return c > 0 ? String(c) : "";
+}
+const numOf = ti => { const n = parseInt(valueOf(ti),10); return Number.isNaN(n) ? null : n; };
+const filledCount = () => S1_TABLES.reduce((a,_,i) => a + (numOf(i) === null ? 0 : 1), 0);
+const enteredSum = () => S1_TABLES.reduce((a,_,i) => a + (numOf(i) ?? 0), 0);
+function checkTables(){
+  const res = S1_TABLES.map((t,i) => numOf(i) === t.answer);
+  return { res, correct:res.filter(Boolean).length, total:S1_TABLES.length };
+}
+
+/* ── fx ─────────────────────────────────────── */
+let fxTimer = null;
+function fx(kind, text, ms, sub){
+  const el = document.getElementById("fx");
+  clearTimeout(fxTimer);
+  el.className = kind;
+  document.getElementById("fxtxt").textContent = text || "";
+  document.getElementById("fxsub").textContent = sub || "";
+  void el.offsetWidth; el.classList.add("on");
+  fxTimer = setTimeout(() => { el.className = ""; }, ms);
+}
+function shake(){
+  const a = document.getElementById("app");
+  a.classList.remove("shake"); void a.offsetWidth; a.classList.add("shake");
+  setTimeout(() => a.classList.remove("shake"), 500);
+}
+
+/* ── clock ──────────────────────────────────── */
+function remaining(){
+  const t0 = S.startedAt[st().n];
+  if(S.phase === "locked" || !t0) return null;
+  return Math.max(0, CFG.stationSeconds*1000 - (Date.now() - t0));
+}
+function tick(){
+  const v = document.getElementById("clockval");
+  if(!v) return;
+  const lab = document.getElementById("clocklab"), wrap = document.getElementById("clock"),
+        app = document.getElementById("app");
+  document.getElementById("scoreval").textContent = S.score;
+  if(S.screen !== "station"){
+    v.textContent = "--:--"; lab.textContent = "תחנה"; wrap.className = "meter";
+    app.classList.remove("critical"); return;
+  }
+  const left = remaining();
+  if(left == null){
+    v.textContent = "7:00"; lab.textContent = "טרם החל"; wrap.className = "meter";
+    app.classList.remove("critical"); return;
+  }
+  const m = Math.floor(left/60000), sec = Math.floor(left%60000/1000);
+  v.textContent = `${m}:${String(sec).padStart(2,"0")}`;
+  lab.textContent = "תחנה " + st().n;
+  const crit = left <= 60000;
+  wrap.className = "meter" + (crit ? " crit" : left <= 120000 ? " warn" : "");
+  app.classList.toggle("critical", crit && S.phase === "active");
+  if(left === 0 && S.phase === "active") close("time");
+}
+setInterval(tick, 250);
+
+/* ── render ─────────────────────────────────── */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function render(){
+  document.documentElement.dir = "rtl";
+  const chip = document.getElementById("groupchip");
+  chip.hidden = !S.group; chip.textContent = S.group ? "צוות " + S.group : "";
+  renderRibbon(); renderStage(); renderDev(); tick();
+}
+
+function renderRibbon(){
+  const r = document.getElementById("ribbon");
+  r.innerHTML = `<span class="label" style="margin-inline-end:5px">קוד המנעול</span>`;
+  STATIONS.forEach((s,i) => {
+    const has = S.digits[s.n] != null, given = !!S.given[s.n];
+    const cls = has ? (given ? "given" : "earned" + (S.fresh === s.n ? " fresh" : ""))
+                    : (i === S.idx && S.screen === "station" ? "current" : "");
+    r.insertAdjacentHTML("beforeend",
+      `<div class="slot ${cls}" title="${esc(s.name)}${given?" — נמסרה, לא נפתרה":""}">
+        <span class="n">${s.n}</span><span class="d">${has ? S.digits[s.n] : "·"}</span></div>`);
+  });
+}
+
+function renderStage(){
+  const el = document.getElementById("stage");
+  if(S.screen === "boot"){ el.innerHTML = viewBoot(); return boot(); }
+  if(S.screen === "briefing") return void (el.innerHTML = viewBriefing());
+  if(S.screen === "vault")    return void (el.innerHTML = viewVault());
+  if(S.screen === "reveal")   return void (el.innerHTML = viewReveal());
+  el.innerHTML = S.phase === "locked" ? viewLocked()
+               : S.phase === "solved" ? viewSolved(false)
+               : S.phase === "expired" ? viewSolved(true)
+               : viewActive();
+}
+
+function viewBoot(){
+  return `<div class="stack">
+    <div class="panel"><div class="term" id="term"></div></div>
+    <div class="field"><span class="label">שם הצוות</span>
+      <input type="text" id="gname" value="${esc(S.group)}" placeholder="למשל: שלישייה 3" autocomplete="off"></div>
+    <div class="row"><button class="btn" id="go">כניסה למבצע</button>
+      <span class="proto">אבטיפוס — סיסמאות ותוכן תחנות 2 עד 7 עדיין זמניים</span></div></div>`;
+}
+const LINES = [
+  "עין הנץ — יחידת ניתוח 7","סיווג: סודי ביותר","",
+  "קליטת ציר סוריה–לבנון ......... <span class='ok'>פעיל</span>",
+  "יומן דיווחי גבול ............... <span class='no'>מלוכלך</span>",
+  "זיהוי השיירה ................... <span class='no'>נכשל</span>","",
+  "השעה 02:17. קלטנו תנועה חריגה על ציר ההברחה.",
+  "יחידה 4400 מעבירה מטען אסטרטגי מסוריה ללבנון.",
+  "<span class='hi'>שבע תחנות. שבע ספרות. קופסה אחת.</span>","",
+  "ממתין לזיהוי צוות_"
+];
+let booting = false;
+function boot(){
+  const term = document.getElementById("term");
+  document.getElementById("go").onclick = () => {
+    const g = document.getElementById("gname").value.trim();
+    set({ group: g || "ללא שם", screen:"briefing" });
+  };
+  if(booting) return;
+  booting = true;
+  let i = 0;
+  (function next(){
+    if(!document.getElementById("term")){ booting = false; return; }
+    term.innerHTML = LINES.slice(0,i+1).join("\n") + '<span class="caret"></span>';
+    if(++i < LINES.length) setTimeout(next,320); else booting = false;
+  })();
+}
+
+function viewBriefing(){
+  return `<div class="stack">
+    <div><div class="eyebrow">תדריך פתיחה · מבצע עין הנץ</div>
+      <h1>יש לנו הכל. אנחנו לא רואים כלום.</h1>
+      <p class="lead">אתם קציני מודיעין ביחידת ניתוח 7. הלילה שיירה של יחידה 4400 חוצה את ציר ההברחה מסוריה ללבנון, ובידינו כל הנתונים שצריך כדי לעצור אותה. הבעיה היא שאף אחד עוד לא הצליח לקרוא אותם.</p>
+      <p>שבע תחנות מפרידות בינינו ובין המעבר הנכון. כל תחנה נותנת ספרה אחת. שבע הספרות פותחות את הקופסה.</p></div>
+    <div class="panel"><div class="eyebrow">נהלים</div><div class="faculty">
+      <span class="k">01</span><span class="v">המנחה מכריז את סיסמת התחנה בקול. בלעדיה המסך לא נפתח.<small>כל הצוותים פותחים כל תחנה יחד</small></span>
+      <span class="k">02</span><span class="v">מרגע הסיסמה יש לכם 7 דקות לתחנה.<small>השעון מתחיל כשאתם מקלידים אותה, לא לפני</small></span>
+      <span class="k">03</span><span class="v">תחנה שנפתרה בזמן שווה ${CFG.pointsPerStation} נקודות.<small>נגמר הזמן ולא פתרתם? תקבלו את הספרה בכל מקרה, בלי נקודות</small></span>
+      <span class="k">04</span><span class="v">סיימתם מוקדם? פנו למנחה למשימה חברתית.<small>כל משימה כזאת שווה ${CFG.bonusQuestPoints} נקודות שהמנחים סופרים בנפרד</small></span>
+    </div></div>
+    <div class="row"><button class="btn" onclick="go.toStation()">לתחנה הראשונה</button></div></div>`;
+}
+
+function viewLocked(){
+  const s = st();
+  return `<div class="lockwrap">
+    <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+      <rect x="4" y="10.5" width="16" height="10" rx="1"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>
+      <circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+    <div class="eyebrow">תחנה ${s.n} מתוך ${STATIONS.length}</div>
+    <h1>${esc(s.name)}</h1>
+    <p>המנחה יכריז על הסיסמה כשכל החדר מוכן. השעון שלכם מתחיל ברגע שהיא נכנסת.</p>
+    <form class="lockform" onsubmit="go.pw(event)">
+      <input type="text" id="pw" placeholder="סיסמה" autocomplete="off" autocapitalize="off">
+      <button class="btn" type="submit">פתיחה</button></form>
+    <p class="err" id="pwerr"></p></div>`;
+}
+
+/* ── active: station 1 ──────────────────────── */
+function viewActive(){
+  const s = st();
+  if(s.kind !== "tables"){
+    return `<div class="lockwrap"><div class="eyebrow">תחנה ${s.n}</div><h1>${esc(s.name)}</h1>
+      <p style="color:var(--muted)">התחנה הזאת עוד לא נבנתה. היא תיכנס לתוך אותו מבנה בדיוק.</p>
+      <p style="color:var(--muted)">${esc(s.concept)}</p></div>`;
+  }
+  const tab = S.tab, t = S1_TABLES[tab], shown = S.hints[s.n] || 0;
+  const sum = enteredSum(), filled = filledCount();
+  const inRange = sum >= s.truth.min && sum <= s.truth.max;
+  const r = S.lastResult, mc = markCount(tab);
+
+  const rows = t.rows.map((row,i) => {
+    const junk = row[0].startsWith("—"), on = !!marksOf(tab)[i];
+    const missing = row[3] === "" && !junk;
+    return `<tr class="${junk?"junk ":""}${on?"mk":""}" onclick="go.mark(${i})">
+      <td class="pick">${on ? "✔" : ""}</td>
+      <td class="m">${esc(row[0])}</td><td class="m">${esc(row[1])}</td><td>${esc(row[2])}</td>
+      <td class="m ${missing?"miss":""}">${missing?"—":esc(row[3])}</td>
+      <td>${missing?'<span class="miss">—</span>':esc(row[4])}</td><td>${esc(row[5])}</td></tr>`;
+  }).join("");
+
+  return `<div class="stack">
+    <div><div class="eyebrow">תחנה ${s.n} מתוך ${STATIONS.length} · ${esc(s.concept)}</div>
+      <h1>${esc(s.name)}</h1>
+      <p class="lead">${esc(s.brief)}</p></div>
+
+    <div class="ask">
+      <p class="q">כמה שיירות ייחודיות חצו בפועל?</p>
+      <p class="sub">סמנו שורה אחת לכל שיירה כזאת. המונה סופר בשבילכם.</p>
+      <ul class="keys">
+        <li><b>חצה · הושלם · CROSSED</b> נחשבים חצייה. ממתין · בוטל · כשל · נכשל — לא.</li>
+        <li>אותו מזהה פעמיים הוא אותה שיירה. סמנו אחת.</li>
+        <li>שורה עם <span class="dash">—</span> לא נספרת, גם אם חצתה.</li>
+      </ul>
+      <p class="cap"><b>${CFG.maxAttempts} שליחות בלבד.</b> בכל שליחה תראו איזו טבלה נכונה ואיזו לא. נגמרו השליחות, נגמרה התחנה.</p>
+    </div>
+
+    <div class="tabs">${S1_TABLES.map((_,i) =>
+      `<button class="tab ${i===tab?"on":""} ${numOf(i)!==null?"done":""}" onclick="go.tab(${i})">טבלה ${i+1}</button>`
+    ).join("")}</div>
+
+    <div>
+      <div class="tablewrap"><table>
+        <thead><tr><th></th><th>מזהה</th><th>תאריך</th><th>מעבר</th>
+          <th>משקל</th><th>יחידה</th><th>סטטוס</th></tr></thead>
+        <tbody>${rows}</tbody></table></div>
+      <div class="tfoot">
+        <span class="cnt">סומנו <b>${mc}</b> שורות בטבלה ${tab+1}${isManual(tab)?" · המספר הוזן ידנית ודוחה את הסימון":""}</span>
+        <span class="row">
+          ${mc ? `<button class="btn-mini" onclick="go.clearMarks()">נקה סימונים</button>` : ""}
+          ${isManual(tab) ? `<button class="btn-mini" onclick="go.unmanual()">חזרה לספירה אוטומטית</button>` : ""}
+        </span></div>
+    </div>
+
+    <div class="panel"><div class="stack">
+      <div class="eyebrow">דף האיחוד</div>
+      <div class="strip">${S1_TABLES.map((_,i) => {
+        const v = CFG.revealWhichWrong ? verdictOf(i) : undefined;
+        const cls = v === undefined ? "" : (v ? "hit" : "miss");
+        const man = isManual(i), has = numOf(i) !== null;
+        const tag = v !== undefined
+          ? `<span class="src ${v?"good":"wrong"}">${v ? "✓ נכון" : "✗ לא נכון"}</span>`
+          : `<span class="src ${man?"man":"auto"}">${has ? (man ? "ידני" : "מסומן") : ""}</span>`;
+        return `<label class="cell ${cls} ${i===tab?"cur":""}"><span class="k">טבלה ${i+1}</span>
+          <input type="number" inputmode="numeric" value="${esc(valueOf(i))}"
+            oninput="go.type(${i}, this.value)">${tag}</label>`;
+      }).join("")}</div>
+      <div class="sums">
+        <div><span class="label">מולאו</span><div class="b">${filled}/8</div></div>
+        <div><span class="label">סכום</span><div class="b ${filled===8?(inRange?"good":"off"):""}">${sum}</div></div>
+        <div><span class="label">בדיקת אמת</span><div class="b" style="font-size:15px">${s.truth.min}–${s.truth.max}</div></div>
+      </div>
+      ${r ? `<p class="verdict ${r.correct===r.total?"ok":"bad"}">${
+        r.correct===r.total ? "כל השמונה נכונים"
+        : `${r.correct} מתוך ${r.total} נכונים. תקנו את המסומנות ושלחו שוב.`}</p>` : ""}
+      <p style="font-size:14.5px;margin:0;color:var(--muted)">הספרה נגזרת מסכום שמונה המספרים (digital root). האפליקציה תחשב אותה בשבילכם.</p>
+    </div></div>
+
+    ${Array.from({length:shown},(_,i) => `<p class="hintbar">${esc(s.hints[i])}</p>`).join("")}
+
+    <div class="row">
+      <button class="btn" onclick="go.submit()" ${S.submitBlocked || filled < 8 ? "disabled" : ""}>
+        ${filled < 8 ? `נותרו ${8-filled} טבלאות` : S.submitBlocked ? "שנו תשובה כדי לשלוח שוב" : "שליחת פענוח"}</button>
+      ${shown < s.hints.length
+        ? `<button class="btn-ghost" onclick="go.hint()">רמז (${shown+1}/${s.hints.length})</button>`
+        : `<span class="label">אין רמזים נוספים</span>`}
+      <span class="label">${attemptsLeft()} מתוך ${CFG.maxAttempts} שליחות נותרו</span>
+    </div></div>`;
+}
+
+function viewSolved(expired){
+  const s = st(), last = S.idx === STATIONS.length - 1;
+  return `<div class="solved">
+    <div class="eyebrow">${expired
+      ? (S.closedBy === "attempts" ? "נגמרו הניסיונות" : "חלון הזמן נסגר")
+      : "תחנה " + s.n + " נפתרה"} · ${esc(s.name)}</div>
+    <div class="bigdigit ${expired?"grey":""}">${S.digits[s.n]}</div>
+    <p class="pts ${expired?"zero":""}">${expired ? "הספרה נמסרה לכם · 0 נקודות" : "+"+CFG.pointsPerStation+" נקודות"}</p>
+    <p style="margin:16px auto 4px;max-width:46ch;color:var(--ink)">${expired
+      ? "הקוד לא ייתקע בגללכם. הספרה מסומנת בקוד כדי שתדעו איפה נשארה עבודה."
+      : "האלגוריתם שהרגע הפעלתם נקרא " + esc(s.concept) + "."}</p>
+    <p style="margin:0 auto 26px;max-width:46ch">${last
+      ? "שבע התחנות מאחוריכם." : "פנו למנחה למשימה חברתית עד שכל החדר מסיים, ואז לסיסמה הבאה."}</p>
+    <button class="btn" onclick="go.next()">${last ? "לפתיחת הקופסה" : "לתחנה הבאה"}</button></div>`;
+}
+
+function viewVault(){
+  return `<div class="stack">
+    <div><div class="eyebrow">פתיחת הקופסה</div><h1>שבע ספרות. סדר אחד.</h1>
+      <p class="lead">הזינו את הקוד כפי שנאסף, מתחנה 1 עד תחנה 7.</p></div>
+    <form class="lockform" style="max-width:470px" onsubmit="go.vault(event)">
+      <input type="text" id="vin" inputmode="numeric" maxlength="7" placeholder="- - - - - - -"
+        style="font-family:var(--mono);letter-spacing:.45em;text-align:center;font-size:24px" autocomplete="off">
+      <button class="btn" type="submit">פתיחה</button></form>
+    <p class="err">${esc(S.vaultErr)}</p></div>`;
+}
+
+function viewReveal(){
+  const solved = STATIONS.filter(s => S.digits[s.n] != null && !S.given[s.n]).length;
+  return `<div class="stack">
+    <div><div class="eyebrow">הקופסה נפתחה</div>
+      <h1>לא פתרתם חידות. הפעלתם אלגוריתמים.</h1>
+      <p class="lead">שבע התחנות לא היו משחק. כל אחת מהן היא שיטה אמיתית שמערכות מודיעין משתמשות בה, ואתם הפעלתם אותה בידיים לפני שמישהו אמר לכם איך היא נקראת.</p></div>
+    <div class="panel"><div class="faculty">${STATIONS.map(s => {
+      const given = !!S.given[s.n];
+      return `<span class="k ${given?"g":""}">${s.n} · ${S.digits[s.n] ?? "·"}</span>
+        <span class="v">${esc(s.concept)}<small>${esc(s.name)}${given?" · נמסרה":""}</small></span>`;
+    }).join("")}</div></div>
+    <div class="scorebox"><div class="label">ניקוד התחנות</div><div class="n">${S.score}</div>
+      <p style="margin:8px 0 0;max-width:none;text-align:center">מתוך ${MAX_TECH} · ${solved} מתוך ${STATIONS.length} תחנות נפתרו בזמן</p>
+      <p style="margin:6px 0 0;max-width:none;text-align:center;color:var(--muted);font-size:14px">
+        המנחים מוסיפים לזה את נקודות המשימות החברתיות שלכם, ואז מכריזים על המנצחים.</p></div>
+    <div><div class="finale">כל זה יחד נקרא למידת מכונה</div>
+      <p style="text-align:center;margin:0 auto;max-width:52ch">הנתונים היו כאן מההתחלה. מה שהיה חסר זה מי שיודע מה לשאול אותם.</p></div>
+    <div class="row" style="justify-content:center"><button class="btn-ghost" onclick="go.reset()">איפוס המכשיר</button></div></div>`;
+}
+
+function renderDev(){
+  const old = document.getElementById("devstrip"); if(old) old.remove();
+  if(!DEV) return;
+  const d = document.createElement("div");
+  d.className = "dev"; d.id = "devstrip";
+  d.innerHTML = `<span class="label">dev — הסירו לפני האירוע</span>
+    <button onclick="go.devSolve()">פתור תחנה</button>
+    <button onclick="go.devAll()">מלא הכל</button>
+    <button onclick="go.reset()">איפוס</button>
+    <span class="label">${esc(st().password[0])} · קוד ${CODE}</span>`;
+  document.getElementById("app").appendChild(d);
+}
+
+/* ── actions ────────────────────────────────── */
+function close(reason){
+  const s = st();
+  S.digits[s.n] = s.digit; S.given[s.n] = true; S.fresh = null; S.closedBy = reason;
+  fx("timeout", reason === "attempts" ? "נגמרו הניסיונות" : "נגמר הזמן", 1400); shake();
+  set({ phase:"expired" });
+}
+
+const go = {
+  toStation(){ set({ screen:"station", phase:"locked" }); },
+  pw(e){
+    e.preventDefault();
+    const s = st(), v = document.getElementById("pw").value;
+    if(!matchAny(v, s.password)){
+      document.getElementById("pwerr").textContent = "לא הסיסמה. חכו להכרזת המנחה.";
+      document.getElementById("pw").value = ""; shake(); return;
+    }
+    S.startedAt[s.n] = Date.now();
+    fx("wipe","תחנה "+s.n,950);
+    set({ phase:"active", tab:0, lastResult:null, submitBlocked:false });
+  },
+  tab(i){ set({ tab:i }); },
+  mark(i){
+    const m = marksOf(S.tab);
+    if(m[i]) delete m[i]; else m[i] = true;
+    clearVerdict(S.tab);
+    S.submitBlocked = false; S.lastResult = null;
+    set({});
+  },
+  clearMarks(){
+    const d = draft(st().n);
+    d.marks[S.tab] = {};
+    clearVerdict(S.tab);
+    S.submitBlocked = false; S.lastResult = null;
+    set({});
+  },
+  unmanual(){
+    const d = draft(st().n);
+    if(d.man) delete d.man[S.tab];
+    delete d["t"+S.tab];
+    clearVerdict(S.tab);
+    S.submitBlocked = false; S.lastResult = null;
+    set({});
+  },
+  type(i, v){
+    const d = draft(st().n);
+    d.man ||= {};
+    if(String(v).trim() === ""){ delete d.man[i]; delete d["t"+i]; }
+    else { d.man[i] = true; d["t"+i] = v; }
+    clearVerdict(i);
+    S.submitBlocked = false; S.lastResult = null; save();
+    // patch in place so typing does not lose focus
+    const filled = filledCount(), sum = enteredSum(), s = st();
+    const btn = document.querySelector(".row .btn");
+    if(btn){
+      btn.disabled = filled < 8;
+      btn.textContent = filled < 8 ? `נותרו ${8-filled} טבלאות` : "שליחת פענוח";
+    }
+    const b = document.querySelectorAll(".sums .b");
+    if(b[0]) b[0].textContent = filled + "/8";
+    if(b[1]){
+      b[1].textContent = sum;
+      b[1].className = "b" + (filled===8 ? (sum>=s.truth.min && sum<=s.truth.max ? " good" : " off") : "");
+    }
+    document.querySelectorAll(".tab").forEach((t,k) => t.classList.toggle("done", numOf(k) !== null));
+    document.querySelectorAll(".cell").forEach((c,k) => {
+      const sp = c.querySelector(".src"); if(!sp) return;
+      const vd = CFG.revealWhichWrong ? verdictOf(k) : undefined;
+      c.classList.remove("hit","miss");
+      if(vd !== undefined){
+        sp.textContent = vd ? "✓ נכון" : "✗ לא נכון";
+        sp.className = "src " + (vd ? "good" : "wrong");
+        c.classList.add(vd ? "hit" : "miss");
+      } else {
+        const has = numOf(k) !== null, man = isManual(k);
+        sp.textContent = has ? (man ? "ידני" : "מסומן") : "";
+        sp.className = "src " + (man ? "man" : "auto");
+      }
+    });
+  },
+  submit(){
+    const s = st(), r = checkTables(), d = draft(s.n);
+    S.attempts[s.n] = (S.attempts[s.n] || 0) + 1;
+    d.v ||= {};
+    r.res.forEach((ok,i) => { d.v[i] = ok; });
+    if(r.correct !== r.total){
+      S.lastResult = r; S.submitBlocked = true;
+      if(attemptsLeft() <= 0){ close("attempts"); return; }
+      const n = attemptsLeft();
+      fx("reject","נדחה",2100, n === 1 ? "נותרה שליחה אחת" : `נותרו ${n} שליחות`);
+      shake(); set({}); return;
+    }
+    S.digits[s.n] = digitalRoot(S1_TABLES.reduce((a,t) => a + t.answer, 0));
+    S.given[s.n] = false; S.fresh = s.n;
+    S.score += CFG.pointsPerStation;
+    fx("accept", String(S.digits[s.n]), 1100);
+    set({ phase:"solved", lastResult:null, submitBlocked:false });
+  },
+  hint(){
+    const s = st();
+    S.hints[s.n] = Math.min((S.hints[s.n] || 0) + 1, s.hints.length);
+    set({});
+  },
+  next(){
+    S.fresh = null;
+    if(S.idx === STATIONS.length - 1) return set({ screen:"vault" });
+    set({ idx:S.idx+1, phase:"locked", tab:0, lastResult:null, submitBlocked:false });
+  },
+  vault(e){
+    e.preventDefault();
+    const v = document.getElementById("vin").value.replace(/\D/g,"");
+    if(v === CODE) return set({ screen:"reveal", vaultErr:"" });
+    shake(); set({ vaultErr:"הקוד נדחה. בדקו את הסדר." });
+  },
+  devSolve(){
+    const s = st();
+    S.digits[s.n] = s.digit; S.given[s.n] = false; S.fresh = s.n;
+    S.score += CFG.pointsPerStation;
+    if(!S.startedAt[s.n]) S.startedAt[s.n] = Date.now();
+    set({ screen:"station", phase:"solved" });
+  },
+  devAll(){
+    STATIONS.forEach(s => {
+      if(S.digits[s.n] == null){ S.digits[s.n] = s.digit; S.given[s.n] = false; S.score += CFG.pointsPerStation; }
+    });
+    set({ screen:"vault" });
+  },
+  reset(){ S = fresh(); booting = false; save(); render(); }
+};
+window.go = go;
+
+render();
+</script>
