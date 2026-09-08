@@ -32,6 +32,15 @@ A one-off digital escape room for a live, in-person data science seminar run by 
 
 When a decision changes something meaningful, update `docs/build-spec.md` in the same commit so the two surfaces do not drift.
 
+### Branching and deployment
+
+**`main` is live.** GitHub Pages serves it at <https://hadas8.github.io/hawks-eye-live/>, and Hadas has shared that link with the team. Anything merged to `main` is in front of other people within about a minute.
+
+- **All work happens on `dev`.** Commit and push there freely.
+- **Never merge or push to `main` unless Hadas asks for it in that turn.** Not "it's finished", not "it's verified", not "it's a small fix" — only on an explicit say-so. Treat a push to `main` as a publish, because it is one.
+- Preview `dev` locally with `npm start`; there is no hosted preview for it, since Pages builds a single branch.
+- When Hadas does ask, merge `dev` into `main`, push, wait for the Pages build to report `built`, and confirm against the live URL rather than assuming.
+
 ## Content status
 
 A colleague (Lotem) is still writing the final per-station data in Drive. Station 1's content is final and verified. Stations 2 to 7 exist only as roster entries with placeholder passwords; each has open content questions listed at the end of the build spec. Do not invent station content to fill the gaps, and do not build placeholder stations.
