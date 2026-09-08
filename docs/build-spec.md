@@ -113,6 +113,23 @@ Decisions taken during the build:
 
 Verified in headless Chrome across 61 checks: the full station 1 path, Hebrew password normalization, marks vs. manual override, sticky per-table verdicts, the attempts cap, both closing paths (clock and exhausted submissions), refresh persistence mid-station, the vault and reveal, that the ribbon's on-screen left-to-right order spells the code, and that no password, digit or lock code appears in a participant-reachable DOM.
 
+## Hebrew copy
+
+Reviewed with Hadas 2026-09-08. The prototype's copy had a recurring tell: pairs of short declarative sentences separated by full stops where Hebrew wants one sentence and a connector. The pass joined those with אבל / ו / a colon / an em dash, dropped the full stops from headlines, and removed three word repetitions (יחידה twice in one clause, של twice in one clause, קוד twice in two adjacent sentences).
+
+Rules that came out of it, for future copy:
+
+- **Headlines take no closing full stop.** Where a headline is a deliberate antithesis, an em dash carries it: לא פתרתם חידות — הפעלתם אלגוריתמים.
+- **Two short sentences in a row are a smell, not a rule.** Join them with a connector when the second depends on the first. Keep them apart when the break is the point.
+- **The unit is יחידה 8200, and the team inside it is מחלקת ניתוח 7** — not יחידת ניתוח 7, which puts יחידה twice in one breath. This also departs from the draft, which says אמ"ן; the participants are high-schoolers who may not decode the acronym.
+
+Deliberately left alone, so they do not get "fixed" later:
+
+- **שבע תחנות. שבע ספרות. קופסה אחת.** A rhetorical triad, and the draft's own phrasing. The full stops are the rhythm.
+- **נגמרו השליחות, נגמרה התחנה.** Parallel construction, already comma-joined.
+- **The station 1 rule bullets.** They are scanned under a 7-minute clock, not read; full stops separate rules faster than connectors would.
+- Terse UI labels and result strings (נדחה, מסומן, ידני, X מתוך Y נכונים).
+
 ## Visual direction
 
 **מארג**, the dark-ops direction. Ground `#05080c`, hawk-amber `#ffb238`, hairline panels, scanlines, slow radar sweep, Heebo with letterspaced micro-labels, IBM Plex Mono for all digits and codes. Single dark theme. RTL throughout.

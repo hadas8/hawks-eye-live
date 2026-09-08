@@ -17,7 +17,7 @@ export function viewLocked() {
     </svg>
     <div class="eyebrow">תחנה ${s.n} מתוך ${STATIONS.length}</div>
     <h1>${esc(s.name)}</h1>
-    <p>המדריך יכריז על הסיסמה כשכל החדר מוכן. השעון שלכם מתחיל ברגע שהיא נכנסת.</p>
+    <p>המדריך יכריז על הסיסמה כשכל החדר מוכן, והשעון שלכם מתחיל ברגע שהיא נכנסת.</p>
     <form class="lockform" data-submit="password">
       <input type="text" id="pw" placeholder="סיסמה" autocomplete="off" autocapitalize="off" autocorrect="off">
       <button class="btn" type="submit">פתיחה</button>
@@ -30,7 +30,7 @@ register('submit', {
   password() {
     const input = document.getElementById('pw');
     if (openStation(input.value)) return;
-    document.getElementById('pwerr').textContent = 'לא הסיסמה. חכו להכרזת המדריך.';
+    document.getElementById('pwerr').textContent = 'זו לא הסיסמה, חכו להכרזת המדריך.';
     input.value = '';
     input.focus();
     shake();

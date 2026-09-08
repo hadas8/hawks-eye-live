@@ -21,8 +21,8 @@ export function viewReveal() {
   return `<div class="stack">
     <div>
       <div class="eyebrow">הקופסה נפתחה</div>
-      <h1>לא פתרתם חידות. הפעלתם אלגוריתמים.</h1>
-      <p class="lead">שבע התחנות לא היו משחק. כל אחת מהן היא שיטה אמיתית שמערכות מודיעין משתמשות בה, ואתם הפעלתם אותה בידיים לפני שמישהו אמר לכם איך היא נקראת.</p>
+      <h1>לא פתרתם חידות — הפעלתם אלגוריתמים</h1>
+      <p class="lead">שבע התחנות לא היו משחק: כל אחת מהן היא שיטה אמיתית שמערכות מודיעין משתמשות בה, ואתם הפעלתם אותה בידיים לפני שמישהו אמר לכם איך היא נקראת.</p>
     </div>
 
     <div class="panel"><div class="faculty">${roster}</div></div>
@@ -36,7 +36,7 @@ export function viewReveal() {
 
     <div>
       <div class="finale">כל זה יחד נקרא למידת מכונה</div>
-      <p class="finale-sub">הנתונים היו כאן מההתחלה. מה שהיה חסר זה מי שיודע מה לשאול אותם.</p>
+      <p class="finale-sub">הנתונים היו כאן מההתחלה — מה שחסר היה מישהו שיודע מה לשאול אותם.</p>
     </div>
 
     <div class="row" style="justify-content:center">

@@ -7,7 +7,7 @@ import { register } from '../ui/actions.js';
 export const viewVault = () => `<div class="stack">
   <div>
     <div class="eyebrow">פתיחת הקופסה</div>
-    <h1>שבע ספרות. סדר אחד.</h1>
+    <h1>שבע ספרות, סדר אחד</h1>
     <p class="lead">הזינו את הקוד כפי שנאסף, מתחנה 1 עד תחנה 7.</p>
   </div>
   <form class="lockform" style="max-width:470px" data-submit="vault">
@@ -23,6 +23,6 @@ register('submit', {
     const value = document.getElementById('vin').value.replace(/\D/g, '');
     if (value === CFG.lockCode) return set({ screen: 'reveal', vaultErr: '' });
     shake();
-    set({ vaultErr: 'הקוד נדחה. בדקו את הסדר.' });
+    set({ vaultErr: 'הקוד נדחה, בדקו את הסדר.' });
   }
 });
