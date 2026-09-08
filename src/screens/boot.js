@@ -3,7 +3,7 @@ import { esc } from '../lib/text.js';
 import { register } from '../ui/actions.js';
 
 const LINES = [
-  'עין הנץ — יחידת ניתוח 7, אמ"ן',
+  'עין הנץ — יחידת ניתוח 7, יחידה 8200',
   'סיווג: סודי ביותר',
   '',
   "קליטת ציר סוריה–לבנון ......... <span class='ok'>פעיל</span>",
