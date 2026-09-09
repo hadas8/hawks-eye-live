@@ -1,48 +1,48 @@
 /* Screen-level furniture: boot, briefing, locked, solved/expired, vault, reveal. */
 
 /* ── boot terminal ────────────────────────── */
-.term{font-family:var(--mono);font-size:14px;line-height:2;color:var(--ink-dim);
-  white-space:pre-wrap;min-height:210px}
+.term{font-family:var(--mono);font-size:0.875rem;line-height:2;color:var(--ink-dim);
+  white-space:pre-wrap;min-height:13.125rem}
 .term .ok{color:var(--ok)}
 .term .no{color:var(--bad)}
 .term .hi{color:var(--amber)}
-.caret{display:inline-block;width:8px;height:15px;background:var(--amber);
+.caret{display:inline-block;width:0.5rem;height:0.9375rem;background:var(--amber);
   vertical-align:-2px;animation:blink 1s steps(2) infinite}
 
 /* ── password gate ───────────────────────── */
 .lockwrap{display:flex;flex-direction:column;align-items:center;text-align:center;
-  gap:5px;padding:40px 0 20px}
-.lockwrap .glyph{width:58px;height:58px;color:var(--muted);margin-bottom:10px}
+  gap:0.3125rem;padding:2.5rem 0 1.25rem}
+.lockwrap .glyph{width:3.625rem;height:3.625rem;color:var(--muted);margin-bottom:0.625rem}
 .lockwrap p{text-align:center;max-width:46ch}
-.lockform{display:flex;gap:10px;margin-top:14px;width:100%;max-width:400px}
-.lockform input{text-align:center;letter-spacing:.1em;font-family:var(--body);font-size:18px}
+.lockform{display:flex;gap:0.625rem;margin-top:0.875rem;width:100%;max-width:25rem}
+.lockform input{text-align:center;letter-spacing:.1em;font-family:var(--body);font-size:1.125rem}
 
 /* ── briefing / reveal list ──────────────── */
-.faculty{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;align-items:baseline}
-.faculty .k{font-family:var(--mono);font-size:13px;color:var(--amber);white-space:nowrap}
+.faculty{display:grid;grid-template-columns:auto 1fr;gap:0.625rem 1.125rem;align-items:baseline}
+.faculty .k{font-family:var(--mono);font-size:0.8125rem;color:var(--amber);white-space:nowrap}
 .faculty .k.g{color:var(--muted)}
 .faculty .v{color:var(--ink)}
-.faculty .v small{display:block;color:var(--muted);font-size:13px}
+.faculty .v small{display:block;color:var(--muted);font-size:0.8125rem}
 
 /* ── solved / expired ────────────────────── */
-.solved{text-align:center;padding:30px 0}
-.bigdigit{font-family:var(--mono);font-weight:600;font-size:clamp(96px,21vw,180px);
+.solved{text-align:center;padding:1.875rem 0}
+.bigdigit{font-family:var(--mono);font-weight:600;font-size:clamp(6rem,21vw,11.25rem);
   line-height:1;color:var(--amber);text-shadow:0 0 60px var(--amber-dim);
   animation:slam .8s cubic-bezier(.2,1.5,.35,1) both}
 .bigdigit.grey{color:var(--muted);text-shadow:none;text-decoration:line-through;
   text-decoration-thickness:5px;text-decoration-color:var(--bad)}
 @keyframes slam{0%{opacity:0;transform:scale(2.2);filter:blur(9px)}
   60%{opacity:1;transform:scale(.95);filter:blur(0)}100%{transform:scale(1)}}
-.pts{font-family:var(--mono);font-size:19px;color:var(--ok);margin:8px 0 0}
+.pts{font-family:var(--mono);font-size:1.1875rem;color:var(--ok);margin:0.5rem 0 0}
 .pts.zero{color:var(--muted)}
-.solved .say{margin:16px auto 4px;max-width:46ch;color:var(--ink)}
-.solved .next{margin:0 auto 26px;max-width:46ch}
+.solved .say{margin:1rem auto 0.25rem;max-width:46ch;color:var(--ink)}
+.solved .next{margin:0 auto 1.625rem;max-width:46ch}
 
 /* ── reveal ──────────────────────────────── */
 /* The hinge from the operation to the lesson, sitting directly above the
    station-to-concept list it introduces. */
-.turn{font-weight:800;font-size:clamp(17px,2.4vw,22px);color:var(--ink);
-  margin:0 0 17px;max-width:none;letter-spacing:-.01em}
+.turn{font-weight:800;font-size:clamp(1.0625rem,2.4vw,1.375rem);color:var(--ink);
+  margin:0 0 1.0625rem;max-width:none;letter-spacing:-.01em}
 /* The screen assembles block by block instead of landing in one frame. */
 .reveal-in > *{animation:riseIn .55s cubic-bezier(.2,.9,.3,1) both}
 .reveal-in > *:nth-child(1){animation-delay:.02s}
@@ -51,19 +51,19 @@
 .reveal-in > *:nth-child(4){animation-delay:.40s}
 .reveal-in > *:nth-child(5){animation-delay:.54s}
 @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.finale{font-weight:800;font-size:clamp(24px,4.6vw,40px);color:var(--amber);
-  text-align:center;margin:28px 0 6px;letter-spacing:-.015em;
+.finale{font-weight:800;font-size:clamp(1.5rem,4.6vw,2.5rem);color:var(--amber);
+  text-align:center;margin:1.75rem 0 0.375rem;letter-spacing:-.015em;
   animation:finaleGlow 2.6s ease-in-out .7s both}
 @keyframes finaleGlow{
   0%{text-shadow:0 0 0 transparent}
   30%{text-shadow:0 0 38px var(--amber-dim)}
   100%{text-shadow:0 0 14px rgba(255,178,56,.22)}}
 .finale-sub{text-align:center;margin:0 auto;max-width:52ch}
-.scorebox{text-align:center;border:1px solid var(--amber);padding:22px;background:var(--amber-soft)}
-.scorebox .n{font-family:var(--mono);font-size:56px;font-weight:600;color:var(--amber);line-height:1}
-.scorebox p{max-width:none;text-align:center;margin:8px 0 0}
-.scorebox .fine{margin:6px 0 0;color:var(--muted);font-size:14px}
-.vin{font-family:var(--mono);letter-spacing:.45em;text-align:center;font-size:24px}
+.scorebox{text-align:center;border:1px solid var(--amber);padding:1.375rem;background:var(--amber-soft)}
+.scorebox .n{font-family:var(--mono);font-size:3.5rem;font-weight:600;color:var(--amber);line-height:1}
+.scorebox p{max-width:none;text-align:center;margin:0.5rem 0 0}
+.scorebox .fine{margin:0.375rem 0 0;color:var(--muted);font-size:0.875rem}
+.vin{font-family:var(--mono);letter-spacing:.45em;text-align:center;font-size:1.5rem}
 
 /* ── station not yet built (stations 2 to 7) ── */
 .unbuilt p{color:var(--muted)}

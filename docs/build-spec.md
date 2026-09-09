@@ -130,6 +130,26 @@ Deliberately left alone, so they do not get "fixed" later:
 - **The station 1 rule bullets.** They are scanned under a 7-minute clock, not read; full stops separate rules faster than connectors would.
 - Terse UI labels and result strings (נדחה, מסומן, ידני, X מתוך Y נכונים).
 
+## Sizing
+
+**The whole interface scales with the viewport.** Everything that should breathe — every font size, the reading column, the ribbon slots, the table, padding and gaps — is expressed in `rem`, and one fluid root size drives the lot:
+
+```
+html{font-size:clamp(15px, 0.3125vw + 12px, 20px)}
+```
+
+15px floor, 16px at 1280 wide, 17px at 1600, 18px at 1920, 20px ceiling from 2560 up. `--stage-max` is `64rem` rather than a pixel width, so the reading column grows with the type and the measure stays constant: 1024px at the 16px root, 1280px at the 20px root.
+
+Why it was needed: at a fixed 16px inside a fixed 1020px column, the app read as a small island of text on anything larger than a laptop. A reviewer on a 27" monitor reported it as too small, correctly.
+
+Two deliberate exceptions to the rem rule:
+
+- **Media query breakpoints stay in px** (`@media (max-width:620px)`), because they measure the viewport, not the type.
+- **`--tap` is `max(44px, 2.75rem)`.** Touch targets are physical: a finger does not get smaller on a small screen, so the 44px floor holds regardless of the root size. Verified at 44px on phone, tablet portrait and tablet landscape.
+- Hairlines and 1–3px nudges stay in px. Scaling a 1px border produces blurry half-pixels for no gain.
+
+The ceiling matters: the event runs on laptops and tablets, so 20px is where it stops rather than growing without limit on a desktop review screen. At 1280 the rendered values are within 4px of what they were before this change, so the machines the event actually runs on look the same as they did.
+
 ## Visual direction
 
 **מארג**, the dark-ops direction. Ground `#05080c`, hawk-amber `#ffb238`, hairline panels, scanlines, slow radar sweep, Heebo with letterspaced micro-labels, IBM Plex Mono for all digits and codes. Single dark theme. RTL throughout.
