@@ -1,12 +1,19 @@
 /* Station 4 — השאלה ששווה לשאול. The "questions" station kind:
    the fleet table, then twenty pickable questions, of which four count. */
 
-.qlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(19rem,1fr));gap:0.4375rem}
+/* Column-major, so the numbers read 1..7 down the first column rather than
+   1,2,3 across the first row. A grid fills by row, so this is multi-column
+   instead — which keeps the column count responsive without pinning a row
+   count. In RTL the first column is the rightmost, where a Hebrew reader
+   starts. */
+.qlist{columns:19rem;column-gap:0.4375rem}
 
 .qrow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.75rem;
   text-align:start;background:var(--panel);border:1px solid var(--hair);
   color:var(--ink-dim);padding:0.625rem 0.75rem;min-height:var(--tap);
-  font-family:var(--body);font-size:0.9375rem}
+  font-family:var(--body);font-size:0.9375rem;
+  /* multi-column has no gap, and a question must not split across columns */
+  width:100%;margin-bottom:0.4375rem;break-inside:avoid}
 .qrow:hover{border-color:var(--muted);color:var(--ink)}
 
 .qrow .qn{font-family:var(--mono);font-size:0.75rem;color:var(--muted);min-width:1.25rem}
@@ -52,7 +59,7 @@ table.fleet tbody tr.out td{color:var(--muted)}
 .frow .fc.nil{color:var(--bad)}
 
 @media (max-width:620px){
-  .qlist{grid-template-columns:1fr}
+  .qlist{columns:1}
   .qrow{grid-template-columns:auto 1fr;gap:0.5rem}
   .qrow .qa{grid-column:2;white-space:normal}
   .frow{grid-template-columns:1fr 3rem 3rem}
