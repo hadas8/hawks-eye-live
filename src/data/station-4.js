@@ -76,7 +76,9 @@ export const PICK = 4;
 
 const byId = id => QUESTIONS.find(q => q.id === id);
 
-// What the real vehicle answers, which is what a question tells you.
+// The answer as it applies to the real vehicle — תשובה על הרכב האמיתי, the
+// source's own phrase. A vehicle does not answer anything; this is what the
+// intelligence already says about it.
 export const answerOn = q => (q.holds(TARGET) ? 'כן' : 'לא');
 
 // Vehicles left after asking these questions of the fleet. Filtering is
@@ -94,6 +96,16 @@ export const cutsOf = id => {
   const q = byId(id);
   return FLEET.filter(v => q.holds(v) !== q.holds(TARGET)).length;
 };
+
+// The vehicles a single question rules out, measured against the whole
+// fleet — never against what earlier questions already removed. That is the
+// number the source worksheet asks the group to write down, and it is what
+// the table highlights while a question is being considered.
+export function eliminatedBy(id) {
+  const q = byId(id);
+  if (!q) return new Set();
+  return new Set(FLEET.filter(v => q.holds(v) !== q.holds(TARGET)).map(v => v.n));
+}
 
 // Step by step, for showing the group what their four questions did.
 export function funnel(ids) {

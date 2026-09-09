@@ -14,9 +14,29 @@
 .qrow .qa{font-size:0.75rem;color:var(--muted);white-space:nowrap}
 .qrow .qa b{font-family:var(--mono);color:var(--ink-dim);font-weight:600}
 
+/* Chosen — its number is written in the union sheet. */
 .qrow.on{border-color:var(--amber);background:var(--amber-soft);color:var(--ink)}
+/* Being previewed against the table right now. Distinct from chosen,
+   because previewing costs nothing and choosing is the commitment. */
+.qrow.shown{border-color:var(--ink-dim);color:var(--ink)}
+.qrow.shown.on{border-color:var(--amber)}
 .qrow.on .qn{color:var(--amber);font-weight:600}
 .qrow.on .qa b{color:var(--amber)}
+
+/* Previewing a question dims the vehicles it rules out. No number is shown
+   anywhere: counting the survivors is the exercise, and printing the count
+   would hand the group the answer the worksheet asks them to work out. */
+table.fleet tbody tr{transition:opacity .12s}
+table.fleet tbody tr.out{opacity:.2}
+table.fleet tbody tr.out td{color:var(--muted)}
+
+/* The union sheet: four question numbers, written rather than clicked. */
+.qsheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(7rem,1fr));gap:0.5625rem}
+.slot-q{background:var(--panel-2);border:1px solid var(--hair);padding:0.5rem 0.5625rem;
+  display:flex;flex-direction:column;gap:0.1875rem}
+.slot-q .k{font-size:0.5625rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.slot-q input{padding:0.25rem 0.375rem;font-size:1.125rem;text-align:center;
+  background:transparent;border:0;min-height:2.25rem}
 
 /* What their own four questions did to the fleet. Shown after every submit,
    right or wrong — it describes their choice without naming a better one. */

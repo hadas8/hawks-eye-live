@@ -181,15 +181,27 @@ Questions 5, 8 and 18 each single out vehicle 4 on their own, cutting 15. **2,73
 
 **The station rejects those.** `isProperSet` requires every chosen question to cut exactly 8 as well as the set narrowing to one, which leaves the 36. Accepting anything that reaches one vehicle would make the station passable by picking *האם מספר הרכב הוא 4* — a guess, not a question. **Reversible in one predicate** if it plays too hard.
 
-### What the screen shows, and what it withholds
+### The instruction the source gets wrong
 
-The fleet table and the twenty questions, each stating what the real vehicle answers — which the source gives too. **It never shows how many vehicles a question would cut, or which survive.** Printing "cuts 8" beside each question would reduce the station to picking the four largest numbers.
+`תחנה_4_.docx` contradicts itself, and it is the reason this station was hard to understand. Step ב׳ says **בחרו את 4 השאלות שמסננות הכי הרבה**, while the truth check says each must filter **exactly 8**. Taken literally, "the four that filter most" gives questions 5, 8, 18 and 19 — filtering 15, 15, 15 and 12 — which does land on vehicle 4 and does fail the truth check. Three of those four are "is it this exact vehicle?" in disguise, so the literal instruction produces the anti-lesson.
 
-**After every submit, right or wrong, the group sees the funnel their own four produced**, question by question, with zero-cuts marked. This is the only feedback on a failure, and it does the work: a set built on question 5 shows 15, 0, 0, 0, and three zeros explain themselves. It also makes rejection legible — without it a group would be told "no" while looking at a screen showing one vehicle left, which would read as a bug. The funnel describes their choice and never points at a better one.
+Earlier notes here called the docx internally consistent. It is, in its **data** — all twenty stated answers match the fleet — but not in its **instructions**. The app states the corrected rule instead, agreed with Hadas as language rather than content: *בחרו ארבע שאלות שכל אחת חותכת את הצי בחצי, וביחד מצמצמות אותו לרכב אחד.* That makes a rejection fair: the group is told the rule up front, not after failing.
 
-Two attempts, per `נראות התחנות`: "אם הם לא מצליחים בסדר הנכון יש להם עוד אופציה אחת".
+### The interaction
 
-The two hints and the failure messages are written here, not by the content author, and need Lotem's eye.
+The group **writes four question numbers** into a union sheet, in station 1's idiom, rather than clicking questions in a list. Writing is the commitment; looking is free.
+
+**Tapping a question previews it: the vehicles it rules out go dim in the fleet table, and the survivors stay lit.** No count is printed anywhere. The source worksheet asks the group to write `כמה רכבים מסננת` for each question, and printing that number would do the work for them — the station would collapse into reading twenty numbers and picking the four biggest. Highlighting shows them **where** to count, not what the answer is. Counting sixteen rows twenty times is not a shortcut; it is the exercise.
+
+**The preview is always measured against the whole fleet of sixteen, never against what previously written questions already removed.** That matches the worksheet, and it keeps the hard part hard: four questions can each halve the fleet and still be worthless together, because *האם הרכב צבוע לבן* and *האם מספר הרכב זוגי* cut along exactly the same line. Nothing on screen reveals that, and finding it is the decision-tree insight.
+
+**After every submit, right or wrong, the group sees the funnel their four produced**, question by question, with zero-cuts marked. It is the only feedback on failure and it does the work: a set built on question 5 reads 15, 0, 0, 0; four halvers on two splits read 8, 0, 0, 4. It also stops a rejection reading as a bug when the group is looking at one surviving vehicle. The funnel describes their choice and never points at a better one.
+
+Three failure messages, because there are three ways to be wrong: a repeated question number, landing on one vehicle via a giveaway, and leaving several vehicles standing.
+
+Two attempts, per `נראות התחנות`.
+
+The hints and failure messages are written here, not by the content author, and need Lotem's eye.
 
 ### What this added to the engine
 
