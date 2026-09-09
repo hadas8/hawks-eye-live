@@ -74,25 +74,25 @@ export function viewCards() {
     </div>
 
     <div class="ask">
-      <p class="q">כמה מהמשאיות הלא מסומנות נושאות אמל"ח?</p>
-      <p class="sub">מצאו את הכלל בעשר המסומנות, והחילו אותו על השש.</p>
+      <p class="q">כמה מהשש נושאות אמל"ח?</p>
+      <p class="sub">מצאו מה מבדיל בין העשר שכבר נבדקו, ואז החליטו על כל אחת מהשש.</p>
       <ul class="keys">
-        <li>תכונה אחת בדיוק מסבירה את כל עשרת הסימונים.</li>
+        <li>תכונה אחת בדיוק עובדת על כל העשר.</li>
       </ul>
-      <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> לא נאמר לכם איזו משאית שגויה, רק אם הכל נכון.</p>
+      <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
     </div>
 
     <div>
-      <div class="eyebrow">עשר משאיות שאנחנו כבר יודעים עליהן</div>
+      <div class="eyebrow">עשר משאיות שכבר נבדקו</div>
       <div class="cards">${LABELLED.map(labelledCard).join('')}</div>
     </div>
 
     <div>
-      <div class="eyebrow">שש משאיות בלי מידע · סמנו כל אחת</div>
+      <div class="eyebrow">שש משאיות שלא נבדקו · החליטו על כל אחת</div>
       <div class="cards">${UNLABELLED.map(unlabelledCard).join('')}</div>
     </div>
 
-    ${result ? '<p class="verdict bad">לא. חזרו לעשר המסומנות ובדקו איזו תכונה באמת מפרידה ביניהן.</p>' : ''}
+    ${result ? '<p class="verdict bad">לא. חזרו לעשר הראשונות ובדקו שוב מה מבדיל בין הנושאות ללא נושאות.</p>' : ''}
 
     ${hints}
 
