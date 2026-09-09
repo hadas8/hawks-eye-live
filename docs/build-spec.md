@@ -100,7 +100,7 @@ Deliberately minimal, after a first attempt at colour-coded rule cards tested wo
 2. The same identifier twice is the same convoy. Mark it once.
 3. A row with — is not counted, even if it crossed.
 
-**The ton/kg mixed units are not mentioned at all.** They are a distractor by design, so explaining them worked against both the exercise and the clarity. It survives as the last of four hints for a group that gets stuck chasing it.
+**The ton/kg mixed units are not mentioned at all.** They are a distractor by design, so explaining them worked against both the exercise and the clarity. It used to survive as a fourth hint for a group stuck chasing it; **that hint was removed on 2026-09-09 as too revealing**, so the distractor now has no escape hatch anywhere in the app. Three hints remain. If groups are seen losing the station to the units rather than to the rules, that is the first thing to revisit.
 
 **Pacing risk:** eight tables of 12 to 18 rows each in 7 minutes is very tight for teenagers. Time it with real participants; the likely fix is fewer tables rather than more time, since 7 minutes is fixed across all stations.
 
@@ -178,7 +178,9 @@ Per `נראות התחנות`: the cards are shown and the group answers כן / 
 
 ### Copy
 
-The brief is adapted from the draft's own station card. **The three hints are written here, not by the content author**, and escalate: compare the two groups → the other three features are noise → the rule is in the antenna column. They need Lotem's eye like the rest of the invented copy.
+The brief is adapted from the draft's own station card. **The hints are written here, not by the content author**, and need Lotem's eye like the rest of the invented copy. A third hint naming the antenna outright was **removed on 2026-09-09** as simply handing over the answer, along with the instruction line `תכונה אחת בדיוק עובדת על כל העשר`, which framed the task too generously for a station already considered too easy. Two hints remain.
+
+**Open, and worth a look:** hint 2 rules out colour, wheels and box. With only four features on a card, ruling out three of them names the fourth by elimination — so hint 2 gives the answer about as directly as the hint that was just removed, one step later. If that is not wanted, it should teach the method rather than do it: something like *תכונה שמופיעה גם אצל נושאת וגם אצל לא נושאת לא יכולה להיות הכלל — עברו על התכונות אחת-אחת ופסלו.*
 
 The instruction panel carries one line only, the source's own `בדיוק תכונה אחת עובדת על כל 10 הכרטיסים`. A second bullet saying the other features are noise was written and removed: it duplicated hint 2 and handed over part of the puzzle in text that is always on screen.
 

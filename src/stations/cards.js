@@ -76,9 +76,6 @@ export function viewCards() {
     <div class="ask">
       <p class="q">כמה מהשש נושאות אמל"ח?</p>
       <p class="sub">מצאו מה מבדיל בין העשר שכבר נבדקו, ואז החליטו על כל אחת מהשש.</p>
-      <ul class="keys">
-        <li>תכונה אחת בדיוק עובדת על כל העשר.</li>
-      </ul>
       <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
     </div>
 
