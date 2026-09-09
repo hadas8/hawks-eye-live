@@ -81,10 +81,10 @@ export function viewCards() {
 
     <div>
       <div class="eyebrow">עשר משאיות שכבר נבדקו</div>
-      <div class="cards">${LABELLED.map(labelledCard).join('')}</div>
+      <div class="cards taught">${LABELLED.map(labelledCard).join('')}</div>
     </div>
 
-    <div>
+    <div class="exercise-set">
       <div class="eyebrow">שש משאיות שלא נבדקו · החליטו על כל אחת</div>
       <div class="cards">${UNLABELLED.map(unlabelledCard).join('')}</div>
     </div>

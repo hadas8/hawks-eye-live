@@ -180,9 +180,13 @@ Per `נראות התחנות`: the cards are shown and the group answers כן / 
 
 The brief is adapted from the draft's own station card. **The hints are written here, not by the content author**, and need Lotem's eye like the rest of the invented copy. A third hint naming the antenna outright was **removed on 2026-09-09** as simply handing over the answer, along with the instruction line `תכונה אחת בדיוק עובדת על כל העשר`, which framed the task too generously for a station already considered too easy. Two hints remain.
 
-**Open, and worth a look:** hint 2 rules out colour, wheels and box. With only four features on a card, ruling out three of them names the fourth by elimination — so hint 2 gives the answer about as directly as the hint that was just removed, one step later. If that is not wanted, it should teach the method rather than do it: something like *תכונה שמופיעה גם אצל נושאת וגם אצל לא נושאת לא יכולה להיות הכלל — עברו על התכונות אחת-אחת ופסלו.*
+Hint 2 originally ruled out colour, wheels and box by name, which with only four features on a card named the fourth by elimination — the same reveal as the hint that had just been removed, one step later. It now teaches the method instead of performing it: *תכונה שמופיעה גם אצל נושאת וגם אצל לא נושאת לא יכולה להיות הכלל. עברו על ארבע התכונות ופסלו.*
 
-The instruction panel carries one line only, the source's own `בדיוק תכונה אחת עובדת על כל 10 הכרטיסים`. A second bullet saying the other features are noise was written and removed: it duplicated hint 2 and handed over part of the puzzle in text that is always on screen.
+### Layout
+
+**The ten labelled cards are pinned to five per row**, so the first row is the five that carry and the second is the five that do not. `auto-fill` packed six into the first row and split the group down the middle — the one thing that set exists to show. Below 700px five columns stop being readable and the grouping gives way to fitting on screen; verified holding at 1280, 1024 and 768 wide, which covers the laptops and tablets the event runs on.
+
+There is deliberate air between the ten they learn from and the six they answer, about 48px, so the two halves read as data and exercise rather than one long wall of cards.
 
 ### What this added to the engine
 
