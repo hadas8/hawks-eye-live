@@ -28,7 +28,7 @@ export function viewOutcome(expired) {
     <p class="next">${last
       ? 'שבע התחנות מאחוריכם.'
       : 'פנו למדריך למשימה חברתית עד שכל החדר מסיים, ואז לסיסמה הבאה.'}</p>
-    <button class="btn" data-act="next">${last ? 'לפתיחת הקופסה' : 'לתחנה הבאה'}</button>
+    <button class="btn" data-act="next">${last ? 'לפתיחת המטען' : 'לתחנה הבאה'}</button>
   </div>`;
 }
 
