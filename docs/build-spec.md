@@ -205,7 +205,9 @@ so tapping a question put its highlight somewhere you could not see. Two interme
 repeating — pinning the fleet *above* the questions makes it cover them as they scroll underneath, and pinning it *beside*
 them without capping the list lets the 1400px question column drag the pinned pane off the bottom of its own grid row, so the
 fleet slides away exactly as you reach questions 14 to 20. What works is both: side by side, the fleet pinned, and the
-question list capped to the viewport so it scrolls in place. Verified at 1280×800, 1512×982, 1024×768 and 768×1024 that all
+question list capped to the viewport so it scrolls in place — as a plain vertical column, not a multi-column box. A
+multi-column box with a capped height does not scroll down; it flows the overflow into further columns *sideways*, which
+hid thirteen of the twenty questions off the right edge and made the list scroll horizontally. Verified at 1280×800, 1512×982, 1024×768 and 768×1024 that all
 sixteen fleet rows stay countable while the twentieth question is reachable, and that the highlight a tap produces is fully on
 screen. Below 900px there is no room to sit them side by side, so the fleet pins above the questions with a capped height.
 
