@@ -16,7 +16,7 @@ Source material: the Drive folder `1P9wJ3NlPZ6Er5CwdTQkQBl9JJfCW3nQa` (owner lot
 - Hit 0:00 unsolved and the station closes.
 - Either way the group lands on the next station's password screen and waits. Only the facilitator's spoken password moves anyone forward, and the facilitator waits until every group's 7 minutes have elapsed.
 - Persist the station's **start timestamp**, never a remaining count, so a mid-station refresh cannot grant extra minutes.
-- The facilitator holds the password list on paper. **There is no facilitator panel in the app.** A `?dev` query param exposes a clearly-marked dev strip for testing; it must be removed before the event.
+- The facilitator holds the password list on paper. **There is no facilitator panel in the app.** A `?dev` query param exposes a clearly-marked dev strip for testing; it must be removed before the event. The strip carries a row of seven numbered buttons that drop straight into any station, mid-run with the clock started, built or not — ordered 1 to 7 left to right, matching the ribbon. A jump clears that station's digit, score, attempts, hints and draft first, so landing on a station twice behaves identically both times rather than starting with spent attempts and a banked digit.
 
 Timing to plan around: 7 × 7 = 49 minutes of station time plus password screens, opening and closing. The draft's "45 דקות" narration line needs rewriting.
 
