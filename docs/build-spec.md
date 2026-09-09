@@ -71,7 +71,7 @@ Names taken from the draft, which are the real ones. Passwords are still placeho
 | 1 | הטבלאות המשקרות | ניקוי נתונים | 3 |
 | 2 | הגרפים המשקרים | ויזואליזציית מידע | 2 |
 | 3 | הכלל הנסתר | סיווג מול חיזוי | 7 |
-| 4 | השאלה ששווה לשאול | עצי החלטה | 4 |
+| 4 | השאלה ששווה לשאול | עצי החלטה | 4 | **built** |
 | 5 | מי קיבל תשובות ומי לא | למידה מפוקחת ולא מפוקחת | 2 | **built** |
 | 6 | ארבעה כוכבים | KNN | 2 |
 | 7 | שמונה אנליסטים | Random Forest | 7 |
@@ -161,6 +161,39 @@ Two deliberate exceptions to the rem rule:
 - Hairlines and 1–3px nudges stay in px. Scaling a 1px border produces blurry half-pixels for no gain.
 
 The ceiling matters: the event runs on laptops and tablets, so 20px is where it stops rather than growing without limit on a desktop review screen. At 1280 the rendered values are within 4px of what they were before this change, so the machines the event actually runs on look the same as they did.
+
+## Station 4 — built and verified
+
+Source: `תחנה_4_.docx`. Sixteen vehicles, twenty candidate questions, four allowed. The digit is the vehicle left standing: **4**.
+
+### The maths, verified rather than trusted
+
+The fleet is a clean 4-bit encoding — colour, antenna, wheels and box each split it exactly in half, and together they address all sixteen uniquely. Direction and flag are constant across the fleet and therefore worthless as questions.
+
+- **All twenty questions' stated answers match the table.** Zero disagreements.
+- **Ten questions cut exactly 8**, not four, because each split has more than one phrasing: *האם הרכב צבוע לבן* and *האם מספר הרכב זוגי* divide the fleet identically. Those ten collapse to four distinct splits: {1, 9, 11}, {2, 12}, {3, 13}, {4, 10, 14}.
+- **There are therefore 36 correct answers**, one question from each split, 3 × 2 × 2 × 3. The app accepts all of them.
+- **Order is irrelevant.** Filtering is commutative, so a set of four gives the same survivor in any order. `נראות התחנות` says "בסדר הנכון" but there is no order to get right.
+
+### The grading decision
+
+Questions 5, 8 and 18 each single out vehicle 4 on their own, cutting 15. **2,739 four-question sets reach the right vehicle by leaning on one of them** while demonstrating the opposite of the lesson — the other three questions cut nothing.
+
+**The station rejects those.** `isProperSet` requires every chosen question to cut exactly 8 as well as the set narrowing to one, which leaves the 36. Accepting anything that reaches one vehicle would make the station passable by picking *האם מספר הרכב הוא 4* — a guess, not a question. **Reversible in one predicate** if it plays too hard.
+
+### What the screen shows, and what it withholds
+
+The fleet table and the twenty questions, each stating what the real vehicle answers — which the source gives too. **It never shows how many vehicles a question would cut, or which survive.** Printing "cuts 8" beside each question would reduce the station to picking the four largest numbers.
+
+**After every submit, right or wrong, the group sees the funnel their own four produced**, question by question, with zero-cuts marked. This is the only feedback on a failure, and it does the work: a set built on question 5 shows 15, 0, 0, 0, and three zeros explain themselves. It also makes rejection legible — without it a group would be told "no" while looking at a screen showing one vehicle left, which would read as a bug. The funnel describes their choice and never points at a better one.
+
+Two attempts, per `נראות התחנות`: "אם הם לא מצליחים בסדר הנכון יש להם עוד אופציה אחת".
+
+The two hints and the failure messages are written here, not by the content author, and need Lotem's eye.
+
+### What this added to the engine
+
+The `pickN` sub-answer kind: a whole set graded together by a predicate, for cases where several different sets are equally correct and there is no per-pick verdict to give. With the `custom` combine rule deriving the surviving vehicle, that is all of station 4.
 
 ## Station 5 — built and verified
 
