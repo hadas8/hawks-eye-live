@@ -71,7 +71,7 @@ Names taken from the draft, which are the real ones. Passwords are still placeho
 | 1 | הטבלאות המשקרות | ניקוי נתונים | 3 |
 | 2 | הגרפים המשקרים | ויזואליזציית מידע | 2 |
 | 3 | הכלל הנסתר | סיווג מול חיזוי | 7 |
-| 4 | השאלה ששווה לשאול | עצי החלטה | 4 |
+| 4 | השאלה ששווה לשאול | עצי החלטה | 4 | **built** |
 | 5 | מי קיבל תשובות ומי לא | למידה מפוקחת ולא מפוקחת | 2 | **built** |
 | 6 | ארבעה כוכבים | KNN | 2 |
 | 7 | שמונה אנליסטים | Random Forest | 7 |
@@ -161,6 +161,68 @@ Two deliberate exceptions to the rem rule:
 - Hairlines and 1–3px nudges stay in px. Scaling a 1px border produces blurry half-pixels for no gain.
 
 The ceiling matters: the event runs on laptops and tablets, so 20px is where it stops rather than growing without limit on a desktop review screen. At 1280 the rendered values are within 4px of what they were before this change, so the machines the event actually runs on look the same as they did.
+
+## Station 4 — built and verified
+
+Source: `תחנה_4_.docx`. Sixteen vehicles, twenty candidate questions, four allowed. The digit is the vehicle left standing: **4**.
+
+### The maths, verified rather than trusted
+
+The fleet is a clean 4-bit encoding — colour, antenna, wheels and box each split it exactly in half, and together they address all sixteen uniquely. Direction and flag are constant across the fleet and therefore worthless as questions.
+
+- **All twenty questions' stated answers match the table.** Zero disagreements.
+- **Ten questions cut exactly 8**, not four, because each split has more than one phrasing: *האם הרכב צבוע לבן* and *האם מספר הרכב זוגי* divide the fleet identically. Those ten collapse to four distinct splits: {1, 9, 11}, {2, 12}, {3, 13}, {4, 10, 14}.
+- **There are therefore 36 correct answers**, one question from each split, 3 × 2 × 2 × 3. The app accepts all of them.
+- **Order is irrelevant.** Filtering is commutative, so a set of four gives the same survivor in any order. `נראות התחנות` says "בסדר הנכון" but there is no order to get right.
+
+### The grading decision
+
+Questions 5, 8 and 18 each single out vehicle 4 on their own, cutting 15. **2,739 four-question sets reach the right vehicle by leaning on one of them** while demonstrating the opposite of the lesson — the other three questions cut nothing.
+
+**The station rejects those.** `isProperSet` requires every chosen question to cut exactly 8 as well as the set narrowing to one, which leaves the 36. Accepting anything that reaches one vehicle would make the station passable by picking *האם מספר הרכב הוא 4* — a guess, not a question. **Reversible in one predicate** if it plays too hard.
+
+### The instruction the source gets wrong
+
+`תחנה_4_.docx` contradicts itself, and it is the reason this station was hard to understand. Step ב׳ says **בחרו את 4 השאלות שמסננות הכי הרבה**, while the truth check says each must filter **exactly 8**. Taken literally, "the four that filter most" gives questions 5, 8, 18 and 19 — filtering 15, 15, 15 and 12 — which does land on vehicle 4 and does fail the truth check. Three of those four are "is it this exact vehicle?" in disguise, so the literal instruction produces the anti-lesson.
+
+Earlier notes here called the docx internally consistent. It is, in its **data** — all twenty stated answers match the fleet — but not in its **instructions**. The app states the corrected rule instead, agreed with Hadas as language rather than content: *בחרו ארבע שאלות שכל אחת חותכת את הצי בחצי, וביחד מצמצמות אותו לרכב אחד.* That makes a rejection fair: the group is told the rule up front, not after failing.
+
+### The interaction
+
+The group **writes four question numbers** into a union sheet, in station 1's idiom, rather than clicking questions in a list. Writing is the commitment; looking is free.
+
+The twenty questions are laid out **column-major**, so they read 1 to 7 down the rightmost column rather than 1, 2, 3 across the first row. A CSS grid fills by row, and forcing column order in a grid means pinning a row count, which would break the responsive column count — so this uses multi-column instead: three columns on a laptop, two on a tablet held upright, one on a phone, and the numbering runs down each of them.
+
+Each question card carries the number and the question on one line and `תשובה על הרכב האמיתי` beneath it, rather than the three of them side by side. Side by side the label took 134px of a 304px card and squeezed the question into 118px, so eighteen of the twenty wrapped to two lines and the two shortest did not — giving cards of two different heights. Stacking gives the question the full width, nothing wraps, and every card is the same height at every width from 430px to 1600px.
+
+**Tapping a question previews it: the vehicles it rules out go dim in the fleet table, and the survivors stay lit.** No count is printed anywhere. The source worksheet asks the group to write `כמה רכבים מסננת` for each question, and printing that number would do the work for them — the station would collapse into reading twenty numbers and picking the four biggest. Highlighting shows them **where** to count, not what the answer is. Counting sixteen rows twenty times is not a shortcut; it is the exercise.
+
+**The preview is always measured against the whole fleet of sixteen, never against what previously written questions already removed.** That matches the worksheet, and it keeps the hard part hard: four questions can each halve the fleet and still be worthless together, because *האם הרכב צבוע לבן* and *האם מספר הרכב זוגי* cut along exactly the same line. Nothing on screen reveals that, and finding it is the decision-tree insight.
+
+**The fleet and the questions sit side by side above 900px, and the fleet pins.** Stacked, the station does not work: the
+page ran to nearly three screens, and by the time the last question was reachable the fleet had scrolled 280px above the fold,
+so tapping a question put its highlight somewhere you could not see. Two intermediate attempts failed for reasons worth not
+repeating — pinning the fleet *above* the questions makes it cover them as they scroll underneath, and pinning it *beside*
+them without capping the list lets the 1400px question column drag the pinned pane off the bottom of its own grid row, so the
+fleet slides away exactly as you reach questions 14 to 20. What works is both: side by side, the fleet pinned, and the
+question list capped to the viewport so it scrolls in place. Verified at 1280×800, 1512×982, 1024×768 and 768×1024 that all
+sixteen fleet rows stay countable while the twentieth question is reachable, and that the highlight a tap produces is fully on
+screen. Below 900px there is no room to sit them side by side, so the fleet pins above the questions with a capped height.
+
+Chasing this turned up an app-wide bug that had already shipped: `#app`'s `overflow-x: hidden` was killing every
+`position: sticky`, so **the station clock scrolled off screen on every station**. Now a hard rule in `CLAUDE.md`.
+
+**After every submit, right or wrong, the group sees the funnel their four produced**, question by question, with zero-cuts marked. It is the only feedback on failure and it does the work: a set built on question 5 reads 15, 0, 0, 0; four halvers on two splits read 8, 0, 0, 4. It also stops a rejection reading as a bug when the group is looking at one surviving vehicle. The funnel describes their choice and never points at a better one.
+
+Three failure messages, because there are three ways to be wrong: a repeated question number, landing on one vehicle via a giveaway, and leaving several vehicles standing.
+
+Two attempts, per `נראות התחנות`.
+
+The hints and failure messages are written here, not by the content author, and need Lotem's eye.
+
+### What this added to the engine
+
+The `pickN` sub-answer kind: a whole set graded together by a predicate, for cases where several different sets are equally correct and there is no per-pick verdict to give. With the `custom` combine rule deriving the surviving vehicle, that is all of station 4.
 
 ## Station 5 — built and verified
 

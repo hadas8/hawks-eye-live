@@ -8,7 +8,7 @@
 //
 // Only the kinds and rules that a built station needs are implemented.
 // The remaining kinds the roster will eventually need — multiChoice, rows,
-// dragToBucket, pickN, pairPick — go in KINDS as their stations land.
+// dragToBucket, pairPick — go in KINDS as their stations land.
 // An unimplemented kind throws rather than silently grading as wrong.
 
 export const digitalRoot = n => (n <= 0 ? 0 : 1 + ((n - 1) % 9));
@@ -25,6 +25,15 @@ const KINDS = {
   choice(spec, value) {
     if (value == null) return false;
     return value === spec.value;
+  },
+
+  // A whole set of picks graded together, because what matters is the
+  // combination rather than any single pick. `value` is the array chosen;
+  // `spec.valid` decides. Used where several different sets are equally
+  // correct, so there is no per-pick verdict to give.
+  pickN(spec, value) {
+    if (!Array.isArray(value) || value.length !== spec.count) return false;
+    return spec.valid(value);
   }
 };
 

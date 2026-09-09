@@ -12,6 +12,7 @@
 // too few submissions to sweep the answer space by watching the count move.
 
 import { TABLES } from './station-1.js';
+import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED } from './station-5.js';
 
 export const STATIONS = [
@@ -44,7 +45,36 @@ export const STATIONS = [
   // ── not built. Passwords and several digits are still placeholders. ──
   { n: 2, name: 'הגרפים המשקרים',        concept: 'ויזואליזציית מידע',        password: ['אופק'], digit: 2, kind: null },
   { n: 3, name: 'הכלל הנסתר',            concept: 'סיווג מול חיזוי',          password: ['מדף'],  digit: 7, kind: null },
-  { n: 4, name: 'השאלה ששווה לשאול',     concept: 'עצי החלטה',                password: ['ענף'],  digit: 4, kind: null },
+
+  {
+    n: 4,
+    name: 'השאלה ששווה לשאול',
+    concept: 'עצי החלטה',
+    password: ['ענף'],           // still a placeholder
+    digit: 4,
+    kind: 'questions',
+
+    // נראות התחנות: "אם הם לא מצליחים בסדר הנכון יש להם עוד אופציה אחת".
+    maxAttempts: 2,
+    revealWhichWrong: false,
+
+    brief: 'זיהינו שישה־עשר רכבים על הציר, ואחד מהם נושא את המטען. יש לכם עשרים שאלות אפשריות ורשות לשאול ארבע.',
+
+    answer: {
+      // One set, graded whole: 36 different sets of four are equally
+      // correct, so there is no per-question verdict to hand back.
+      parts: [{ kind: 'pickN', count: PICK, valid: isProperSet }],
+      rule: 'custom',
+      // The digit is whichever vehicle is left standing, not an assertion.
+      derive: ([ids]) => survivors(ids)[0]?.n ?? 0
+    },
+
+    hints: [
+      'שאלה שכל הצי עונה עליה אותו דבר לא פוסלת אף אחד. לחצו על שאלה ותראו מיד אם היא מחלקת את הצי או לא.',
+      'ארבע שאלות שחותכות את הצי באותו מקום שוות לשאלה אחת. בדקו שכל שאלה שבחרתם מסתכלת על עמודה אחרת.'
+    ]
+  },
+
 
   {
     n: 5,

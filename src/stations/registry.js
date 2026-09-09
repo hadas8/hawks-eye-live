@@ -3,10 +3,12 @@
 // "not built yet" panel. Stations 2 to 7 are deliberately in that state.
 import { viewTables } from './tables.js';
 import { viewCards } from './cards.js';
+import { viewQuestions } from './questions.js';
 
 export const RENDERERS = {
   tables: viewTables,
-  cards: viewCards
+  cards: viewCards,
+  questions: viewQuestions
 };
 
 export const rendererFor = kind => RENDERERS[kind] || null;

@@ -23,6 +23,7 @@ A one-off digital escape room for a live, in-person data science seminar run by 
 - **Never reveal a station's answer, digit or password in the DOM, in a comment, or in a data attribute** on a screen a participant can reach. Teenagers will open devtools.
 - **Amber `#ffb238` is the only UI accent.** An earlier attempt at per-column and per-rule colour coding tested worse and was reverted. Do not reintroduce it.
 - Instructions stay minimal. When a station reads as unclear, the fix is fewer words, not more explanation.
+- **`#app` uses `overflow-x: clip`, never `hidden`.** `hidden` computes `overflow-y` to `auto`, which makes `#app` a scroll container and silently kills every `position: sticky` inside it. That already shipped once: the station clock scrolled off the top of the screen on any page taller than the viewport, which is every station.
 - `prefers-reduced-motion` must disable the effects layer, not just slow it.
 
 ## Workflow
