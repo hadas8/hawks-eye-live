@@ -7,6 +7,8 @@
 .envelope .eq{font-size:clamp(1rem,1.9vw,1.1875rem);font-weight:800;color:var(--ink);
   margin:0;max-width:none;letter-spacing:-.01em}
 
+.envelope .ehow{font-size:0.875rem;color:var(--ink-dim);margin:0.3125rem 0 0;max-width:none}
+
 .gpair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.75rem}
 
 .gcard{display:block;width:100%;text-align:start;background:var(--panel-2);
@@ -22,10 +24,13 @@
 .chart{display:block;width:100%;height:auto}
 .chart .cg{stroke:var(--hair);stroke-width:1}
 .chart .ca{stroke:var(--muted);stroke-width:1}
-.chart .cy,.chart .cx{fill:var(--muted);font-family:var(--mono);font-size:9px}
+/* The value axis is the whole puzzle in three of the seven envelopes — a
+   group has to read where it starts. At 9px in --muted it was the least
+   legible thing on the screen, which is exactly backwards. */
+.chart .cy,.chart .cx{fill:var(--ink-dim);font-family:var(--mono);font-size:11px}
 .chart .cy{text-anchor:start}
 .chart .cx{text-anchor:middle}
-.chart .cv{fill:var(--ink);font-family:var(--mono);font-size:9px;text-anchor:middle}
+.chart .cv{fill:var(--ink);font-family:var(--mono);font-size:11px;text-anchor:middle}
 
 .chart .cb{fill:var(--ink-dim)}
 .chart .cl{fill:none;stroke:var(--ink-dim);stroke-width:2;stroke-linejoin:round}

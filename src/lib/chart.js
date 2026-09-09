@@ -21,7 +21,7 @@
 import { esc } from './text.js';
 
 const W = 340, H = 210;
-const PAD = { top: 16, right: 44, bottom: 30, left: 12 };
+const PAD = { top: 16, right: 52, bottom: 32, left: 12 };
 const X0 = PAD.left, X1 = W - PAD.right;          // plot, right edge = first category
 const Y0 = PAD.top, Y1 = H - PAD.bottom;
 
@@ -82,7 +82,11 @@ export function renderChart(spec) {
         `<text x="${xOf(i).toFixed(1)}" y="${(yOf(r.value) - 8).toFixed(1)}" class="cv">${esc(nice(r.value))}${esc(unit)}</text>`).join('') : '');
   }
 
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+  // direction:ltr inside the SVG so text-anchor means what it says. The
+  // right-to-left reading order is produced by xOf() putting category 0 on
+  // the right, not by the document's direction leaking in here.
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true"
+    preserveAspectRatio="xMidYMid meet" style="direction:ltr">
     ${grid}
     <line x1="${X0}" x2="${X1}" y1="${Y1}" y2="${Y1}" class="ca"/>
     ${marks}

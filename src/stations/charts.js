@@ -47,6 +47,7 @@ function envelopeBlock(env, i) {
     <div class="ehead">
       <div class="eyebrow">מעטפה ${esc(env.id)} · ${esc(env.title)}</div>
       <p class="eq">${esc(env.question)}</p>
+      <p class="ehow">איזה משני הגרפים עונה על זה נכון?</p>
     </div>
     <div class="gpair">${chartsOf(env).map((spec, k) => chartCard(spec, k + 1, i, chosen)).join('')}</div>
     ${hinted
