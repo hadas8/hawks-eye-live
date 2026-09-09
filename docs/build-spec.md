@@ -185,13 +185,24 @@ Rejected: **מטען חבלה.** A bomb implies a countdown, and the timer desig
 
 ### The reveal's shape
 
-Two beats, in order: the operation, then the lesson.
+Cut back hard on Hadas's direction 2026-09-09: no algorithm summary, no explanation of what was or was not in the crate. Four blocks, one screen, no scrolling.
 
-1. `השיירה נעצרה במעבר ג'נתא` — seven answers narrowed hundreds of dirty reports to one vehicle of sixteen, one crossing of three.
-2. What was inside, and what it would have done.
-3. The turn: *שני הצדדים של הלילה הזה עבדו על אותו חומר גלם. הם ניסו להפוך מידע לנשק, ואתם הפכתם מידע לתפיסה שלהם.*
-4. `לא פתרתם חידות — הפעלתם אלגוריתמים` over the station-to-concept list.
-5. Score, then `כל זה יחד נקרא למידת מכונה`.
+```
+[eyebrow]  השיירה נעצרה במעבר ג'נתא
+[h1]       עשרות רקטות לא יידעו לאן לפגוע
+[punch]    הנשק שעצר אותן היה מידע.
+
+[score]    70 · מתוך 70
+
+[finale]   כל מה שעשיתם הלילה נקרא למידת מכונה
+[sub]      לא פתרתם חידות — הפעלתם שבעה אלגוריתמים אמיתיים, לפני שמישהו אמר לכם איך הם נקראים.
+```
+
+The shape is: consequence, then the data punch line, then the score, then the name of the thing they did. The operational detail is demoted to the eyebrow so the two large lines land without competition.
+
+**The station-to-concept roster was removed.** Each station already names its own concept on its solved screen (`האלגוריתם שהרגע הפעלתם נקרא…`), and the ribbon already shows all seven digits, so the list repeated both and blunted the ending. The `.turn` style went with it.
+
+The guidance-kit reasoning above still drives the copy, but it is now carried entirely by implication — `לא יידעו לאן לפגוע` only makes sense if the cargo was guidance, and that is enough. Nothing on screen explains it.
 
 ### Dependencies and open points
 
