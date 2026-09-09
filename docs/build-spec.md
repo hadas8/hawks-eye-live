@@ -125,7 +125,7 @@ Rules that came out of it, for future copy:
 
 Deliberately left alone, so they do not get "fixed" later:
 
-- **שבע תחנות. שבע ספרות. קופסה אחת.** A rhetorical triad, and the draft's own phrasing. The full stops are the rhythm.
+- **שבע תחנות. שבע ספרות. מטען אחד.** A rhetorical triad; the full stops are the rhythm and stay. The draft's third beat was קופסה אחת; changed to מטען אחד on Hadas's call 2026-09-09, so the opening names the thing they are actually hunting and pays off against המשלוח נעצר on the closing screen. A box is what the answer arrives in; the cargo is the point.
 - **נגמרו השליחות, נגמרה התחנה.** Parallel construction, already comma-joined.
 - **The station 1 rule bullets.** They are scanned under a 7-minute clock, not read; full stops separate rules faster than connectors would.
 - Terse UI labels and result strings (נדחה, מסומן, ידני, X מתוך Y נכונים).
@@ -218,6 +218,7 @@ Three aphorisms stacked in six lines is itself the tell. The rewrite uses none o
 ### Dependencies and open points
 
 - The reveal names **מעבר ג'נתא** (station 7's answer) and **רכב 4 מתוך 16** (station 4's). Both are solid in the draft's own working, and ג'נתא is load-bearing for digit 7. If either station's answer changes, this copy changes with it.
+- **The word קופסה still appears on three other screens** — the briefing (`שבע הספרות פותחות את הקופסה`), the last station's button (`לפתיחת הקופסה`) and the vault lead. They are still correct — the crate is the physical object the code opens, the cargo is what is inside it — but if that reads as a wobble, they should follow the opening to מטען.
 - **What physically goes in the box is still undecided.** It should read as the seized guidance kit — a component in foam, a drive, something that looks like a part rather than a prize — plus a card carrying `נתונים זה הזהב החדש`.
 - One box for the room or one per group is still unanswered.
 - Unused draft material a real closing screen could still draw on: the `לדיון אחרי הפתרון` cards on stations 5 and 7, and station 7's line *שמונה בינוניים שרואים דברים שונים מנצחים שני מומחים טובים שרואים אותו דבר.*
