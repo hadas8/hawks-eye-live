@@ -191,6 +191,8 @@ Earlier notes here called the docx internally consistent. It is, in its **data**
 
 The group **writes four question numbers** into a union sheet, in station 1's idiom, rather than clicking questions in a list. Writing is the commitment; looking is free.
 
+The twenty questions are laid out **column-major**, so they read 1 to 7 down the rightmost column rather than 1, 2, 3 across the first row. A CSS grid fills by row, and forcing column order in a grid means pinning a row count, which would break the responsive column count — so this uses multi-column instead: three columns on a laptop, two on a tablet held upright, one on a phone, and the numbering runs down each of them.
+
 **Tapping a question previews it: the vehicles it rules out go dim in the fleet table, and the survivors stay lit.** No count is printed anywhere. The source worksheet asks the group to write `כמה רכבים מסננת` for each question, and printing that number would do the work for them — the station would collapse into reading twenty numbers and picking the four biggest. Highlighting shows them **where** to count, not what the answer is. Counting sixteen rows twenty times is not a shortcut; it is the exercise.
 
 **The preview is always measured against the whole fleet of sixteen, never against what previously written questions already removed.** That matches the worksheet, and it keeps the hard part hard: four questions can each halve the fleet and still be worthless together, because *האם הרכב צבוע לבן* and *האם מספר הרכב זוגי* cut along exactly the same line. Nothing on screen reveals that, and finding it is the decision-tree insight.
