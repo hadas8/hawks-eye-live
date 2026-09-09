@@ -43,7 +43,24 @@ const SCREENS = {
 
 export function render() {
   const stage = document.getElementById('stage');
+
+  // Rendering replaces the whole stage, which throws away the scroll
+  // position of anything scrolling inside it. Station 4's question list is
+  // 1400px in a 700px pane, so previewing question 14 sent the list back to
+  // question 1 and the group lost what they had just tapped. Any pane that
+  // should survive a re-render carries data-keep-scroll with a stable name.
+  const kept = new Map();
+  stage.querySelectorAll('[data-keep-scroll]').forEach(el => {
+    if (el.scrollTop) kept.set(el.dataset.keepScroll, el.scrollTop);
+  });
+
   stage.innerHTML = (SCREENS[S.screen] || viewBoot)();
+
+  kept.forEach((top, name) => {
+    const el = stage.querySelector(`[data-keep-scroll="${name}"]`);
+    if (el) el.scrollTop = top;
+  });
+
   if (S.screen === 'boot') mountBoot();
 
   renderChip();

@@ -46,6 +46,8 @@ One SPA, one URL, no router, a single state machine.
 
 `boot` → `briefing` → per station (`locked` → `active` → `solved` | `expired`) → `vault` → `reveal`
 
+**Rendering replaces the whole stage, so anything scrolling inside it loses its position.** A pane that should survive a re-render carries `data-keep-scroll` with a stable name and `ui/render.js` restores it. Station 4 needed this: its question list is 1400px inside a 700px pane, so previewing question 14 sent the list back to question 1 and the group lost sight of what they had just tapped. The same applies to any future station with a scrolling pane.
+
 Persistent chrome: the station clock and score in the top bar, and a 7-slot code ribbon at the bottom with three slot states (empty, earned, given).
 
 **The code ribbon is the one part of the UI that runs left to right.** Station 1 is the leftmost slot, station 7 the rightmost, so reading the digits off the screen gives the code in the order it is entered into the physical lock. Laid out RTL like everything else it reads back-to-front, which is a real risk at the box with a room full of teenagers. The ribbon's Hebrew label stays in the RTL flow, to the right of the slots; only the slot group is LTR. The vault input is `dir="ltr"` for the same reason. Everything else in the app remains RTL.
