@@ -3,7 +3,7 @@
 import { CFG } from './config.js';
 import { S, set, save, station } from './state.js';
 import { STATIONS } from './data/stations.js';
-import { fx, shake, wipeTo } from './ui/fx.js';
+import { fx, shake, coverThen } from './ui/fx.js';
 import { matchAny } from './lib/text.js';
 
 export const openStation = value => {
@@ -15,7 +15,7 @@ export const openStation = value => {
   S.startedAt[s.n] ||= Date.now();
   save();                                      // persist the start before the transition runs
   // Hand the screen swap to the curtain so it happens out of sight.
-  wipeTo('תחנה ' + s.n,
+  coverThen('wipe', 'תחנה ' + s.n,
     () => set({ phase: 'active', tab: 0, lastResult: null, submitBlocked: false }));
   return true;
 };
@@ -42,9 +42,12 @@ export function closeStation(reason) {
   S.given[s.n] = true;
   S.fresh = null;
   S.closedBy = reason;
-  fx('timeout', reason === 'attempts' ? 'נגמרו הניסיונות' : 'נגמר הזמן', 1400);
+  save();                                      // persist before the flood runs
   shake();
-  set({ phase: 'expired' });
+  // The digit has to arrive out of the black, not be sitting there waiting
+  // for the black to arrive — otherwise the screen spoils its own reveal.
+  coverThen('timeout', reason === 'attempts' ? 'נגמרו הניסיונות' : 'נגמר הזמן',
+    () => set({ phase: 'expired' }));
 }
 
 export function nextStation() {
