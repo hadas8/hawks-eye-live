@@ -1,9 +1,9 @@
 // State transitions that more than one module needs: opening a station with
 // its password, closing it, solving it, and moving on.
 import { CFG } from './config.js';
-import { S, set, station } from './state.js';
+import { S, set, save, station } from './state.js';
 import { STATIONS } from './data/stations.js';
-import { fx, shake } from './ui/fx.js';
+import { fx, shake, wipeTo } from './ui/fx.js';
 import { matchAny } from './lib/text.js';
 
 export const openStation = value => {
@@ -11,9 +11,12 @@ export const openStation = value => {
   if (!matchAny(value, s.password)) return false;
   // The clock is a stored start timestamp, never a counter. Do not reset it
   // if one already exists: a refresh must not buy a group more time.
+  if (S.phase !== 'locked') return true;        // already opening; ignore a second submit
   S.startedAt[s.n] ||= Date.now();
-  fx('wipe', 'תחנה ' + s.n, 950);
-  set({ phase: 'active', tab: 0, lastResult: null, submitBlocked: false });
+  save();                                      // persist the start before the transition runs
+  // Hand the screen swap to the curtain so it happens out of sight.
+  wipeTo('תחנה ' + s.n,
+    () => set({ phase: 'active', tab: 0, lastResult: null, submitBlocked: false }));
   return true;
 };
 

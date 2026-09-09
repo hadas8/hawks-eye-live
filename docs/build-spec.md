@@ -158,7 +158,7 @@ Colour discipline learned the hard way: amber is the only accent in the UI. The 
 
 Dramatic moments in the prototype, to be pushed further here:
 
-- Password accepted: amber vertical wipe with the station number, letterspacing collapsing inward
+- Password accepted: amber vertical wipe with the station number, letterspacing collapsing inward. **The wipe is a curtain, and the screen swap has to happen behind it.** `#fx.wipe` reaches full coverage at 45% of its 0.9s run, so the station is rendered at 405ms, not on submit. Rendering it immediately showed the station, drew the curtain over it, and revealed it again — which reads as the station loading twice, and was reported as exactly that. Under reduced motion there is no curtain, so the swap is immediate.
 - Wrong submit: red strobe three times in the first half second, then a dark scrim so text stays readable; נדחה stamps in, then the remaining-submissions count rises under it a beat later. Runs 2.1s total, because 0.9s was unreadable.
 - Correct submit: amber shockwave expanding from centre, the digit slamming in at scale with bloom, the ribbon slot igniting
 - Under 60 seconds: clock goes red and pulses, a red vignette breathes at the screen edges

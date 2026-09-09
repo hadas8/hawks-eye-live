@@ -44,6 +44,19 @@ export function vaultUnlock(done) {
   setTimeout(done, cascade + BLAST_MS);
 }
 
+// The password wipe is a curtain, not a glow: #fx.wipe reaches
+// clip-path:inset(0) — full coverage — at 45% of its 0.9s run. Swap what is
+// underneath at exactly that moment. Rendering the station immediately, as
+// this used to, showed it, drew the curtain over it, and revealed it again,
+// which reads as the station loading twice.
+const WIPE_COVER_MS = 405;
+
+export function wipeTo(label, swap) {
+  if (reduced.matches) return swap();   // no curtain, so nothing to hide behind
+  fx('wipe', label, 950);
+  setTimeout(swap, WIPE_COVER_MS);
+}
+
 export function shake() {
   if (reduced.matches) return;
   const app = document.getElementById('app');
