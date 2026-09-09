@@ -7,8 +7,8 @@
 //   }
 //
 // Only the kinds and rules that a built station needs are implemented.
-// The remaining kinds the roster will eventually need — choice, multiChoice,
-// rows, dragToBucket, pickN, pairPick — go in KINDS as their stations land.
+// The remaining kinds the roster will eventually need — multiChoice, rows,
+// dragToBucket, pickN, pairPick — go in KINDS as their stations land.
 // An unimplemented kind throws rather than silently grading as wrong.
 
 export const digitalRoot = n => (n <= 0 ? 0 : 1 + ((n - 1) % 9));
@@ -18,6 +18,13 @@ const KINDS = {
   number(spec, value) {
     if (value == null || Number.isNaN(value)) return false;
     return Math.abs(value - spec.value) <= (spec.tolerance ?? 0);
+  },
+
+  // One pick from a fixed set — including the yes/no case, where the value
+  // is a boolean. null means the group has not answered this one yet.
+  choice(spec, value) {
+    if (value == null) return false;
+    return value === spec.value;
   }
 };
 

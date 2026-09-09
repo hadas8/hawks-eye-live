@@ -12,6 +12,7 @@
 // too few submissions to sweep the answer space by watching the count move.
 
 import { TABLES } from './station-1.js';
+import { UNLABELLED } from './station-5.js';
 
 export const STATIONS = [
   {
@@ -45,7 +46,37 @@ export const STATIONS = [
   { n: 2, name: 'הגרפים המשקרים',        concept: 'ויזואליזציית מידע',        password: ['אופק'], digit: 2, kind: null },
   { n: 3, name: 'הכלל הנסתר',            concept: 'סיווג מול חיזוי',          password: ['מדף'],  digit: 7, kind: null },
   { n: 4, name: 'השאלה ששווה לשאול',     concept: 'עצי החלטה',                password: ['ענף'],  digit: 4, kind: null },
-  { n: 5, name: 'מי קיבל תשובות ומי לא', concept: 'למידה מפוקחת ולא מפוקחת',  password: ['מצפן'], digit: 2, kind: null },
+
+  {
+    n: 5,
+    name: 'מי קיבל תשובות ומי לא',
+    concept: 'למידה מפוקחת ולא מפוקחת',
+    password: ['מצפן'],          // still a placeholder
+    digit: 2,
+    kind: 'cards',
+
+    // Six binary choices is 64 combinations, so per-card feedback plus
+    // retries would be brute-forceable. It is really one insight, not six
+    // judgements: get the rule and all six follow. So the verdict is
+    // all-or-nothing, and a wrong submit sends them back to the ten
+    // labelled cards rather than telling them which of the six moved.
+    maxAttempts: 3,
+    revealWhichWrong: false,
+
+    brief: 'על עשר מהמשאיות יש לנו מידע קודם ואנחנו יודעים אם נשאו אמל"ח בעבר. על שש האחרונות אין כלום, ואין זמן לפרק אותן אחת-אחת.',
+
+    answer: {
+      parts: UNLABELLED.map(c => ({ kind: 'choice', value: c.carries })),
+      rule: 'count'
+    },
+
+    hints: [
+      'חמישה מהמסומנים נושאים אמל"ח וחמישה לא. חפשו תכונה אחת שיש לכל החמישה הראשונים ואין לאף אחד מהאחרים.',
+      'צבע, גלגלים וארגז מופיעים בשני הצדדים, ולכן אף אחד מהם לא יכול להיות הכלל.',
+      'הכלל נמצא בעמודת האנטנה.'
+    ]
+  },
+
   { n: 6, name: 'ארבעה כוכבים',          concept: 'KNN — שכנים קרובים',       password: ['גדר'],  digit: 2, kind: null },
   { n: 7, name: 'שמונה אנליסטים',        concept: 'Random Forest — יער אקראי', password: ['חורש'], digit: 7, kind: null }
 ];

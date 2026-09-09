@@ -1,0 +1,38 @@
+/* Station 5 — מי קיבל תשובות ומי לא. The "cards" station kind:
+   a labelled training set above an unlabelled set the group answers.
+
+   Amber only, as everywhere. The labelled cards say נושאת / לא נושאת in
+   words and lean on border weight rather than a green/red pair — that
+   colour coding was tried on station 1 and reverted. */
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.25rem,1fr));gap:0.625rem}
+
+.card{background:var(--panel);border:1px solid var(--hair);padding:0.75rem 0.8125rem;
+  display:flex;flex-direction:column;gap:0.1875rem}
+.card .cid{font-family:var(--mono);font-size:0.75rem;color:var(--muted);
+  letter-spacing:.08em;margin-bottom:0.25rem}
+
+.frow{display:flex;justify-content:space-between;align-items:baseline;gap:0.5rem;font-size:0.8125rem}
+.frow .fk{color:var(--muted)}
+.frow .fv{color:var(--ink)}
+
+/* Ground truth on the training set: carrying is amber, not carrying is quiet. */
+.card .tag{margin-top:0.5rem;padding-top:0.4375rem;border-top:1px solid var(--hair);
+  font-size:0.75rem;font-weight:500;letter-spacing:.04em}
+.card.pos{border-color:var(--amber-dim)}
+.card.pos .tag{color:var(--amber)}
+.card.neg .tag{color:var(--muted)}
+
+/* The six they answer. */
+.card.ask-card{background:var(--panel-2)}
+.card.ask-card.answered{border-color:var(--ink-dim)}
+.choose{display:flex;gap:0.375rem;margin-top:0.5625rem}
+.pick{flex:1;background:none;border:1px solid var(--hair);color:var(--ink-dim);
+  padding:0.5rem;font-size:0.875rem;font-weight:500;min-height:var(--tap)}
+.pick:hover{border-color:var(--muted);color:var(--ink)}
+.pick.on{background:var(--amber);border-color:var(--amber);color:#0a0a0a;font-weight:800}
+
+@media (max-width:620px){
+  .cards{grid-template-columns:repeat(auto-fill,minmax(8.25rem,1fr));gap:0.5rem}
+  .card{padding:0.625rem}
+}

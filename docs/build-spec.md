@@ -54,13 +54,13 @@ Declarative per station, with a `custom` escape hatch:
 
 Names taken from the draft, which are the real ones. Passwords are still placeholders.
 
-| # | Name | Concept | Digit |
-|---|------|---------|-------|
+| # | Name | Concept | Digit | State |
+|---|------|---------|-------|-------|
 | 1 | הטבלאות המשקרות | ניקוי נתונים | 3 |
 | 2 | הגרפים המשקרים | ויזואליזציית מידע | 2 |
 | 3 | הכלל הנסתר | סיווג מול חיזוי | 7 |
 | 4 | השאלה ששווה לשאול | עצי החלטה | 4 |
-| 5 | מי קיבל תשובות ומי לא | למידה מפוקחת ולא מפוקחת | 2 |
+| 5 | מי קיבל תשובות ומי לא | למידה מפוקחת ולא מפוקחת | 2 | **built** |
 | 6 | ארבעה כוכבים | KNN | 2 |
 | 7 | שמונה אנליסטים | Random Forest | 7 |
 
@@ -149,6 +149,28 @@ Two deliberate exceptions to the rem rule:
 - Hairlines and 1–3px nudges stay in px. Scaling a 1px border produces blurry half-pixels for no gain.
 
 The ceiling matters: the event runs on laptops and tablets, so 20px is where it stops rather than growing without limit on a desktop review screen. At 1280 the rendered values are within 4px of what they were before this change, so the machines the event actually runs on look the same as they did.
+
+## Station 5 — built and verified
+
+Source: `תחנה_5_.docx`, which supersedes the draft's own card set. Ten labelled trucks, six unlabelled, digit is how many of the six carry.
+
+**The rule is the antenna, and it is the only rule that works.** Verified mechanically rather than by eye: of the four features, colour, wheels and box each appear on both sides of the labelled 5/5 split, so none of them can explain the labels; only `אנטנה` separates cleanly. Applying it to the six unlabelled gives U-01 and U-03, so the digit is **2**, matching the roster and keeping the lock code intact.
+
+### Interaction
+
+Per `נראות התחנות`: the cards are shown and the group answers כן / לא on each of the six. The rule itself is never typed anywhere — getting all six right is the proof they found it, exactly as in the source.
+
+**Attempt policy: 3 submissions, `revealWhichWrong: false`.** Chosen here, not specified anywhere; confirm with the content author. The reasoning: six binary answers is 64 combinations, so naming which cards are wrong — or even how many — would let a group flip one card at a time and read the rule off the app instead of off the data. It is really one insight rather than six judgements, so the verdict is all-or-nothing and a failed submit points them back at the ten labelled cards.
+
+### Copy
+
+The brief is adapted from the draft's own station card. **The three hints are written here, not by the content author**, and escalate: compare the two groups → the other three features are noise → the rule is in the antenna column. They need Lotem's eye like the rest of the invented copy.
+
+The instruction panel carries one line only, the source's own `בדיוק תכונה אחת עובדת על כל 10 הכרטיסים`. A second bullet saying the other features are noise was written and removed: it duplicated hint 2 and handed over part of the puzzle in text that is always on screen.
+
+### What this added to the engine
+
+The `choice` sub-answer kind, which covers the yes/no case and any future pick-from-a-set. Combined with the existing `count` rule, that is the whole of station 5. The remaining kinds — `multiChoice`, `rows`, `dragToBucket`, `pickN`, `pairPick` — still land with their stations.
 
 ## Visual direction
 
