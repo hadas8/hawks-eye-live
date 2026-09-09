@@ -12,6 +12,7 @@
 // too few submissions to sweep the answer space by watching the count move.
 
 import { TABLES } from './station-1.js';
+import { UNLABELLED } from './station-5.js';
 
 export const STATIONS = [
   {
@@ -36,8 +37,7 @@ export const STATIONS = [
     hints: [
       'התחילו מהסטטוס: סמנו קודם רק שורות שחצו, ורק אחר כך טפלו בכפילויות.',
       'שני פורמטי תאריך מסתירים את אותה שיירה. השוו לפי המזהה, לא לפי התאריך.',
-      'שורה עם — לא נספרת, גם אם הסטטוס שלה חצה. זה תופס גם כשזו השורה היחידה של אותה שיירה.',
-      'עמודות המשקל והיחידה הן רעש בתחנה הזאת. השאלה היא כמה שיירות, לא כמה טון.'
+      'שורה עם — לא נספרת, גם אם הסטטוס שלה חצה. זה תופס גם כשזו השורה היחידה של אותה שיירה.'
     ]
   },
 
@@ -45,7 +45,36 @@ export const STATIONS = [
   { n: 2, name: 'הגרפים המשקרים',        concept: 'ויזואליזציית מידע',        password: ['אופק'], digit: 2, kind: null },
   { n: 3, name: 'הכלל הנסתר',            concept: 'סיווג מול חיזוי',          password: ['מדף'],  digit: 7, kind: null },
   { n: 4, name: 'השאלה ששווה לשאול',     concept: 'עצי החלטה',                password: ['ענף'],  digit: 4, kind: null },
-  { n: 5, name: 'מי קיבל תשובות ומי לא', concept: 'למידה מפוקחת ולא מפוקחת',  password: ['מצפן'], digit: 2, kind: null },
+
+  {
+    n: 5,
+    name: 'מי קיבל תשובות ומי לא',
+    concept: 'למידה מפוקחת ולא מפוקחת',
+    password: ['מצפן'],          // still a placeholder
+    digit: 2,
+    kind: 'cards',
+
+    // Six binary choices is 64 combinations, so per-card feedback plus
+    // retries would be brute-forceable. It is really one insight, not six
+    // judgements: get the rule and all six follow. So the verdict is
+    // all-or-nothing, and a wrong submit sends them back to the ten
+    // labelled cards rather than telling them which of the six moved.
+    maxAttempts: 3,
+    revealWhichWrong: false,
+
+    brief: 'עשר משאיות כבר נבדקו ואנחנו יודעים על כל אחת אם נשאה אמל"ח. על שש אחרות אין לנו כלום, ואין זמן לעצור כל אחת ולבדוק.',
+
+    answer: {
+      parts: UNLABELLED.map(c => ({ kind: 'choice', value: c.carries })),
+      rule: 'count'
+    },
+
+    hints: [
+      'חמש מהמשאיות שנבדקו נושאות אמל"ח וחמש לא. חפשו תכונה שיש לכל החמש הנושאות ואין לאף אחת מהאחרות.',
+      'תכונה שמופיעה גם אצל נושאת וגם אצל לא נושאת לא יכולה להיות הכלל. עברו על ארבע התכונות ופסלו.'
+    ]
+  },
+
   { n: 6, name: 'ארבעה כוכבים',          concept: 'KNN — שכנים קרובים',       password: ['גדר'],  digit: 2, kind: null },
   { n: 7, name: 'שמונה אנליסטים',        concept: 'Random Forest — יער אקראי', password: ['חורש'], digit: 7, kind: null }
 ];

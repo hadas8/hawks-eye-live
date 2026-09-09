@@ -1,9 +1,14 @@
-// The closing reveal. Shows only this group's technical score; facilitators
-// add the social bonus points on paper. No cross-group comparison, by design.
+// The closing reveal. Deliberately short: one dramatic consequence, the
+// score, and the name of the thing they just did.
+//
+// It does not recap the seven algorithms. Each station already names its own
+// concept on its solved screen, and the ribbon already shows all seven
+// digits, so a summary list said both things a second time and blunted the
+// ending. Shows only this group's technical score; facilitators add the
+// social bonus points on paper. No cross-group comparison, by design.
 import { CFG } from '../config.js';
 import { S, reset } from '../state.js';
 import { STATIONS } from '../data/stations.js';
-import { esc } from '../lib/text.js';
 import { register } from '../ui/actions.js';
 import { resetBootTyping } from './boot.js';
 
@@ -12,20 +17,13 @@ const MAX_TECH = STATIONS.length * CFG.pointsPerStation;
 export function viewReveal() {
   const solved = STATIONS.filter(s => S.digits[s.n] != null && !S.given[s.n]).length;
 
-  const roster = STATIONS.map(s => {
-    const given = !!S.given[s.n];
-    return `<span class="k ${given ? 'g' : ''}">${s.n} · ${S.digits[s.n] ?? '·'}</span>
-      <span class="v">${esc(s.concept)}<small>${esc(s.name)}${given ? ' · נמסרה' : ''}</small></span>`;
-  }).join('');
-
   return `<div class="stack reveal-in">
     <div>
-      <div class="eyebrow">הקופסה נפתחה</div>
-      <h1>לא פתרתם חידות — הפעלתם אלגוריתמים</h1>
-      <p class="lead">שבע התחנות לא היו משחק: כל אחת מהן היא שיטה אמיתית שמערכות מודיעין משתמשות בה, ואתם הפעלתם אותה בידיים לפני שמישהו אמר לכם איך היא נקראת.</p>
+      <div class="eyebrow">מעבר ג'נתא · 03:41</div>
+      <h1>כל הכבוד, סיכלתם את המבצע</h1>
+      <p class="lead">המשלוח נעצר, והרקטות שלהם ימשיכו לפספס.</p>
+      <p class="punch">מצאתם אותו בתוך טבלה.</p>
     </div>
-
-    <div class="panel"><div class="faculty">${roster}</div></div>
 
     <div class="scorebox">
       <div class="label">ניקוד התחנות</div>
@@ -34,9 +32,9 @@ export function viewReveal() {
       <p class="fine">המדריכים מוסיפים לזה את נקודות המשימות החברתיות שלכם, ואז מכריזים על המנצחים.</p>
     </div>
 
-    <div>
-      <div class="finale">כל זה יחד נקרא למידת מכונה</div>
-      <p class="finale-sub">הנתונים היו כאן מההתחלה — מה שחסר היה מישהו שיודע מה לשאול אותם.</p>
+    <div class="close">
+      <div class="finale">לזה קוראים למידת מכונה</div>
+      <p class="finale-sub">כל תחנה כאן היא שיטה שמנתחי מודיעין עובדים איתה באמת.</p>
     </div>
 
     <div class="row" style="justify-content:center">

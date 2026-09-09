@@ -44,6 +44,28 @@ export function vaultUnlock(done) {
   setTimeout(done, cascade + BLAST_MS);
 }
 
+// Two effects hide the screen rather than glow over it, and both of them
+// exist so the screen can change out of sight. Swapping on the way in shows
+// the destination, covers it, then uncovers the same thing — which reads as
+// the screen loading twice.
+//
+//   wipe    #fx.wipe reaches clip-path:inset(0) at 45% of its 0.9s run
+//   timeout coldIn peaks at 86% black at 30% of its 1.4s run
+const COVERS = {
+  wipe:    { total: 950,  cover: 405 },
+  timeout: { total: 1400, cover: 420 }
+};
+
+// Run a covering effect and change the screen underneath it at the moment
+// it is opaque. Under reduced motion there is nothing to hide behind, so
+// the swap is immediate rather than a wait in front of an invisible frame.
+export function coverThen(kind, text, swap, sub) {
+  if (reduced.matches) return swap();
+  const c = COVERS[kind];
+  fx(kind, text, c.total, sub);
+  setTimeout(swap, c.cover);
+}
+
 export function shake() {
   if (reduced.matches) return;
   const app = document.getElementById('app');

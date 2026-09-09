@@ -31,6 +31,9 @@
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
   --ls:.22em;
 
-  --stage-max:1020px;
-  --tap:44px;
+  /* In rem, so the reading column grows with the type and the measure
+     stays constant: 1024px at the 16px root, 1280px at the 20px root. */
+  --stage-max:64rem;
+  /* Touch targets are physical, so this has a px floor no matter the root. */
+  --tap:max(44px, 2.75rem);
 }
