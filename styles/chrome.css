@@ -49,9 +49,12 @@
 .slot.verify .d{animation:verifyDigit .5s ease-out both}
 @keyframes verifyDigit{35%{color:#fff;transform:scale(1.18)}100%{transform:scale(1)}}
 
-/* given: the station closed unsolved, the digit was handed over, it scored 0 */
+/* given: the station closed unsolved, the digit was handed over, it scored 0.
+   The dashed border and the muted digit carry that on their own. No
+   strikethrough: this is the ribbon they read the lock code off at the end,
+   and a line through a 7 at this size is a misread waiting to happen. */
 .slot.given{border-color:#3a2a2e;border-style:dashed}
-.slot.given .d{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--bad)}
+.slot.given .d{color:var(--muted)}
 
 .slot.current{border-color:var(--ink-dim)}
 .slot.current .d{animation:blink 1.4s steps(2) infinite}
