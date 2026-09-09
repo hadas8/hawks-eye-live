@@ -8,6 +8,18 @@ Source material: the Drive folder `1P9wJ3NlPZ6Er5CwdTQkQBl9JJfCW3nQa` (owner lot
 
 **מבצע עין הנץ.** The draft's name חוסם הציר is dropped; the frame is unchanged. Intelligence analysis unit 7 of Unit 8200, the Syria to Lebanon smuggling route, **Hezbollah's** Unit 4400 moving a strategic cargo, 02:17, seven stations, seven digits, one physical box. Both attributions come from the draft's opening card (יחידת ניתוח 7 — אמ"ן, יחידה 4400 של חיזבאללה) and were missing from the prototype's copy; restored 2026-09-08. The draft's אמ"ן was replaced with יחידה 8200 per Hadas: the participants are high-schoolers who may not decode the acronym, and 8200 is the seminar's own frame.
 
+## What this is, and what it is not
+
+**It is an event, not a lesson.** A fast competitive round that previews algorithms the participants will learn over the coming year. It is not a teaching tool, and it does not owe any concept a full treatment.
+
+Consequences, all of which have been got wrong at least once here:
+
+- **No reflection or discussion screens in the app.** No "what did you notice", no debrief panels, no post-digit thinking questions. The draft's `לדיון אחרי הפתרון` cards on stations 5 and 7 are facilitator material and stay out of the app.
+- **The time after a station is solved belongs to the bonus quests.** It is already designed and already scored, 5 points each, counted by facilitators on paper. Anything the app puts there is competing with it.
+- **A concept gets named once and that is the whole dose.** The station's solved screen says `האלגוריתם שהרגע הפעלתם נקרא X`. That is the preview. The reveal names the field once more and stops.
+- **A station does not have to exercise its whole concept.** Station 5 is `למידה מפוקחת ולא מפוקחת` and only exercises the supervised half. That is correct. An unsupervised second beat was designed and rejected on these grounds.
+- **A short station is not a broken station.** Station 5 is one insight and will run well under its 7 minutes. Do not pad a station to fill the clock; the format already absorbs early finishers.
+
 ## Timer
 
 - **Per station, 7 minutes.** Starts the moment a group submits the correct password for that station. No global session clock.
@@ -159,6 +171,8 @@ Source: `תחנה_5_.docx`, which supersedes the draft's own card set. Ten label
 ### Interaction
 
 Per `נראות התחנות`: the cards are shown and the group answers כן / לא on each of the six. The rule itself is never typed anywhere — getting all six right is the proof they found it, exactly as in the source.
+
+It is one insight and it will run fast. That is fine — see *What this is, and what it is not*.
 
 **Attempt policy: 3 submissions, `revealWhichWrong: false`.** Chosen here, not specified anywhere; confirm with the content author. The reasoning: six binary answers is 64 combinations, so naming which cards are wrong — or even how many — would let a group flip one card at a time and read the rule off the app instead of off the data. It is really one insight rather than six judgements, so the verdict is all-or-nothing and a failed submit points them back at the ten labelled cards.
 
