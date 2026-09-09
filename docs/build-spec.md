@@ -199,6 +199,19 @@ Each question card carries the number and the question on one line and `תשוב
 
 **The preview is always measured against the whole fleet of sixteen, never against what previously written questions already removed.** That matches the worksheet, and it keeps the hard part hard: four questions can each halve the fleet and still be worthless together, because *האם הרכב צבוע לבן* and *האם מספר הרכב זוגי* cut along exactly the same line. Nothing on screen reveals that, and finding it is the decision-tree insight.
 
+**The fleet and the questions sit side by side above 900px, and the fleet pins.** Stacked, the station does not work: the
+page ran to nearly three screens, and by the time the last question was reachable the fleet had scrolled 280px above the fold,
+so tapping a question put its highlight somewhere you could not see. Two intermediate attempts failed for reasons worth not
+repeating — pinning the fleet *above* the questions makes it cover them as they scroll underneath, and pinning it *beside*
+them without capping the list lets the 1400px question column drag the pinned pane off the bottom of its own grid row, so the
+fleet slides away exactly as you reach questions 14 to 20. What works is both: side by side, the fleet pinned, and the
+question list capped to the viewport so it scrolls in place. Verified at 1280×800, 1512×982, 1024×768 and 768×1024 that all
+sixteen fleet rows stay countable while the twentieth question is reachable, and that the highlight a tap produces is fully on
+screen. Below 900px there is no room to sit them side by side, so the fleet pins above the questions with a capped height.
+
+Chasing this turned up an app-wide bug that had already shipped: `#app`'s `overflow-x: hidden` was killing every
+`position: sticky`, so **the station clock scrolled off screen on every station**. Now a hard rule in `CLAUDE.md`.
+
 **After every submit, right or wrong, the group sees the funnel their four produced**, question by question, with zero-cuts marked. It is the only feedback on failure and it does the work: a set built on question 5 reads 15, 0, 0, 0; four halvers on two splits read 8, 0, 0, 4. It also stops a rejection reading as a bug when the group is looking at one surviving vehicle. The funnel describes their choice and never points at a better one.
 
 Three failure messages, because there are three ways to be wrong: a repeated question number, landing on one vehicle via a giveaway, and leaving several vehicles standing.
