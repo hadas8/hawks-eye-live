@@ -19,9 +19,10 @@ export function viewReveal() {
 
   return `<div class="stack reveal-in">
     <div>
-      <div class="eyebrow">השיירה נעצרה במעבר ג'נתא</div>
-      <h1>עשרות רקטות לא יידעו לאן לפגוע</h1>
-      <p class="punch">הנשק שעצר אותן היה מידע.</p>
+      <div class="eyebrow">מעבר ג'נתא · 03:41</div>
+      <h1>כל הכבוד, סיכלתם את המבצע</h1>
+      <p class="lead">המשלוח נעצר, והרקטות שלהם ימשיכו לפספס.</p>
+      <p class="punch">מצאתם אותו בתוך טבלה.</p>
     </div>
 
     <div class="scorebox">
@@ -31,9 +32,9 @@ export function viewReveal() {
       <p class="fine">המדריכים מוסיפים לזה את נקודות המשימות החברתיות שלכם, ואז מכריזים על המנצחים.</p>
     </div>
 
-    <div>
-      <div class="finale">כל מה שעשיתם הלילה נקרא למידת מכונה</div>
-      <p class="finale-sub">לא פתרתם חידות — הפעלתם שבעה אלגוריתמים אמיתיים, לפני שמישהו אמר לכם איך הם נקראים.</p>
+    <div class="close">
+      <div class="finale">לזה קוראים למידת מכונה</div>
+      <p class="finale-sub">כל תחנה כאן היא שיטה שמנתחי מודיעין עובדים איתה באמת.</p>
     </div>
 
     <div class="row" style="justify-content:center">

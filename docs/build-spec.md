@@ -185,24 +185,35 @@ Rejected: **מטען חבלה.** A bomb implies a countdown, and the timer desig
 
 ### The reveal's shape
 
-Cut back hard on Hadas's direction 2026-09-09: no algorithm summary, no explanation of what was or was not in the crate. Four blocks, one screen, no scrolling.
+Rewritten with Hadas 2026-09-09. It is a closing frame, not another page: full screen, centred on both axes, roughly double the type size of every other screen, and it congratulates them before it does anything else.
 
 ```
-[eyebrow]  השיירה נעצרה במעבר ג'נתא
-[h1]       עשרות רקטות לא יידעו לאן לפגוע
-[punch]    הנשק שעצר אותן היה מידע.
+[eyebrow]  מעבר ג'נתא · 03:41
+[h1]       כל הכבוד, סיכלתם את המבצע
+[lead]     המשלוח נעצר, והרקטות שלהם ימשיכו לפספס.
+[punch]    מצאתם אותו בתוך טבלה.            (amber)
 
-[score]    70 · מתוך 70
+           ── 70 ──                        (amber rules, no box)
 
-[finale]   כל מה שעשיתם הלילה נקרא למידת מכונה
-[sub]      לא פתרתם חידות — הפעלתם שבעה אלגוריתמים אמיתיים, לפני שמישהו אמר לכם איך הם נקראים.
+[finale]   לזה קוראים למידת מכונה            (amber, inside a faint ring)
+[sub]      כל תחנה כאן היא שיטה שמנתחי מודיעין עובדים איתה באמת.
 ```
 
-The shape is: consequence, then the data punch line, then the score, then the name of the thing they did. The operational detail is demoted to the eyebrow so the two large lines land without competition.
+The station-to-concept roster was removed: each station already names its own concept on its solved screen and the ribbon already shows all seven digits.
 
-**The station-to-concept roster was removed.** Each station already names its own concept on its solved screen (`האלגוריתם שהרגע הפעלתם נקרא…`), and the ribbon already shows all seven digits, so the list repeated both and blunted the ending. The `.turn` style went with it.
+**Impact comes from size, colour and shape, not from more words.** The score lost its filled box for a pair of amber hairlines, the closing block sits inside a faint amber ring echoing the insignia and the vault's shockwaves, and the amber accent is used harder here than anywhere else in the app.
 
-The guidance-kit reasoning above still drives the copy, but it is now carried entirely by implication — `לא יידעו לאן לפגוע` only makes sense if the cargo was guidance, and that is enough. Nothing on screen explains it.
+**Every size on this screen is bounded by viewport height as well as width** — `clamp(1.75rem, min(5.4vw, 7.4vh), 4rem)` and similar. A closing frame has to fit the screen it closes on, and without the `vh` term the last line of the whole event slid under the ribbon on a 768-tall laptop. Verified clear of the ribbon at 1366×768, 1280×800, 1280×900, 1920×1080 and 2560×1440.
+
+### Hebrew register on this screen
+
+The first draft of this copy read as machine-written, and the diagnosis is worth keeping. Every line was an English rhetorical formula in Hebrew clothing:
+
+- `עשרות רקטות לא יידעו לאן לפגוע` — personified the rockets. English copy does that; Hebrew does not.
+- `הנשק שעצר אותן היה מידע` — the "the X that did Y was Z" reversal.
+- `לא פתרתם חידות — הפעלתם אלגוריתמים` — "not X, but Y", the most recognisable LLM tic, and it appeared twice on one screen.
+
+Three aphorisms stacked in six lines is itself the tell. The rewrite uses none of those structures: plain statements, concrete nouns, spoken forms (`לזה קוראים` rather than `זה נקרא`, `ימשיכו לפספס` rather than an abstraction). **Hebrew register is the weakest thing produced here — it needs a native reader's judgement on every pass, not just a proofread.**
 
 ### Dependencies and open points
 
