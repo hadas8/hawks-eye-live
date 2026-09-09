@@ -38,6 +38,7 @@ Append `?dev` for the test strip that solves stations and prints the passwords. 
 | `tools/dev-server.js` | Local static server. Not deployed. |
 | `CLAUDE.md` | Constraints and workflow. |
 | `docs/build-spec.md` | The spec: frame, timer, scoring, answer engine, station 1 data, open content questions. |
+| `docs/station-5-difficulty.md` | Open content question: station 5 is too easy. Options and what is needed from the content author. |
 | `docs/prototype.html` | The Cowork prototype. **Reference only, superseded by the code above.** |
 
 ### How a screen gets on the page

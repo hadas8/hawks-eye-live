@@ -172,7 +172,7 @@ Source: `תחנה_5_.docx`, which supersedes the draft's own card set. Ten label
 
 Per `נראות התחנות`: the cards are shown and the group answers כן / לא on each of the six. The rule itself is never typed anywhere — getting all six right is the proof they found it, exactly as in the source.
 
-It is one insight and it will run fast. That is fine — see *What this is, and what it is not*.
+**It is one insight and will run in 60 to 90 seconds of a 7-minute slot, against station 1's eight tables.** Hadas raised this as too easy on 2026-09-09 and it is unresolved, pending a conversation with the content author. The options, the constraint that the digit must stay 2, and what is needed from Lotem are written up in [station-5-difficulty.md](station-5-difficulty.md); Hadas leans toward a second labelled round on a two-feature rule, which would also make the station's concept plain `למידה מפוקחת`. **Station 5 ships as it is until that is settled.** Note this is a separate concern from padding a station to fill the clock, which is still not something to do — see *What this is, and what it is not*.
 
 **Attempt policy: 3 submissions, `revealWhichWrong: false`.** Chosen here, not specified anywhere; confirm with the content author. The reasoning: six binary answers is 64 combinations, so naming which cards are wrong — or even how many — would let a group flip one card at a time and read the rule off the app instead of off the data. It is really one insight rather than six judgements, so the verdict is all-or-nothing and a failed submit points them back at the ten labelled cards.
 
