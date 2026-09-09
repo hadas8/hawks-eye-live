@@ -8,17 +8,26 @@
    starts. */
 .qlist{columns:19rem;column-gap:0.4375rem}
 
-.qrow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.75rem;
-  text-align:start;background:var(--panel);border:1px solid var(--hair);
-  color:var(--ink-dim);padding:0.625rem 0.75rem;min-height:var(--tap);
+/* Two rows, not three columns. Side by side, the answer label was 134px of
+   a 304px card and squeezed the question into 118px, so eighteen of the
+   twenty wrapped to two lines and the two shortest did not — which is why
+   the cards came out at two different heights. Giving the question the full
+   width fits every one of them on a single line, and every card is then the
+   same height. */
+.qrow{display:grid;grid-template-columns:auto 1fr;column-gap:0.75rem;row-gap:0.125rem;
+  align-items:baseline;text-align:start;background:var(--panel);
+  border:1px solid var(--hair);color:var(--ink-dim);padding:0.625rem 0.75rem;
   font-family:var(--body);font-size:0.9375rem;
   /* multi-column has no gap, and a question must not split across columns */
   width:100%;margin-bottom:0.4375rem;break-inside:avoid}
+.qrow .qn{grid-column:1;grid-row:1}
+.qrow .qt{grid-column:2;grid-row:1}
+.qrow .qa{grid-column:2;grid-row:2}
 .qrow:hover{border-color:var(--muted);color:var(--ink)}
 
 .qrow .qn{font-family:var(--mono);font-size:0.75rem;color:var(--muted);min-width:1.25rem}
 .qrow .qt{line-height:1.35}
-.qrow .qa{font-size:0.75rem;color:var(--muted);white-space:nowrap}
+.qrow .qa{font-size:0.75rem;color:var(--muted)}
 .qrow .qa b{font-family:var(--mono);color:var(--ink-dim);font-weight:600}
 
 /* Chosen — its number is written in the union sheet. */
@@ -60,7 +69,6 @@ table.fleet tbody tr.out td{color:var(--muted)}
 
 @media (max-width:620px){
   .qlist{columns:1}
-  .qrow{grid-template-columns:auto 1fr;gap:0.5rem}
-  .qrow .qa{grid-column:2;white-space:normal}
+  .qrow{column-gap:0.5rem}
   .frow{grid-template-columns:1fr 3rem 3rem}
 }
