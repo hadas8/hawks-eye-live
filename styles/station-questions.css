@@ -62,8 +62,18 @@
      drag the pinned pane off the bottom of its own grid row and the fleet
      slides away just as you reach questions 14 to 20. Capping the list to
      the viewport and scrolling it in place keeps both panes on one screen
-     and the fleet visible for every question. */
-  .qlist{max-height:calc(100vh - 9rem);overflow-y:auto;padding-inline-end:0.25rem}
+     and the fleet visible for every question.
+
+     It has to stop being multi-column to do that. A multi-column box with a
+     capped height does not scroll down — it flows the overflow into further
+     columns SIDEWAYS, so capping it turned the list horizontal and hid
+     thirteen of the twenty questions off the right edge. Beside the fleet
+     there is only room for one column anyway, so this is a plain vertical
+     list that scrolls the way it looks like it should. */
+  .qlist{columns:auto;display:flex;flex-direction:column;gap:0.4375rem;
+    max-height:calc(100vh - 9rem);overflow-y:auto;overflow-x:hidden;
+    padding-inline-end:0.25rem}
+  .qlist .qrow{margin-bottom:0}
 }
 /* Below that there is no room to sit them side by side, so the fleet pins
    above the questions with a cap, and the group scrolls inside it. */

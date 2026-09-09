@@ -101,7 +101,7 @@ export function viewQuestions() {
     <div class="fleet-pane">
       <div class="eyebrow">הצי · שישה־עשר רכבים${
         shownId ? ` · מוצגת שאלה ${shownId}` : ''}</div>
-      <div class="tablewrap"><table class="fleet">
+      <div class="tablewrap" data-keep-scroll="s4-fleet"><table class="fleet">
         <thead><tr>${COLUMNS.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead>
         <tbody>${FLEET.map(v => fleetRow(v, out)).join('')}</tbody>
       </table></div>
@@ -113,7 +113,8 @@ export function viewQuestions() {
 
     <div class="qset">
       <div class="eyebrow">עשרים שאלות</div>
-      <div class="qlist">${QUESTIONS.map(q => questionRow(q, shownId, picked)).join('')}</div>
+      <div class="qlist" data-keep-scroll="s4-questions">${
+        QUESTIONS.map(q => questionRow(q, shownId, picked)).join('')}</div>
     </div>
     </div>
 
