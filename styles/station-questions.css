@@ -39,6 +39,46 @@
 .qrow.on .qn{color:var(--amber);font-weight:600}
 .qrow.on .qa b{color:var(--amber)}
 
+/* The fleet stays on screen while the questions scroll under it. Without
+   this the station is unusable: the page runs to nearly three screens, the
+   table is 774px on its own, and by the time the last question is reachable
+   the table ended 280px above the fold — so tapping a question showed its
+   highlight somewhere you could not see. Tap, scroll up, look, scroll back,
+   twenty times.
+
+   The rows are tighter than elsewhere in the app for the same reason: the
+   whole fleet has to fit in the pinned pane, or the group is scrolling
+   inside it to count. */
+/* Side by side wherever there is room. Stacked, the fleet cannot work: it
+   is 450px tall and the questions are 1200px, so either the fleet scrolls
+   away when you tap a question, or it is pinned and covers the questions
+   scrolling underneath it. Both were tried. Beside each other, the fleet
+   pins and the questions scroll past it with nothing hidden. */
+@media (min-width:900px){
+  .q-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(17rem,1fr);
+    gap:1.25rem;align-items:start}
+  .fleet-pane{position:sticky;top:4rem}
+  /* The questions are three times taller than the fleet, so left to run they
+     drag the pinned pane off the bottom of its own grid row and the fleet
+     slides away just as you reach questions 14 to 20. Capping the list to
+     the viewport and scrolling it in place keeps both panes on one screen
+     and the fleet visible for every question. */
+  .qlist{max-height:calc(100vh - 9rem);overflow-y:auto;padding-inline-end:0.25rem}
+}
+/* Below that there is no room to sit them side by side, so the fleet pins
+   above the questions with a cap, and the group scrolls inside it. */
+@media (max-width:899px){
+  .fleet-pane{position:sticky;top:4rem;z-index:3;background:var(--ground);padding-bottom:0.5rem}
+  .fleet-pane .tablewrap{max-height:42vh;overflow:auto}
+}
+/* Narrower than the app's other tables: it has to share the row with the
+   questions, and its own font is a step down to make that fit. */
+table.fleet{min-width:34rem}
+table.fleet{font-size:0.875rem}
+table.fleet td{padding:0.1875rem 0.75rem;line-height:1.3}
+table.fleet th{padding:0.3125rem 0.75rem;position:sticky;top:0;z-index:1;
+  background:var(--panel)}
+
 /* Previewing a question dims the vehicles it rules out. No number is shown
    anywhere: counting the survivors is the exercise, and printing the count
    would hand the group the answer the worksheet asks them to work out. */

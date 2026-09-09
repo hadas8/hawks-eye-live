@@ -97,7 +97,8 @@ export function viewQuestions() {
       <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> אחרי כל שליחה תראו כמה כל שאלה שלכם פסלה.</p>
     </div>
 
-    <div>
+    <div class="q-layout">
+    <div class="fleet-pane">
       <div class="eyebrow">הצי · שישה־עשר רכבים${
         shownId ? ` · מוצגת שאלה ${shownId}` : ''}</div>
       <div class="tablewrap"><table class="fleet">
@@ -113,6 +114,7 @@ export function viewQuestions() {
     <div class="qset">
       <div class="eyebrow">עשרים שאלות</div>
       <div class="qlist">${QUESTIONS.map(q => questionRow(q, shownId, picked)).join('')}</div>
+    </div>
     </div>
 
     <div class="panel"><div class="stack">
