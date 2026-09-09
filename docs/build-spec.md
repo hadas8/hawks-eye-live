@@ -71,7 +71,7 @@ Names taken from the draft, which are the real ones. Passwords are still placeho
 | # | Name | Concept | Digit | State |
 |---|------|---------|-------|-------|
 | 1 | הטבלאות המשקרות | ניקוי נתונים | 3 |
-| 2 | הגרפים המשקרים | ויזואליזציית מידע | 2 |
+| 2 | הגרפים המשקרים | ויזואליזציית מידע | 2 | **built** |
 | 3 | הכלל הנסתר | סיווג מול חיזוי | 7 |
 | 4 | השאלה ששווה לשאול | עצי החלטה | 4 | **built** |
 | 5 | מי קיבל תשובות ומי לא | למידה מפוקחת ולא מפוקחת | 2 | **built** |
@@ -163,6 +163,29 @@ Two deliberate exceptions to the rem rule:
 - Hairlines and 1–3px nudges stay in px. Scaling a 1px border produces blurry half-pixels for no gain.
 
 The ceiling matters: the event runs on laptops and tablets, so 20px is where it stops rather than growing without limit on a desktop review screen. At 1280 the rendered values are within 4px of what they were before this change, so the machines the event actually runs on look the same as they did.
+
+## Station 2 — built, with reconstructed data
+
+Source: `תחנה_2_גרפים_סופי.docx`. Seven envelopes, each holding two charts of identical data where one has been distorted. The group picks the honest chart in all seven. **Digit 2, stated outright by the source.**
+
+Feedback is pass or fail and nothing else, per `נראות התחנות`. **Submissions are uncapped**, which is safe precisely because nothing is revealed: seven binary choices is 128 combinations and with no partial feedback there is nothing to hill-climb on, so a sweep costs more clicks than seven minutes hold. **Hints are per envelope**, not station-wide — seven independent puzzles, so a group stuck on ד׳ should not have to spend three hints reaching it.
+
+### The charts are drawn, not imported
+
+The source's fourteen charts are images inside the docx and cannot be read out of it. They are rebuilt as inline SVG by `src/lib/chart.js`, which takes the distortions as parameters rather than treating them as faults to avoid: `yFloor` (where the value axis starts), `highlight` (one bar in the accent colour while the rest recede), `order: 'desc'` (largest first, destroying chronology), `pick` (render only these indices, evenly spaced, so unequal gaps vanish) and `flatten` (replace every value with the mean). RTL: category 0 sits at the right and the value axis is on the right.
+
+Drawing rather than importing was deliberate. The distortions have to be exact — an axis starting at precisely 96, precisely the smallest bar highlighted — which is controllable in SVG and inherited by luck from a spreadsheet export. It also keeps the repo free of an asset pipeline, and the charts theme to the dark palette and scale on a tablet.
+
+### Two departures from the source, both agreed with Hadas
+
+1. **The liar's position is redistributed.** In the source the lying chart is GRAPH 1 in six of seven envelopes, so "always pick graph 2" scored six of seven. It is now first in three envelopes and second in four, so there is no position to learn instead of reading the charts. The key is 1, 2, 2, 1, 1, 2, 1.
+2. **The numeric chain is dropped.** The source carries `5+4+3+4+4+4+5 = 29 → 2`, but it does not derive from its own answers: envelope ו׳'s stated answer is a rise of 3 points while the chain uses 4, and ז׳'s is 25 while the chain uses 5. `נראות התחנות` replaces the numeric task with click-the-honest-chart anyway, so the chain is unused and the digit is simply 2.
+
+### What the source gave, and what was invented
+
+**Used exactly as stated:** ציר צפוני 8% and ג'נתא 38% (ב׳); the 98→101 activity index (ו׳); three events between January and April (ג׳); a weekly average of 4 (ד׳); `3+6+4+7+5 = 25` and its mean of 5 (ז׳); every trick, question and answer.
+
+**Invented, and needing the content author's eye:** the remaining series in each envelope, listed in `src/data/station-2.js`. Specifically א׳'s monthly index `98, 99, 100, 99, 101, 100`; ב׳'s two middle crossings at 31% and 23%, chosen to sum to 100 with the two stated figures; ג׳'s full twelve months `1,1,1,0,2,3,4,5,4,6,7,8`, built so January to April sums to the stated 3 while the four sampled months read as smooth growth; ד׳'s eight weeks `3,6,2,5,4,4,5,3`, built to average exactly 4 with no real trend; ה׳'s sixteen weeks and their monthly means `4.5, 4.5, 6, 7`, built so the monthly view rises cleanly while week 5 crashes to 1; ו׳'s monotonic `98,99,99,100,100,101`, kept distinct from א׳'s noisier series so the two truncated-axis envelopes do not feel identical.
 
 ## Station 4 — built and verified
 
@@ -340,7 +363,7 @@ Three aphorisms stacked in six lines is itself the tell. The rewrite uses none o
 
 Being worked one at a time with the content author. Recorded here so nothing is lost.
 
-1. **Station 2's digit has no source under the new interaction.** The draft derives it from numeric answers per chart pair (29 → 2), but `נראות התחנות` replaces that with click-the-honest-chart, 2 options, all-or-nothing. That produces no numbers. Recommendation: award the digit on a clean sweep.
+1. ~~**Station 2's digit has no source.**~~ **Resolved — the source states it outright.** `תחנה_2_גרפים_סופי.docx`: *עדכנו את ספרת תחנה 2 ל-2 (במקום 6). הקוד המעודכן: 3274227*. The digit is 2, awarded on a clean sweep, and the lock code is intact. Built 2026-09-09.
 2. **Station 3's key is wrong — confirmed against `תחנה_3.docx` 2026-09-09.** The authoritative file has no answer key at all: its union sheet is blank. Working its stated rule over the twenty cards gives א=9 (cards 1, 4, 6, 8, 10, 12, 15, 18, 20), ב=7 (2, 5, 7, 11, 13, 16, 19) and ג=4 (3, 9, 14, 17). The docx says the digit is the count in box א, which is **9**, not the 7 the roster needs. **7 is the count for box ב.** Redefining the digit as box ב keeps the code `3274227` intact; otherwise the digit is 9 and the code becomes `3294227`. The draft's own key lists nine cards while claiming seven, then says "רגע, ספרו שוב".
 3. **Station 3's rule is ambiguous for about six cards**, because "is the answer a category" and "do we have this data" are independent axes but box ג mixes them. Cards 12, 15, 18 and 20 are yes/no questions with no available data and can be argued into either box. A drag-to-bucket station with 3 attempts needs one unambiguous key.
 4. ~~**Station 4's truth check is mathematically false.**~~ **Withdrawn 2026-09-09 — this blocker was written against the draft, not the authoritative file, and does not survive contact with it.** `תחנה_4_.docx` is internally consistent: all twenty questions' stated answers match the vehicle table, and its truth check — each chosen question must filter exactly 8 — is satisfiable. Ten of the twenty questions filter exactly 8. The error is in the *draft*, which nominates {1, 2, 3, 5} as the best four; question 5, the stained windshield, filters 15, so the draft's own key contradicts the docx's rule. The draft is superseded, so there is nothing to fix.

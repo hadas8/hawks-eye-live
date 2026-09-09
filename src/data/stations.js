@@ -12,6 +12,7 @@
 // too few submissions to sweep the answer space by watching the count move.
 
 import { TABLES } from './station-1.js';
+import { ENVELOPES, honestPosition } from './station-2.js';
 import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED } from './station-5.js';
 
@@ -43,7 +44,34 @@ export const STATIONS = [
   },
 
   // ── not built. Passwords and several digits are still placeholders. ──
-  { n: 2, name: 'הגרפים המשקרים',        concept: 'ויזואליזציית מידע',        password: ['אופק'], digit: 2, kind: null },
+
+  {
+    n: 2,
+    name: 'הגרפים המשקרים',
+    concept: 'ויזואליזציית מידע',
+    password: ['אופק'],          // still a placeholder
+    digit: 2,
+    kind: 'charts',
+
+    // נראות התחנות: all or nothing, and the group is told nothing about
+    // WHICH envelope is wrong. Uncapped submissions are safe because of
+    // that: seven binary choices with no partial feedback gives nothing to
+    // hill-climb on, so a sweep costs more clicks than the clock allows.
+    revealWhichWrong: false,
+
+    brief: 'שבע נקודות תצפית שלחו דוחות גרפיים, וכל דוח הגיע בשני עותקים עם אותם נתונים בדיוק. באחד מכל זוג מישהו סידר את הגרף כך שיטעה את מי שמסתכל.',
+
+    answer: {
+      parts: ENVELOPES.map(env => ({ kind: 'choice', value: honestPosition(env) })),
+      // The digit is stated outright by the source, so it is not derived
+      // from the answers: תחנה_2_גרפים_סופי.docx says
+      // "עדכנו את ספרת תחנה 2 ל-2 (במקום 6). הקוד המעודכן: 3274227".
+      rule: 'literal'
+    },
+
+    hints: []   // station 2's hints are per envelope, inside the station
+  },
+
   { n: 3, name: 'הכלל הנסתר',            concept: 'סיווג מול חיזוי',          password: ['מדף'],  digit: 7, kind: null },
 
   {
