@@ -36,12 +36,13 @@
      None of the three is amber: amber is the app's own accent, so an amber
      box read as active UI rather than as box א׳. None is green or red
      either, which are verdict colours everywhere else, nor coral, which is
-     --miss. Indigo, teal and pink sit far enough apart on the wheel to
-     survive being read at the size of a 44px button in peripheral vision;
-     blue-next-to-teal did not. All three are equally saturated, so no box
-     reads as the reject pile before the group has worked out what the
-     boxes mean. */
-  --box-1:#7c74f0;  --box-1-soft:rgba(124,116,240,.14); --box-1-dim:rgba(124,116,240,.45);
+     --miss. Violet, teal and pink sit far enough apart to survive being
+     read at the size of a 44px button in peripheral vision. Two rejects
+     worth not repeating: blue for א׳ is indistinguishable from teal at
+     that size, and a deeper pink for ג׳ starts reading as the red
+     verdict colour. All three are equally saturated, so no box reads as
+     the reject pile before the group has worked out what the boxes mean. */
+  --box-1:#b48af5;  --box-1-soft:rgba(180,138,245,.14); --box-1-dim:rgba(180,138,245,.45);
   --box-2:#3fc7d4;  --box-2-soft:rgba(63,199,212,.14);  --box-2-dim:rgba(63,199,212,.45);
   --box-3:#ef7d9d;  --box-3-soft:rgba(239,125,157,.14); --box-3-dim:rgba(239,125,157,.45);
 
