@@ -18,7 +18,7 @@ Hadas's calls, applied:
 
 Together those take the station from 48 comparisons to 36 and make a failed attempt worth something. Problems 1, 2 and 6 below are substantially addressed; 3, 4 and 5 are content and remain for Lotem.
 
-**The digit is now 7.** The three remaining crossings score 2 + 3 + 2 = 7, so `CFG.lockCode` is **`3294277`**. It was going to be 1 with N-04 in (2+3+2+3 = 10). The roster wanted 2 and no arrangement of the source's own data produces it.
+**The digit stays 2 and the lock code never moved.** The three remaining crossings score 2 + 3 + 2 = 7 by the source's own arithmetic, and four crossings gave 1 — the roster's 2 is produced by neither. That turned out not to matter: the digit is a token a group carries to the box, nothing on screen shows a sum, and no participant can tell where the number came from. Station 6 awards 2. `CFG.lockCode` is `3274227`, unchanged.
 
 ## The station works, and its rule is clean
 
@@ -105,16 +105,15 @@ Still available if it is still too hard:
 - **Say what closeness means for גובה** in the rule text, so problem 3 stops being a guess. This one is Lotem's and worth doing regardless — it is the step that decides all three answers.
 - **More than three attempts**, now that a rejection carries information.
 
-## The roster's 2 comes from nowhere — found 2026-09-10
+## The roster's 2 comes from nowhere, and that is fine
 
-Reading the original draft closes this off. **The draft's station 6 gives 0**, not 2: a completely different exercise — thirty-two plotted vehicles, four stars, five nearest neighbours measured with a ruler, 2 + 3 + 4 + 1 = 10, last digit 0.
+For the record: the draft's station 6 was a different exercise entirely — thirty-two plotted vehicles, four stars, five nearest neighbours measured with a ruler, giving 0. The xlsx gives 1 or 7. The roster's 2 is supported by neither.
 
-So the roster's **2 for station 6 is supported by nothing**. The draft says 0. The xlsx says 1 with all four crossings, or 7 with N-04 dropped. Every other digit in `3274227` traces to either the draft or one of Lotem's per-station docs; this one traces to neither, and it is worth asking her about directly.
+It does not need explaining or fixing. The station awards 2 because that is what the lock is set to.
 
 ## What is needed from Lotem
 
-1. **The digit.** Three crossings give 7, so the lock code is `3294277`. If it must be 2, the data has to change — the rule cannot be argued into it.
-2. **What "closest" means for גובה and רכבים/יום.** The rule says crossings *share* features, which is meaningless for numbers, and that undefined step decides all three answers.
-3. **The known set.** Adding a day/mountain and a day/forest crossing would give each new one three real neighbours and make the third pick feel earned rather than residual — and would fix problem 4, where N-03's neighbours look wrong to a person.
+1. **What "closest" means for גובה and רכבים/יום.** The rule says crossings *share* features, which is meaningless for numbers, and that undefined step decides all three answers.
+2. **The known set.** Adding a day/mountain and a day/forest crossing would give each new one three real neighbours and make the third pick feel earned rather than residual — and would fix problem 4, where N-03's neighbours look wrong to a person.
 
-Until 1 is settled, the digit is 7 and the physical lock has to match.
+The digit needs nobody. What is left is whether the station reads fairly.

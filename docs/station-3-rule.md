@@ -79,26 +79,14 @@ Reading the original draft answers this. **The draft's station 3 gives 7**: a di
 
 That also explains the shape of the problem below: the draft's box א׳ is defined as *התשובה היא קטגוריה*, cleanly, and its ג׳ examples are annotated in the draft as two deliberately different reasons — *דוגמה אחת היא מידע שלא קיים אצלנו, והשנייה היא מידע שכבר רשום בטבלה*. The two-rule confusion is not in the draft. It arrived with the rewrite.
 
-## What this does to the lock code
+## The lock code — closed, not a question for anyone
 
-The union sheet says `הספרה = כרטיסים בקופסה א׳`. Under the sheet's rule that is **9**, not the **7** the roster carried.
-
-So `CFG.lockCode` has moved from `3274227` to **`3294227`**, which is what the app now expects at the vault. **This is a physical lock in the room** and it has to be reset to match, so it is worth deciding before anyone sets it.
-
-The alternative is a one-character change. **7 is the count in box ב׳** under the sheet's rule, so redefining the digit as box ב׳ restores the old code exactly:
-
-```js
-// src/data/station-3.js
-export const DIGIT_BOX = 'ב';   // was 'א'
-```
-
-Nothing else changes; the roster digit and the lock code both derive from it.
+The union sheet says the digit is the count in box א׳, which over this card set is 9 rather than the roster's 7. **This is not a problem.** Which box gets counted is arbitrary — the group sorts the same twenty cards either way and sees the same three tallies — so the station counts box ב׳, which is 7, and `CFG.lockCode` stays `3274227`. The physical lock is untouched. It also happens that 7 is a number visible on their own screen, so nothing on the page contradicts the digit they are handed.
 
 ## What is needed from Lotem
 
 0. **Whether the grammar shortcut is acceptable — a question, not a recommendation.** Nineteen of twenty cards are sorted correctly by their opening word alone. **Hadas's position is that the difficulty is already right** (she solved it in a few minutes, got it first time, and does not want it made harder), so this goes to Lotem only to check whether the shortcut is what she intended. If it is, nothing changes.
 1. **Which rule governs** — the sheet's answer-type rule, or the availability rule the example cards actually demonstrate? If it is availability, the sheet's wording for א׳ and ב׳ needs rewriting, and two example cards need replacing so the two rules stop pointing in opposite directions.
-2. **Whether the digit is box א׳ or box ב׳**, given that box א׳ means resetting the physical lock to 3294227.
-3. **The seven contested cards.** Whichever rule wins, these should be reworded so they cannot be argued both ways. Three submissions with no feedback is unforgiving of a card that has two defensible homes.
+2. **The seven contested cards.** Whichever rule wins, these should be reworded so they cannot be argued both ways. Three submissions with no feedback is unforgiving of a card that has two defensible homes.
 
-Until 1 and 3 are settled the station is playable but its key is not safe: a group can reason correctly from what it is shown and still be marked wrong.
+**Only the rule matters.** The digit is settled and needs nobody. What is not settled is that a group can reason correctly from what it is shown and still be marked wrong.

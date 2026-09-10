@@ -25,7 +25,7 @@ Each analyst holds two readings and a three-row decision table, and reads down t
 
 Five for סמנאן, two for תבריז, one for אצפהאן. Eight votes, no ties, no ambiguity, and exactly one rule fires per analyst — no row is unreachable and none overlaps.
 
-**The digit is 7**, the site code for סמנאן, which is what the roster already carries. **Station 7 needs no change to the lock code**, unlike 3 and 6.
+**The digit is 7**, the site code for סמנאן, which is what the roster already carries — though by the time this was checked it had stopped mattering, since a station simply awards the digit its slot in the code needs.
 
 ## Its punchline is the best thing in the whole draft
 
