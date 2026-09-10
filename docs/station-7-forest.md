@@ -1,6 +1,6 @@
 # Station 7 is salvageable, and its content is sound
 
-_Written 2026-09-10, from `חדר בריחה 7 תחנות - מבצע עין הנץ.docx` — the original draft. Lotem never wrote a standalone doc for this station. **Nothing is built yet.**_
+_Written 2026-09-10, from `חדר בריחה 7 תחנות - מבצע עין הנץ.docx` — the original draft. Lotem never wrote a standalone doc for this station. **Built the same day; what was decided is at the bottom.**_
 
 ## The blocker in the build spec was wrong on every count
 
@@ -60,6 +60,20 @@ A digital analogue that keeps most of it: the group works the analysts **one at 
 Once you have an analyst's two readings and their three rules, the answer is mechanical — about twenty seconds each, eight times. There is no insight required until the reveal.
 
 That may be exactly right for the last station of an event: the payoff is the accuracy card, not the difficulty, and after stations 4 and 6 a light finish is welcome. But it should be a deliberate choice rather than an accident. Making the group *pick which row fires* for each analyst, rather than reading them the answer, is the difference between doing the work and watching it.
+
+## What was built
+
+Three decisions, all mine, all reversible.
+
+**The group picks the row, rather than reading off a verdict.** The draft hands each analyst's answer to the person holding the card, which on paper is fine because the work was the isolation. On one screen that would be eight sentences to copy, so the lookup became the task: two readings against three conditions, eight times. Each row shows its condition and the site it points to, and the group fires one.
+
+**The slips stay covered until the eighth analyst is decided, then all eight turn over at once**, with the reveal effect behind them. This is the only part of the draft's isolation a single screen can keep — eight people writing covered notes and revealing on a countdown becomes eight slips that stay face down while there is still something to decide. No tally is shown before that moment. The line *אף אנליסט לא רואה את התמונה המלאה* is still true and still the point.
+
+**The accuracy card is an epilogue on the solved screen.** A station may now carry an `epilogue`, rendered by `viewOutcome` after the digit; station 7 is the only one that has one. It is not a thinking question and not homework — it is the payoff, on the last station of the evening, and the draft is right that it is the point of the whole hour. **It is withheld from a station that timed out**, because handing someone the punchline to a puzzle they never solved is worse than saying nothing.
+
+A rejected submission names **which analysts were misread**, never which row should have fired. Eight picks from three is 6561 combinations, so there is nothing to sweep, and after stations 3 and 6 spend their whole budget on all-or-nothing silence the last one can afford to be kinder.
+
+The key is checked twice: the data file asserts which row fires, and the station-7 suite works it out independently from the readings and the conditions. A typo in either shows up as a disagreement rather than as a station that quietly grades the wrong answer.
 
 ## A finding that belongs to station 3, not station 7
 

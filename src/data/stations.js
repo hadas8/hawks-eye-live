@@ -17,6 +17,7 @@ import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED } from './station-5.js';
 import { CARDS, DIGIT_BOX, countIn } from './station-3.js';
 import { NEW, NEIGHBOURS, isCorrectFor, scoreFrom, K as KNN } from './station-6.js';
+import { ANALYSTS, tally, winnerOf, codeOf, BEST_TWO } from './station-7.js';
 
 export const STATIONS = [
   {
@@ -208,5 +209,49 @@ export const STATIONS = [
       'אם נשארו פחות משלושה שחולקים את שתי התכונות הראשונות, השלישי מגיע מהקרוב ביותר שנותר — לא ממי שדומה לכם במבט ראשון.'
     ]
   },
-  { n: 7, name: 'שמונה אנליסטים',        concept: 'Random Forest — יער אקראי', password: ['חורש'], digit: 7, kind: null }
+  {
+    n: 7,
+    name: 'שמונה אנליסטים',
+    concept: 'Random Forest — יער אקראי',
+    password: ['חורש'],          // still a placeholder
+    // 7 — the site code for סמנאן, which wins 5 votes to 2 to 1. This is
+    // the one station whose digit the roster already had right.
+    digit: codeOf('סמנאן'),
+    kind: 'forest',
+
+    // Eight picks from three is 6561 combinations, so there is nothing to
+    // sweep, and after two stations of all-or-nothing silence the last one
+    // can afford to say which analyst was misread. It never says which row.
+    maxAttempts: 3,
+    revealWhichWrong: true,
+
+    brief: 'שמונה עמדות האזנה קלטו את המשאית החשודה הלילה, וכל אחת קלטה שני נתונים אחרים. המשגר מוסתר באחד משלושה אתרים, ואף עמדה לא ראתה מספיק כדי להכריע לבד.',
+
+    answer: {
+      // One row per analyst, all eight graded together.
+      parts: ANALYSTS.map(a => ({ kind: 'choice', value: a.fires })),
+      rule: 'custom',
+      // The group's own eight verdicts are counted, and the winning site's
+      // code is the digit — the app asserts nothing.
+      derive: rows => codeOf(winnerOf(tally(rows)))
+    },
+
+    hints: [
+      'לכל אנליסט שני נתונים בלבד. קראו את שלוש השורות מלמעלה למטה ועצרו בראשונה שמתאימה לשניהם.',
+      'שורה שמתאימה רק לנתון אחד מהשניים לא מתאימה. בדקו את שני התנאים בכל שורה.'
+    ],
+
+    // Shown on the solved screen, after the digit. Not a question and not
+    // homework — the payoff, on the last station of the evening.
+    epilogue: {
+      eyebrow: 'כרטיס הדיוק · נחשף רק עכשיו',
+      accuracy: ANALYSTS.map(a => ({ n: a.n, pct: a.accuracy,
+        best: BEST_TWO.some(b => b.n === a.n) })),
+      lines: [
+        `שני האנליסטים המדויקים ביותר הם <b>${BEST_TWO[0].n}</b> עם ${BEST_TWO[0].accuracy}% ו<b>${BEST_TWO[1].n}</b> עם ${BEST_TWO[1].accuracy}%, ושניהם אמרו <b>${BEST_TWO[0].says}</b> — כלומר שניהם טעו.`,
+        'קבוצה שהייתה בוחרת לסמוך על שני הטובים הייתה מפספסת את המשגר. רק ספירת שמונת הקולות הביאה אתכם לסמנאן.',
+        'הם לא הסכימו ביניהם כי אף אחד מהם לא ראה את כל התמונה, וכל אחד טעה בכיוון אחר. בגלל זה הטעויות התקזזו במקום להצטבר.'
+      ]
+    }
+  }
 ];

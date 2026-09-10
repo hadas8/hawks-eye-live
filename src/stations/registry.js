@@ -7,6 +7,7 @@ import { viewQuestions } from './questions.js';
 import { viewCharts } from './charts.js';
 import { viewBoxes } from './boxes.js';
 import { viewNeighbours } from './neighbours.js';
+import { viewForest } from './forest.js';
 
 export const RENDERERS = {
   tables: viewTables,
@@ -14,7 +15,8 @@ export const RENDERERS = {
   questions: viewQuestions,
   charts: viewCharts,
   boxes: viewBoxes,
-  neighbours: viewNeighbours
+  neighbours: viewNeighbours,
+  forest: viewForest
 };
 
 export const rendererFor = kind => RENDERERS[kind] || null;

@@ -56,7 +56,7 @@ Persistent chrome: the station clock and score in the top bar, and a 7-slot code
 
 Declarative per station, with a `custom` escape hatch:
 
-- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice` (stations 2, 3 and 5), `pickN` (stations 4 and 6), `multiChoice`, `rows`, `pairPick`
+- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice` (stations 2, 3, 5 and 7), `pickN` (stations 4 and 6), `multiChoice`, `rows`, `pairPick`
 - Combine rules: `digitalRoot`, `count`, `literal`, `custom`
 - **Attempt policy comes from the station config, not a global rule.** Station 1 allows 3 submissions; station 2 is all-or-nothing with unlimited redos; station 3 allows 3 attempts; station 4 allows one retry. Running out closes the station immediately rather than leaving a group idle at a dead button.
 - No lockout timer. After a failed submit, disable submit until an input actually changes.
@@ -423,7 +423,9 @@ Being worked one at a time with the content author. Recorded here so nothing is 
    **Two crossings are also genuinely ambiguous.** N-02 and N-04 both match K-07 and K-11 on the first three features; the third neighbour is any of four night mountain crossings scoring 4, 4, 5 and 5, giving an average that rounds to either 3 or 4. Breaking the tie on altitude gives 3, but nothing in the source says to.
 
    So the blocker moved rather than cleared: the metric exists, and it contradicts the digit. Needs the content author.
-6. ~~**Station 7 cannot run per-group as written.**~~ **Withdrawn 2026-09-10 — this blocker was wrong on every count, and was checked against the wrong station's data.** There are **eight** analysts in four pairs, not seven; the sites are סמנאן / תבריז / אצפהאן, and ג'נתא and קוסייא belong to station *2*; and the votes are 5 / 2 / 1, which is eight. All eight analysts were verified against their own decision tables and reproduce the draft's key exactly, with exactly one rule firing each. **The digit is 7 and the roster already has it — station 7 needs no lock-code change**, unlike 3 and 6.
+6. ~~**Station 7 cannot run per-group as written.**~~ **Built 2026-09-10.** The group fires one row per analyst rather than reading off a verdict, the eight slips stay covered until the last is decided and then turn over together, and the accuracy card lands as an `epilogue` on the solved screen — a new per-station field rendered by `viewOutcome`, withheld when a station times out. Station 7 is the only station with one, and the only one whose digit the roster already had right.
+
+    **Withdrawn 2026-09-10 — this blocker was wrong on every count, and was checked against the wrong station's data.** There are **eight** analysts in four pairs, not seven; the sites are סמנאן / תבריז / אצפהאן, and ג'נתא and קוסייא belong to station *2*; and the votes are 5 / 2 / 1, which is eight. All eight analysts were verified against their own decision tables and reproduce the draft's key exactly, with exactly one rule firing each. **The digit is 7 and the roster already has it — station 7 needs no lock-code change**, unlike 3 and 6.
 
    Two things do need solving. The **site-code table is missing from the draft** although a hint and the union sheet both point at it; it is recoverable as סמנאן 7 / תבריז 2 / אצפהאן 5, which the union sheet prints one column to the left of where it belongs. And the **isolation mechanic cannot survive one screen** — the draft's drama is eight people holding covered notes, and on one device everyone sees everything. Full assessment in [station-7-forest.md](station-7-forest.md).
 7. **Station 5** has two conflicting card sets. Use `תחנה_5_.docx`, not the draft's. Both yield digit 2.

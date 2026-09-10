@@ -1,0 +1,87 @@
+/* Station 7 — שמונה אנליסטים. The "forest" station kind: eight analysts,
+   two readings and three rules each, then a vote. */
+
+.acards{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:0.625rem}
+
+.acard{border:1px solid var(--hair);background:var(--panel);padding:0.75rem 0.875rem;
+  display:flex;flex-direction:column;gap:0.5rem}
+.acard.fired{border-color:var(--ink-dim)}
+/* After a rejected submission: which analysts were read correctly and which
+   were not. Never which row should have fired. */
+.acard.hit{border-color:var(--ok)}
+.acard.miss{border-color:var(--bad);background:var(--bad-soft)}
+
+.ahead{display:flex;align-items:baseline;justify-content:space-between}
+.acard .anum{font-family:var(--mono);font-size:0.875rem;color:var(--amber)}
+.acard .amark{font-family:var(--mono);font-size:0.875rem}
+.acard.hit .amark{color:var(--ok)}
+.acard.miss .amark{color:var(--bad)}
+
+/* The two readings this analyst holds, and nothing else — the whole station
+   turns on each of them seeing a different pair. */
+.asees{display:flex;flex-direction:column;gap:0.125rem;
+  border-inline-start:2px solid var(--amber-dim);padding-inline-start:0.625rem}
+.areading{font-size:0.8125rem;color:var(--muted)}
+.areading b{color:var(--ink);font-weight:500}
+
+.arules{display:flex;flex-direction:column;gap:0.25rem}
+.arow{display:flex;align-items:baseline;justify-content:space-between;gap:0.625rem;
+  text-align:start;background:var(--panel-2);border:1px solid var(--hair);
+  padding:0.4375rem 0.625rem;min-height:var(--tap);font-family:var(--body);
+  color:var(--ink-dim);cursor:pointer}
+.arow:hover{border-color:var(--muted);color:var(--ink)}
+.arow.on{border-color:var(--amber);background:var(--amber-soft);color:var(--ink)}
+.arow .awhen{font-size:0.8125rem;line-height:1.35}
+.arow .asite{font-size:0.8125rem;color:var(--muted);white-space:nowrap}
+.arow.on .asite{color:var(--amber);font-weight:500}
+
+/* ── the eight slips ──────────────────────── */
+/* Covered until the last analyst is decided, then all eight at once. This is
+   the only part of the draft's isolation a single screen can keep: eight
+   people writing covered notes and revealing on a countdown becomes eight
+   slips that stay face down until there is nothing left to decide. */
+.slips{border:1px solid var(--hair);background:var(--panel);padding:0.875rem 1rem}
+.slips.open{border-color:var(--amber-dim)}
+.slips .sub{font-size:0.8125rem;color:var(--muted);margin:0.625rem 0 0;max-width:none}
+
+.sliprow{display:flex;flex-wrap:wrap;gap:0.375rem;margin-top:0.625rem}
+.slip{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-width:3.25rem;min-height:2.75rem;background:var(--panel-2);
+  border:1px solid var(--hair);font-family:var(--mono);font-size:0.6875rem;
+  color:var(--muted)}
+.slip.ready{border-color:var(--ink-dim);color:var(--ink-dim)}
+.slip.said{border-color:var(--amber-dim);color:var(--muted);padding:0.25rem 0.5rem}
+.slip.said b{display:block;font-size:0.8125rem;color:var(--ink);font-weight:400;
+  margin-top:0.125rem}
+
+.tallyrow{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem;
+  border-top:1px solid var(--hair);padding-top:0.75rem}
+.vote{display:flex;align-items:baseline;gap:0.5rem;background:var(--panel-2);
+  border:1px solid var(--hair);padding:0.4375rem 0.75rem}
+.vote .vname{font-size:0.8125rem;color:var(--ink-dim)}
+.vote .vn{font-family:var(--mono);font-size:1.125rem;color:var(--ink)}
+.vote.won{border-color:var(--amber)}
+.vote.won .vname{color:var(--amber)}
+.vote.won .vn{color:var(--amber)}
+
+/* ── the epilogue, on the solved screen ───── */
+/* The accuracy card. It is not a thinking question and it is not homework —
+   it is the payoff, on the last station of the evening, and the draft is
+   right that it is the point of the whole thing. */
+.epilogue{border:1px solid var(--hair);background:var(--panel);
+  padding:0.875rem 1rem;margin:1.25rem auto 0;max-width:34rem;text-align:start}
+.epilogue .eyebrow{margin-bottom:0.625rem}
+.epilogue p{font-size:0.9375rem;color:var(--ink-dim);margin:0 0 0.5rem;max-width:none}
+.epilogue p:last-child{margin-bottom:0}
+.epilogue b{color:var(--ink);font-weight:500}
+.accrow{display:flex;flex-wrap:wrap;gap:0.3125rem;margin:0 0 0.75rem}
+.acc{display:flex;flex-direction:column;align-items:center;gap:0.0625rem;
+  background:var(--panel-2);border:1px solid var(--hair);padding:0.3125rem 0.5rem;
+  font-family:var(--mono);font-size:0.625rem;color:var(--muted);min-width:3.25rem}
+.acc b{font-size:0.8125rem;color:var(--ink-dim);font-weight:400}
+.acc.best{border-color:var(--bad)}
+.acc.best b{color:var(--bad)}
+
+@media (max-width:700px){
+  .acards{grid-template-columns:1fr}
+}
