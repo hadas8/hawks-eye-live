@@ -194,6 +194,12 @@ An earlier version reconstructed the series from the docx's prose, because the i
 
 Two of those are not cosmetic. **ה׳'s deception is the arrow, not the averaging** — the monthly view shows month 2 dipping perfectly clearly, and it is the arrow drawn from month 1 to month 4 that papers over it. And **ב׳'s other bars are not dimmed**; dimming them, which the reconstruction did, turns misleading emphasis into a chart that merely looks broken.
 
+### The station reads as confusing, and that is unresolved
+
+Hadas walked all seven envelopes on `dev` on 2026-09-10 and came out with: *"not too hard, just not clear. I think it needs a complete overhaul."* The headline issue is that each envelope is topped by a question asking for **a number** while the task and the scoring are **a chart**, so groups do arithmetic that is never checked. Beyond that: ה׳ is the only pair drawn at two granularities and its question is phrased in the lying chart's units; ב׳'s deception is colour alone while the bar heights and printed values stay honest; and א׳ and ו׳ spend two of the seven envelopes on the same truncated-axis trick.
+
+This is **not** a transcription problem — every series matches Lotem's images. It is a design problem in content that belongs to the content author, so **station 2 ships exactly as transcribed until Lotem decides.** A one-line fix for ה׳'s question was written and deliberately reverted for that reason. The full write-up is in [station-2-clarity.md](station-2-clarity.md).
+
 ### Two inconsistencies inside the source, for the content author
 
 - **ג׳: the chart and the text disagree.** The chart shows incidents only in January, March and July, so January to April totals **2**. The docx text says 3. The app follows the chart. If the intended answer is 3, the chart needs a fourth incident.
