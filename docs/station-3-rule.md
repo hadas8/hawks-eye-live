@@ -8,7 +8,27 @@ Transcribed from `תחנה_3.docx`: six pre-sorted example cards in three unlabe
 
 One change to the interaction, worth flagging: the source has the group **drag paper cards into boxes**. On screen each card carries three buttons instead. Dragging twenty cards on a tablet, in a dark room, against a seven-minute clock is a dexterity test rather than a thinking one, and the outcome is identical.
 
-One thing had to be hidden. Every other station prints its concept in the header — `ניקוי נתונים`, `עצי החלטה`. Station 3's concept is **`סיווג מול חיזוי`**, which names two of the three boxes outright. It is now shown only on the solved screen, which is where the seminar's own "intuition first, name after" rule wants it.
+The concept stays in the header like every other station's. It was briefly hidden on the grounds that `סיווג מול חיזוי` names two of the three boxes; Hadas overruled that, correctly — the group has not met either term yet, so the words carry no meaning to give away.
+
+## The station is solvable from the first word of each card
+
+Hadas solved it in a few minutes and got all twenty right first time, by this route: everything opening `האם` into one box, everything opening `כמה` into the second — then noticing that the third box already held a `כמה` card naming ג'נתא, and sending the matching card there.
+
+Checked mechanically over all twenty: **the opening word predicts the box correctly nineteen times out of twenty.**
+
+| opener | cards | box |
+|---|---|---|
+| `האם` | 9 | א׳, all nine |
+| `כמה` / `בכמה` | 8 | ב׳, seven of the eight |
+| `מה` | 3 | ג׳, all three |
+
+The single exception is **card 3**, `כמה שיירות חצו ב-ג'נתא אתמול?`, which the key puts in ג׳ — and it is catchable purely by resemblance to ג׳'s own example card, which is the same question about the same place on a different day. No understanding of classification or regression is required at any point.
+
+This cuts two ways.
+
+**It makes the rule contest below much less dangerous in practice.** All seven contested cards open with `האם` or `כמה`, so the grammatical shortcut sends every one of them exactly where the union sheet sends them. Groups will overwhelmingly produce the sheet's key, which is the one the app grades against. The contest is still a real defect — a group that reasons semantically can still be marked wrong — but it is a tail risk rather than a coin flip.
+
+**It also means the station can be beaten without meeting its idea.** The event is a competition and a preview rather than a lesson, so a group finishing fast on a word pattern is not a failure. But nothing in the seven minutes pushes anyone toward "is the answer a category or a number", which is the thing station 3 exists to preview. If that matters, the fix is to break the correlation deliberately — a few `מה` questions whose answer is a category and belong in א׳ (`מה סוג הרכב?`), and a few `האם` questions that belong in ג׳. That is content, so it is Lotem's to write.
 
 ## The problem: the sheet and the example cards teach different rules
 
@@ -70,6 +90,7 @@ Nothing else changes; the roster digit and the lock code both derive from it.
 
 ## What is needed from Lotem
 
+0. **Whether the grammar shortcut is acceptable.** Nineteen of twenty cards are sorted correctly by their opening word alone. If station 3 should require its actual idea, some cards need rewording to break that.
 1. **Which rule governs** — the sheet's answer-type rule, or the availability rule the example cards actually demonstrate? If it is availability, the sheet's wording for א׳ and ב׳ needs rewriting, and two example cards need replacing so the two rules stop pointing in opposite directions.
 2. **Whether the digit is box א׳ or box ב׳**, given that box א׳ means resetting the physical lock to 3294227.
 3. **The seven contested cards.** Whichever rule wins, these should be reworded so they cannot be argued both ways. Three submissions with no feedback is unforgiving of a card that has two defensible homes.

@@ -64,12 +64,7 @@ export function viewBoxes() {
 
   return `<div class="stack">
     <div>
-      <!-- Every other station prints its concept here. This one must not:
-           סיווג מול חיזוי names two of the three boxes outright, which is
-           the whole puzzle. The concept is named on the solved screen,
-           which is where the seminar's "intuition first, name after" rule
-           puts it anyway. -->
-      <div class="eyebrow">תחנה ${s.n} מתוך ${STATIONS.length}</div>
+      <div class="eyebrow">תחנה ${s.n} מתוך ${STATIONS.length} · ${esc(s.concept)}</div>
       <h1>${esc(s.name)}</h1>
       <p class="lead">${esc(s.brief)}</p>
     </div>
