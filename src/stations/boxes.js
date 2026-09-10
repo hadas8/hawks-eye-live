@@ -42,7 +42,11 @@ const tally = box => CARDS.filter(c => pickOf(c.n) === box).length;
 // same objects the group is about to sort. The source draws them as separate
 // cards for that reason — it colour-codes them too, which this cannot follow,
 // so the containment has to carry the whole job.
-const exampleBox = box => `<div class="ebox">
+// Each box carries its own colour, and so does a card sent to it. One
+// class, `bx1`..`bx3`, sets --bc and --bcs for everything downstream.
+const boxClass = box => `bx${BOXES.indexOf(box) + 1}`;
+
+const exampleBox = box => `<div class="ebox ${boxClass(box)}">
     <div class="eblid"><span class="ebletter">${esc(box)}׳</span>
       <span class="ebnote">כבר מוינו</span></div>
     <div class="ebwell">${EXAMPLES.filter(e => e.box === box).map((e, k) =>
@@ -52,11 +56,11 @@ const exampleBox = box => `<div class="ebox">
 
 const sortCard = c => {
   const pick = pickOf(c.n);
-  return `<div class="qcard ${pick ? 'placed' : ''}">
+  return `<div class="qcard ${pick ? 'placed ' + boxClass(pick) : ''}">
     <div class="qn">${c.n}</div>
     <p class="qt">${esc(c.text)}</p>
     <div class="qboxes">${BOXES.map(b =>
-      `<button class="qb ${pick === b ? 'on' : ''}" data-act="putCard"
+      `<button class="qb ${boxClass(b)} ${pick === b ? 'on' : ''}" data-act="putCard"
         data-arg="${c.n}:${b}" aria-label="כרטיס ${c.n} לקופסה ${b}">${esc(b)}׳</button>`).join('')}</div>
   </div>`;
 };
@@ -94,7 +98,7 @@ export function viewBoxes() {
     </div>
 
     <div class="tallies">
-      ${BOXES.map(b => `<div class="tal"><span class="tk">קופסה ${esc(b)}׳</span>
+      ${BOXES.map(b => `<div class="tal ${boxClass(b)}"><span class="tk">קופסה ${esc(b)}׳</span>
         <span class="tv">${tally(b)}</span></div>`).join('')}
       <div class="tal total"><span class="tk">סה"כ</span><span class="tv">${done}</span></div>
     </div>

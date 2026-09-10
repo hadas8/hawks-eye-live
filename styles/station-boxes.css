@@ -12,12 +12,18 @@
    different kinds of thing, and one of the six example questions wraps. */
 .eboxes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem}
 
-.ebox{border:1px solid var(--muted);background:var(--panel);
+/* One class carries the box's colour to everything that belongs to it:
+   the box itself, a card sent to it, its button, its tally. */
+.bx1{--bc:var(--box-1);--bcs:var(--box-1-soft);--bcd:var(--box-1-dim)}
+.bx2{--bc:var(--box-2);--bcs:var(--box-2-soft);--bcd:var(--box-2-dim)}
+.bx3{--bc:var(--box-3);--bcs:var(--box-3-soft);--bcd:var(--box-3-dim)}
+
+.ebox{border:1px solid var(--bc);background:var(--panel);
   display:flex;flex-direction:column}
 
 .eblid{display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
-  padding:0.5rem 0.75rem;border-bottom:1px solid var(--muted);background:var(--panel-2)}
-.eblid .ebletter{font-family:var(--mono);font-size:1.125rem;color:var(--amber);line-height:1}
+  padding:0.5rem 0.75rem;border-bottom:1px solid var(--bc);background:var(--bcs)}
+.eblid .ebletter{font-family:var(--mono);font-size:1.125rem;color:var(--bc);line-height:1}
 .eblid .ebnote{font-size:0.6875rem;letter-spacing:var(--ls);text-transform:uppercase;
   color:var(--muted)}
 
@@ -35,15 +41,24 @@
 
 .qcard{border:1px solid var(--hair);background:var(--panel);padding:0.625rem 0.75rem;
   display:flex;flex-direction:column;gap:0.5rem}
-.qcard.placed{border-color:var(--ink-dim)}
+/* A placed card takes its box's colour on the edge nearest the reader, so
+   a screen of twenty reads as three groups at a glance. The rest of the
+   border goes to 45%: at full strength, twenty sorted cards turn the page
+   into stained glass and the chosen button stops being the loudest thing
+   on its own card. */
+.qcard.placed{border-color:var(--bcd)}
+.qcard.placed{border-inline-start:3px solid var(--bc)}
 .qcard .qn{font-family:var(--mono);font-size:0.6875rem;color:var(--muted)}
 .qcard .qt{font-size:0.9375rem;color:var(--ink);margin:0;max-width:none;flex:1}
 
 .qboxes{display:flex;gap:0.375rem}
+/* Unpicked buttons stay neutral. Three colours on every one of twenty
+   cards would be twenty traffic lights; the colour arrives when a choice
+   is made, which is the only moment it means anything. */
 .qb{flex:1;min-height:var(--tap);background:var(--panel-2);border:1px solid var(--hair);
   color:var(--ink-dim);font-family:var(--mono);font-size:0.9375rem;cursor:pointer}
-.qb:hover{border-color:var(--muted)}
-.qb.on{border-color:var(--amber);background:var(--amber-soft);color:var(--amber)}
+.qb:hover{border-color:var(--bc);color:var(--bc)}
+.qb.on{border-color:var(--bc);background:var(--bcs);color:var(--bc)}
 
 /* ── the union sheet's tally, kept live ───── */
 /* The source has the group count each box by hand and check the total is
@@ -54,8 +69,8 @@
 .tal{display:flex;align-items:baseline;gap:0.5rem;background:var(--panel-2);
   border:1px solid var(--hair);padding:0.5rem 0.75rem}
 .tal .tk{font-size:0.75rem;color:var(--muted)}
-.tal .tv{font-family:var(--mono);font-size:1.125rem;color:var(--ink)}
-.tal.total .tv{color:var(--amber)}
+.tal .tv{font-family:var(--mono);font-size:1.125rem;color:var(--bc,var(--ink))}
+.tal.total .tv{color:var(--ink)}
 
 @media (max-width:700px){
   .eboxes{grid-template-columns:1fr}

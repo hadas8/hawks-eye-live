@@ -313,7 +313,9 @@ The `choice` sub-answer kind, which covers the yes/no case and any future pick-f
 
 **מארג**, the dark-ops direction. Ground `#05080c`, hawk-amber `#ffb238`, hairline panels, scanlines, slow radar sweep, Heebo with letterspaced micro-labels, IBM Plex Mono for all digits and codes. Single dark theme. RTL throughout.
 
-Colour discipline learned the hard way: amber is the only accent in the UI. The one exception is the coral `—` glyph, so a missing value stays scannable in a dense table. Do not reintroduce per-column or per-rule colour coding.
+Colour discipline learned the hard way: amber is the only accent in the UI. **Inside a table** the rule is absolute — per-column and per-rule colouring cut across the rows a group is scanning and made station 1 harder to read, and the coral `—` glyph is all that survives of it. Do not reintroduce colour into a table.
+
+**Station 3's boxes are a sanctioned exception, added 2026-09-10 at Hadas's request.** Three box colours (`--box-1/2/3`: amber, teal, violet), applied to the box, to the button that sends a card there, to the card once placed, and to that box's tally. This is not the table case — colour here belongs to a *place* a card was put, so it marks membership rather than cutting across a scan, and the source colour-codes its own boxes for exactly that reason. Deliberately not green or red, which are verdict colours everywhere else, and all three are equally saturated so no box reads as the reject pile before the group has worked out what the boxes mean. A placed card's border sits at 45% with a full-strength edge on the reader's side: at full strength twenty sorted cards drown out the chosen button on each one. **Do not generalise this to other stations without asking.**
 
 Dramatic moments in the prototype, to be pushed further here:
 
