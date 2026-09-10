@@ -38,7 +38,10 @@ function ticks(floor, ceil) {
   return [0, 1, 2, 3, 4].map(i => floor + step * i);
 }
 
-export function renderChart(spec) {
+// `hue` is a class, h1..h3, set by the envelope rather than by the chart:
+// both drawings of one data set share it, so a pair reads as a pair. It
+// must never track which of the two is honest.
+export function renderChart(spec, hue = '') {
   const {
     kind = 'bars', labels = [], values = [],
     yFloor = 0, yCeil, highlight = null, order = 'given',
@@ -73,7 +76,11 @@ export function renderChart(spec) {
   if (kind === 'bars') {
     const bw = Math.min(band * 0.62, 30);
     marks = rows.map((r, i) => {
-      const y = yOf(r.value), h = Math.max(1, Y1 - y);
+      // A 1px floor keeps a very small value visible, but it must not
+      // invent one: envelope ג׳ asks a group to COUNT incidents across
+      // twelve months, nine of which are zero, and a stub on each of those
+      // is nine incidents that did not happen. Zero draws nothing.
+      const y = yOf(r.value), raw = Y1 - y, h = raw < 0.5 ? 0 : Math.max(1, raw);
       // Only the highlighted bar changes. Dimming the others turns a chart
       // with misleading emphasis into one that looks broken, which is a
       // different and much cruder trick than the source's.
@@ -118,7 +125,7 @@ export function renderChart(spec) {
     <text x="${X1 - 4}" y="${(yOf(spec.refLine.value) - 5).toFixed(1)}" class="cv creft"
       text-anchor="end">${esc(spec.refLine.label)}</text>` : '';
 
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true"
+  return `<svg class="chart ${hue}" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true"
     preserveAspectRatio="xMidYMid meet" style="direction:ltr">
     ${grid}
     <line x1="${X0}" x2="${X1}" y1="${Y1}" y2="${Y1}" class="ca"/>

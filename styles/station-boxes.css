@@ -14,9 +14,9 @@
 
 /* One class carries the box's colour to everything that belongs to it:
    the box itself, a card sent to it, its button, its tally. */
-.bx1{--bc:var(--box-1);--bcs:var(--box-1-soft);--bcd:var(--box-1-dim)}
-.bx2{--bc:var(--box-2);--bcs:var(--box-2-soft);--bcd:var(--box-2-dim)}
-.bx3{--bc:var(--box-3);--bcs:var(--box-3-soft);--bcd:var(--box-3-dim)}
+.bx1{--bc:var(--hue-1);--bcs:var(--hue-1-soft);--bcd:var(--hue-1-dim)}
+.bx2{--bc:var(--hue-2);--bcs:var(--hue-2-soft);--bcd:var(--hue-2-dim)}
+.bx3{--bc:var(--hue-3);--bcs:var(--hue-3-soft);--bcd:var(--hue-3-dim)}
 
 .ebox{border:1px solid var(--bc);background:var(--panel);
   display:flex;flex-direction:column}

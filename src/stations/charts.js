@@ -34,10 +34,15 @@ const answers = () => ENVELOPES.map((_, i) => pickOf(i) ?? null);
 const answered = () => answers().filter(v => v !== null).length;
 
 /* ── view ─────────────────────────────────── */
+// Three hues cycle down the seven envelopes, and BOTH charts in an
+// envelope get the same one. Colouring by position instead would be a
+// tell, and colouring honest against lying would hand over the answer.
+const hueOf = envIndex => `h${(envIndex % 3) + 1}`;
+
 const chartCard = (spec, pos, envIndex, chosen) => `<button
     class="gcard ${chosen === pos ? 'on' : ''}" data-act="pickChart" data-arg="${envIndex}:${pos}">
     <span class="glabel">גרף ${pos}${chosen === pos ? ' · נבחר' : ''}</span>
-    ${renderChart(spec)}
+    ${renderChart(spec, hueOf(envIndex))}
   </button>`;
 
 function envelopeBlock(env, i) {

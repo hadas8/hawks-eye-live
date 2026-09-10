@@ -28,11 +28,12 @@
   /* the single sanctioned exception: the missing-value dash */
   --miss:#ff7a59;
 
-  /* Station 3 only: one colour per box. The three boxes are containers a
-     group is sorting INTO, so colour marks where a card went — which is
-     what the source does too. This is not decoration and it is not the
-     per-column colouring that was dropped from station 1's tables: there,
-     colour cut across rows being scanned; here it belongs to a place.
+  /* Three hues, shared by station 3's boxes and station 2's chart pairs.
+     In station 3 a colour marks the box a card was sent to; in station 2
+     it marks which envelope a chart belongs to, so the two drawings of one
+     data set are visibly a pair. Neither is the per-column colouring that
+     was dropped from station 1's tables: there, colour cut across the rows
+     being scanned; here it belongs to a place or to a pair.
      None of the three is amber: amber is the app's own accent, so an amber
      box read as active UI rather than as box א׳. None is green or red
      either, which are verdict colours everywhere else, nor coral, which is
@@ -42,9 +43,9 @@
      that size, and a deeper pink for ג׳ starts reading as the red
      verdict colour. All three are equally saturated, so no box reads as
      the reject pile before the group has worked out what the boxes mean. */
-  --box-1:#b48af5;  --box-1-soft:rgba(180,138,245,.14); --box-1-dim:rgba(180,138,245,.45);
-  --box-2:#3fc7d4;  --box-2-soft:rgba(63,199,212,.14);  --box-2-dim:rgba(63,199,212,.45);
-  --box-3:#ef7d9d;  --box-3-soft:rgba(239,125,157,.14); --box-3-dim:rgba(239,125,157,.45);
+  --hue-1:#b48af5;  --hue-1-soft:rgba(180,138,245,.14); --hue-1-dim:rgba(180,138,245,.45);
+  --hue-2:#3fc7d4;  --hue-2-soft:rgba(63,199,212,.14);  --hue-2-dim:rgba(63,199,212,.45);
+  --hue-3:#ef7d9d;  --hue-3-soft:rgba(239,125,157,.14); --hue-3-dim:rgba(239,125,157,.45);
 
   --body:"Heebo",system-ui,-apple-system,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;

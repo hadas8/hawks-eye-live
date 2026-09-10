@@ -32,18 +32,28 @@
 .chart .cx{text-anchor:middle}
 .chart .cv{fill:var(--ink);font-family:var(--mono);font-size:11px;text-anchor:middle}
 
-.chart .cb{fill:var(--ink-dim)}
-.chart .cl{fill:none;stroke:var(--ink-dim);stroke-width:2;stroke-linejoin:round}
-.chart .cd{fill:var(--ink-dim)}
+/* The series takes its envelope's hue. Both charts in a pair share it, so
+   the two drawings read as one data set seen twice; it cycles across the
+   seven so the page is not one long grey column. It never tracks which
+   chart is honest — that would be the answer, in colour. */
+.chart.h1{--sc:var(--hue-1)}
+.chart.h2{--sc:var(--hue-2)}
+.chart.h3{--sc:var(--hue-3)}
 
-/* The deception in envelope ב׳: the smallest bar in the accent colour and
-   the rest pushed back, so the eye lands on the wrong one. This is the one
-   place amber is used to mislead rather than to mean "chosen", which is why
-   the chart sits inside a card whose own selected state is the border. */
+.chart .cb{fill:var(--sc,var(--ink-dim))}
+.chart .cl{fill:none;stroke:var(--sc,var(--ink-dim));stroke-width:2;stroke-linejoin:round}
+.chart .cd{fill:var(--sc,var(--ink-dim))}
+
+/* The deception in envelope ב׳: one bar in amber while the rest keep the
+   series colour, so the eye lands on the smallest. Amber is the only hue
+   not used by any series, which is what makes it read as emphasis rather
+   than as another category. The source does this with orange against grey.
+   It is not a tell: amber also carries ה׳'s false arrow and ז׳'s honest
+   average rule, so it appears on two lying charts and one truthful one. */
 .chart .cb.hot{fill:var(--amber)}
 
 /* filled area under a line — makes a shallow climb read as a mass */
-.chart .cf{fill:var(--ink-dim);opacity:.16}
+.chart .cf{fill:var(--sc,var(--ink-dim));opacity:.18}
 /* an asserted trend, drawn over data that does not support it */
 .chart .cr{stroke:var(--amber);stroke-width:2}
 .chart .crh{fill:var(--amber)}
