@@ -51,7 +51,7 @@ The draft asserted 2 + 3 + 3 + 3 = 11, which is the 2. The single disagreement i
 
 No rounding convention rescues it either. Rounding every average **down** gives 9; rounding every average **up** gives 13 → 4. Only ordinary rounding gives a sum in the right neighbourhood at all, and it lands one short: the digit would need a sum of 11 or 20.
 
-So `CFG.lockCode` is now **`3294277`** — station 3 having already moved position three from 7 to 9. **Two of the seven digits no longer match the draft's code, and both move the physical lock.** Neither is a transcription error; each is what the station's own rule does to its own data.
+None of which matters, as the section above says: the station awards 2 and `CFG.lockCode` stays `3274227`. The arithmetic is recorded here only so nobody re-derives it and thinks they have found a bug.
 
 ## Why it plays too hard
 
