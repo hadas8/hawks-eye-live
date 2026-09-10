@@ -1,0 +1,74 @@
+/* Station 6 — ארבעה כוכבים. The "neighbours" station kind: twelve assessed
+   crossings pinned beside four new ones needing three neighbours each. */
+
+/* The rule, printed. Station 6 is the one station that hands its rule over,
+   so the list is instruction rather than hint, and it is numbered because
+   the ORDER is the whole of it. */
+.prio{margin:0.5rem 0 0;padding:0;list-style:none;counter-reset:p;
+  display:flex;flex-wrap:wrap;gap:0.375rem}
+.prio li{counter-increment:p;background:var(--panel-2);border:1px solid var(--hair);
+  padding:0.25rem 0.5rem 0.25rem 0.375rem;font-size:0.8125rem;color:var(--ink-dim)}
+.prio li::before{content:counter(p);font-family:var(--mono);font-size:0.6875rem;
+  color:var(--amber);margin-inline-end:0.375rem}
+
+/* ── the pinned table beside the four cases ─ */
+/* Station 4's layout, for station 4's reason: a group cannot pick neighbours
+   out of a table it has to scroll away from to reach the thing it is
+   picking for. Side by side wherever there is room, table pinned. */
+@media (min-width:900px){
+  .nwrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(20rem,1fr);
+    gap:1.25rem;align-items:start}
+  .nside{position:sticky;top:4rem}
+  .ncases{display:flex;flex-direction:column;gap:0.625rem;
+    max-height:calc(100vh - 9rem);overflow-y:auto;padding-inline-end:0.25rem}
+}
+@media (max-width:899px){
+  .nwrap{display:flex;flex-direction:column;gap:1rem}
+  .nside{position:sticky;top:4rem;z-index:3;background:var(--ground);padding-bottom:0.5rem}
+  .ktable{max-height:40vh}
+  .ncases{display:flex;flex-direction:column;gap:0.625rem}
+}
+
+.ktable{overflow:auto;border:1px solid var(--hair)}
+.ktable table{width:100%;min-width:31rem;border-collapse:collapse;font-size:0.8125rem}
+.ktable th{position:sticky;top:0;z-index:1;background:var(--panel);
+  padding:0.375rem 0.625rem;text-align:start;font-size:0.6875rem;font-weight:500;
+  letter-spacing:var(--ls);text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--hair);white-space:nowrap}
+.ktable td{padding:0.25rem 0.625rem;line-height:1.35;color:var(--ink-dim);white-space:nowrap}
+.ktable tbody tr{border-bottom:1px solid var(--hair)}
+/* A row already spoken for. Not a verdict — only a reminder of where the
+   group put it, so they are not holding twelve placements in their heads. */
+.ktable tbody tr.used{background:var(--panel-2)}
+.ktable tbody tr.used td{color:var(--ink)}
+.ktable .kid{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.ktable .kscore{font-family:var(--mono);color:var(--ink);text-align:center}
+/* Which new crossings this one is standing in for, by number alone — the
+   N- prefix is the same on all four and only costs width. */
+.ktable .kused{font-family:var(--mono);font-size:0.6875rem;color:var(--amber);
+  margin-inline-start:0.375rem}
+
+/* ── the four new crossings ───────────────── */
+.ncase{border:1px solid var(--hair);background:var(--panel);padding:0.75rem 0.875rem}
+.ncase.done{border-color:var(--ink-dim)}
+
+.ncase .nhead{margin-bottom:0.5rem}
+.ncase .nid{font-family:var(--mono);font-size:1rem;color:var(--amber);
+  margin-inline-end:0.5rem}
+.ncase .nfeat{font-size:0.8125rem;color:var(--muted);line-height:1.5}
+.ncase .nfeat b{color:var(--ink);font-weight:500}
+
+.nchips{display:grid;grid-template-columns:repeat(auto-fill,minmax(4.25rem,1fr));gap:0.3125rem}
+.chip{min-height:var(--tap);background:var(--panel-2);border:1px solid var(--hair);
+  color:var(--ink-dim);font-family:var(--mono);font-size:0.8125rem;cursor:pointer}
+.chip:hover:not(:disabled){border-color:var(--muted);color:var(--ink)}
+.chip.on{border-color:var(--amber);background:var(--amber-soft);color:var(--amber)}
+/* Once three are chosen the rest go quiet rather than vanishing: a group
+   that wants a different third has to take one back out, which is the
+   moment they reconsider the comparison. */
+.chip:disabled{opacity:.35;cursor:default}
+
+.nfoot{display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
+  margin-top:0.5rem}
+.navg{font-size:0.8125rem;color:var(--ink-dim)}
+.navg b{font-family:var(--mono);font-size:1.0625rem;color:var(--ink)}

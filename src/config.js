@@ -4,10 +4,12 @@ export const CFG = {
   stationSeconds: 7 * 60,
   pointsPerStation: 10,
   bonusQuestPoints: 5,      // facilitators count these on paper; the app never sees them
-  // Station 3's digit is the count in box א׳, which its own union sheet
-  // instructs, and that count is 9 — not the 7 the draft's roster carried.
-  // See docs/station-3-rule.md; this moves the PHYSICAL lock too.
-  lockCode: '3294227'
+  // Two digits no longer match the draft's roster, because working each
+  // station's own rule over its own data does not reproduce it. Station 3
+  // is 9, not 7 (its union sheet counts box א׳). Station 6 is 1, not 2
+  // (its twelve crossings give 2+3+2+3 = 10). Both are written up in docs/,
+  // and BOTH MOVE THE PHYSICAL LOCK. Neither is settled with Lotem yet.
+  lockCode: '3294217'
 };
 
 // ?dev exposes the test strip. It must be removed before the event.

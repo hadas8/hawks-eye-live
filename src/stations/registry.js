@@ -6,13 +6,15 @@ import { viewCards } from './cards.js';
 import { viewQuestions } from './questions.js';
 import { viewCharts } from './charts.js';
 import { viewBoxes } from './boxes.js';
+import { viewNeighbours } from './neighbours.js';
 
 export const RENDERERS = {
   tables: viewTables,
   cards: viewCards,
   questions: viewQuestions,
   charts: viewCharts,
-  boxes: viewBoxes
+  boxes: viewBoxes,
+  neighbours: viewNeighbours
 };
 
 export const rendererFor = kind => RENDERERS[kind] || null;

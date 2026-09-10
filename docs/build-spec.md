@@ -56,7 +56,7 @@ Persistent chrome: the station clock and score in the top bar, and a 7-slot code
 
 Declarative per station, with a `custom` escape hatch:
 
-- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice` (stations 2, 3 and 5), `multiChoice`, `rows`, `pickN` (station 4), `pairPick` (station 2)
+- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice` (stations 2, 3 and 5), `pickN` (stations 4 and 6), `multiChoice`, `rows`, `pairPick`
 - Combine rules: `digitalRoot`, `count`, `literal`, `custom`
 - **Attempt policy comes from the station config, not a global rule.** Station 1 allows 3 submissions; station 2 is all-or-nothing with unlimited redos; station 3 allows 3 attempts; station 4 allows one retry. Running out closes the station immediately rather than leaving a group idle at a dead button.
 - No lockout timer. After a failed submit, disable submit until an input actually changes.
@@ -410,7 +410,9 @@ Being worked one at a time with the content author. Recorded here so nothing is 
    - The digit is the surviving vehicle number, **4**, matching the roster.
 5. ~~**Station 6 has no distance metric.**~~ **It does — `תחנה_6_מעברים.xlsx` states one the draft never had**, checked 2026-09-09: *מתחילים בשעת פעילות, ממשיכים לסוג כביש, כיסוי עצים, גובה, רכבים ביום — שני מעברים דומים = חולקים כמה שיותר תכונות מהתחלת הרשימה*. That is a lexicographic match, and it is checkable.
 
-   **But running it does not give the digit.** Computed: N-01 = 2, N-02 = 3, N-03 = 2, N-04 = 3, summing to 10 and a digital root of **1**. The roster needs **2**, which requires the draft's 2 + 3 + 3 + 3 = 11. The disagreement is N-03: the draft asserts 3, the stated rule gives 2 and cannot give 3 under any choice of third neighbour, because its only close match is K-12 and every remaining daytime crossing scores 1 or 2.
+   **But running it does not give the digit. Built anyway, 2026-09-10.** Computed: N-01 = 2, N-02 = 3, N-03 = 2, N-04 = 3, summing to 10 and a digital root of **1**. The roster needs **2**, which requires the draft's 2 + 3 + 3 + 3 = 11. The disagreement is N-03: the draft asserts 3, the stated rule gives 2 and cannot give 3 under any choice of third neighbour, because its only close match is K-12 and every remaining daytime crossing scores 1 or 2. Rounding down gives 9, up gives 4, so no convention rescues the 2. `CFG.lockCode` is now **`3294217`** — with station 3's 9 at position three, **two digits now differ from the draft's code and both move the physical lock.** The key in `src/data/station-6.js` is *computed* from the stated rule rather than typed, so it cannot drift from it.
+
+   Two further defects, neither blocking the build. **N-02 and N-04 are the same puzzle**: identical on שעת פעילות, סוג כביש and כיסוי עצים, ten metres and one vehicle apart, so they take the same three neighbours and the same score — the station is really three cases. And **no new crossing has three neighbours of its own kind**: N-01 and N-02 have two same-time-same-road matches, N-03 has one, so the third pick always comes from a crossing that fails on road type. Well defined, but never the intuitive choice. Full write-up in [station-6-neighbours.md](station-6-neighbours.md).
 
    **Two crossings are also genuinely ambiguous.** N-02 and N-04 both match K-07 and K-11 on the first three features; the third neighbour is any of four night mountain crossings scoring 4, 4, 5 and 5, giving an average that rounds to either 3 or 4. Breaking the tie on altitude gives 3, but nothing in the source says to.
 

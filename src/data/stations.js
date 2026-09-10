@@ -16,6 +16,7 @@ import { ENVELOPES, honestPosition } from './station-2.js';
 import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED } from './station-5.js';
 import { CARDS, DIGIT_BOX, countIn } from './station-3.js';
+import { NEW, NEIGHBOURS, isCorrectFor, scoreFrom, K as KNN } from './station-6.js';
 
 export const STATIONS = [
   {
@@ -165,6 +166,46 @@ export const STATIONS = [
     ]
   },
 
-  { n: 6, name: 'ארבעה כוכבים',          concept: 'KNN — שכנים קרובים',       password: ['גדר'],  digit: 2, kind: null },
+  {
+    n: 6,
+    name: 'ארבעה כוכבים',
+    concept: 'KNN — שכנים קרובים',
+    password: ['גדר'],           // still a placeholder
+    // Not 2. Working the xlsx's own rule over its own twelve crossings gives
+    // 2+3+2+3 = 10, and 1+0 = 1. No rounding convention rescues the 2:
+    // rounding down gives 9, up gives 4. See docs/station-6-neighbours.md.
+    digit: (() => {
+      const sum = NEW.reduce((t, n) => t + scoreFrom(NEIGHBOURS[n.id]), 0);
+      return sum <= 0 ? 0 : 1 + ((sum - 1) % 9);
+    })(),
+    kind: 'neighbours',
+
+    // Four sets of three from twelve. Nothing to brute-force, but naming the
+    // wrong set would turn the rule into a game played against the app.
+    maxAttempts: 3,
+    revealWhichWrong: false,
+
+    brief: 'שנים‑עשר מעברים כבר נבדקו ויש לנו עליהם ציון סיכון, וארבעה חדשים נפתחו הלילה בלי שום היסטוריה. מעבר שמושך למעברים שאנחנו מכירים מתנהג כמותם.',
+
+    answer: {
+      // One set of three per new crossing, graded whole: which three, not
+      // in what order.
+      parts: NEW.map(n => ({
+        kind: 'pickN', count: KNN, valid: ids => isCorrectFor(n.id, ids)
+      })),
+      rule: 'custom',
+      // The group's own picks make the digit: average each set of three,
+      // sum the four, reduce to one digit.
+      derive: sets => {
+        const sum = sets.reduce((t, ids) => t + scoreFrom(ids), 0);
+        return sum <= 0 ? 0 : 1 + ((sum - 1) % 9);
+      }
+    },
+
+    hints: [
+      'התחילו משעת הפעילות ופסלו את כל מי שלא מתאים. רק מהנותרים עוברים לתכונה הבאה.',
+      'אם נשארו פחות משלושה שחולקים את שתי התכונות הראשונות, השלישי מגיע מהקרוב ביותר שנותר — לא ממי שדומה לכם במבט ראשון.'
+    ]
+  },
   { n: 7, name: 'שמונה אנליסטים',        concept: 'Random Forest — יער אקראי', password: ['חורש'], digit: 7, kind: null }
 ];
