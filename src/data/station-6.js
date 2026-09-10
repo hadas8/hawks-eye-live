@@ -21,13 +21,21 @@
 // 2 + 3 + 2 + 3 = 10 and the digit was 1; the roster wanted 2, and no
 // rounding convention reached it.) See docs/station-6-neighbours.md.
 
+// `match: true` marks the features two crossings can be said to SHARE. The
+// other two are numbers: 360 מ׳ and 350 מ׳ are not shared, they are near.
+// That distinction is the source's own blind spot — its rule says crossings
+// share features and then lists two that cannot be — so the station makes it
+// visible instead of papering over it: you can filter on the first three and
+// only compare on the last two.
 export const FEATURES = [
-  { key: 'time',  label: 'שעת פעילות' },
-  { key: 'road',  label: 'סוג כביש' },
-  { key: 'cover', label: 'כיסוי עצים' },
+  { key: 'time',  label: 'שעת פעילות', match: true },
+  { key: 'road',  label: 'סוג כביש',   match: true },
+  { key: 'cover', label: 'כיסוי עצים', match: true },
   { key: 'alt',   label: 'גובה', unit: ' מ׳' },
   { key: 'veh',   label: 'רכבים/יום' }
 ];
+
+export const MATCHABLE = FEATURES.filter(f => f.match);
 
 const known = (id, time, veh, road, alt, cover, score) =>
   ({ id, time, veh, road, alt, cover, score });

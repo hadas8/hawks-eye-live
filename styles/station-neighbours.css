@@ -41,15 +41,28 @@
    group put it, so they are not holding twelve placements in their heads. */
 .ktable tbody tr.used{background:var(--panel-2)}
 .ktable tbody tr.used td{color:var(--ink)}
-/* Ruled out by the active crossing's שעת פעילות — the first step of the
-   rule, applied for the group so they are not scanning twelve rows by eye
-   for something the app already knows. Dimmed rather than removed: the row
-   is still there to be read, and taking rows away would make the filter
-   feel like an answer rather than a lens. Station 4 does the same. */
+/* Ruled out by a filter the GROUP switched on. Dimmed rather than removed:
+   the row is still there to be read and still pickable, so a group that
+   disagrees with its own filter is not blocked by it. */
 .ktable tbody tr{transition:opacity .12s}
 .ktable tbody tr.out{opacity:.24}
 .ktable tbody tr.out td{color:var(--muted)}
 .ktable th.filtered{color:var(--amber)}
+
+/* The filter bar. Three buttons, one per feature two crossings can SHARE —
+   גובה and רכבים/יום have none, because nothing in the table sits at exactly
+   360 מ׳ and comparing them is the tie-break the group has to do by eye. */
+.fbar{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin:0 0 0.5rem}
+.fbar .flabel{font-size:0.75rem;color:var(--muted)}
+.fbar .flabel b{font-family:var(--mono);color:var(--amber);font-weight:400}
+.fbtns{display:flex;gap:0.3125rem;flex-wrap:wrap}
+.fb{min-height:2rem;padding:0 0.625rem;background:var(--panel-2);
+  border:1px solid var(--hair);color:var(--ink-dim);font-family:var(--body);
+  font-size:0.8125rem;cursor:pointer}
+.fb:hover{border-color:var(--muted);color:var(--ink)}
+.fb.on{border-color:var(--amber);background:var(--amber-soft);color:var(--amber)}
+.fcount{margin-inline-start:auto;font-family:var(--mono);font-size:0.75rem;color:var(--muted)}
+.fcount.on{color:var(--ink)}
 .ktable .kid{font-family:var(--mono);color:var(--ink);white-space:nowrap}
 .ktable .kscore{font-family:var(--mono);color:var(--ink);text-align:center}
 /* Which new crossings this one is standing in for, by number alone — the

@@ -24,15 +24,18 @@
 // so there is nothing to sweep, and knowing that N-02 is wrong tells a group
 // to re-read the rule rather than which chip to swap.
 //
-// The table filters live to whichever crossing is being worked on, dimming
-// the rows that fail its שעת פעילות. That is the first step of the rule and
-// the purely mechanical half of the work; everything that requires judgement
-// is left alone. Filtering by road type as well would leave one or two rows
-// standing and hand over the top of the answer.
+// The table has a filter the GROUP drives, not the app: three buttons, one
+// per matchable feature, each dimming the rows that fail the active crossing
+// on that feature. An earlier version applied שעת פעילות automatically and
+// was wrong twice over — it made the first decision before the group had
+// done anything, and there was no principle by which step 1 should be
+// automatic and steps 2 to 5 not. Driven by the group, applying the rule in
+// priority order stops being something the app hides and becomes something
+// they do, in whatever order they choose, including the wrong one.
 
 import { S, set, station, draftOf, attemptsLeft } from '../state.js';
 import { STATIONS } from '../data/stations.js';
-import { KNOWN, NEW, FEATURES, K, scoreFrom, isCorrectFor } from '../data/station-6.js';
+import { KNOWN, NEW, FEATURES, MATCHABLE, K, scoreFrom, isCorrectFor } from '../data/station-6.js';
 import { grade, deriveDigit } from '../engine/answers.js';
 import { esc } from '../lib/text.js';
 import { fx, shake } from '../ui/fx.js';
@@ -48,12 +51,19 @@ const pickedFor = nId => (picks()[nId] ||= []);
 const answers = () => NEW.map(n => pickedFor(n.id));
 const complete = () => answers().filter(a => a.length === K).length;
 
-// Which crossing the group is working on. The table filters to it, so there
-// always has to be one: the first unfinished crossing, until they say
-// otherwise by tapping another.
+// Which crossing the filters measure against. There always has to be one:
+// the first unfinished crossing, until the group says otherwise.
 const activeId = () => d().active
   || (NEW.find(n => pickedFor(n.id).length < K) || NEW[0]).id;
 const active = () => NEW.find(n => n.id === activeId()) || NEW[0];
+
+// Which features the group has switched on. Empty by default: the table
+// starts whole, and nothing dims until they ask for it.
+const filters = () => (d().filters ||= {});
+const filterOn = key => !!filters()[key];
+const anyFilter = () => MATCHABLE.some(f => filterOn(f.key));
+const failsFilter = k => MATCHABLE.some(f => filterOn(f.key) && k[f.key] !== active()[f.key]);
+const litCount = () => KNOWN.filter(k => !failsFilter(k)).length;
 
 // Per-crossing verdicts, kept until that crossing is edited. Station 1 does
 // the same: naming WHICH one is wrong, never what is wrong inside it.
@@ -70,22 +80,27 @@ const usedIn = kId => NEW.filter(n => pickedFor(n.id).includes(kId)).map(n => n.
 // Where a crossing has been used rides in the id cell rather than in a
 // column of its own: eight columns did not fit the pinned pane, and the one
 // that got cut off at the edge was this one.
+// The filter bar. Only the three matchable features get a button: you cannot
+// filter on גובה, because no known crossing is AT 360 מ׳ — that one is read
+// off the table by eye, which is the whole of the tie-break.
+const filterBar = () => `<div class="fbar">
+    <span class="flabel">מודדים מול <b>${esc(activeId())}</b></span>
+    <div class="fbtns">${MATCHABLE.map(f =>
+      `<button class="fb ${filterOn(f.key) ? 'on' : ''}" data-act="toggleFilter"
+        data-arg="${f.key}">${esc(f.label)}</button>`).join('')}</div>
+    <span class="fcount ${anyFilter() ? 'on' : ''}">${
+      anyFilter() ? `${litCount()} מתוך ${KNOWN.length}` : `${KNOWN.length} מעברים`}</span>
+  </div>`;
+
 const knownTable = () => {
-  // The first feature, applied live to the table for whichever crossing is
-  // being worked on. It halves the twelve without choosing anything: the
-  // group still has to compare road, cover and altitude among the survivors.
-  // Station 4 does the same with one question against the fleet, at Hadas's
-  // own request. Going further — dimming by road type too — would leave one
-  // or two rows standing and hand over the top of the answer.
-  const cur = active();
   return `<div class="ktable" data-keep-scroll="known">
     <table>
-      <thead><tr><th>מזהה</th>${FEATURES.map((f, i) =>
-        `<th class="${i === 0 ? 'filtered' : ''}">${esc(f.label)}</th>`).join('')}
+      <thead><tr><th>מזהה</th>${FEATURES.map(f =>
+        `<th class="${f.match && filterOn(f.key) ? 'filtered' : ''}">${esc(f.label)}</th>`).join('')}
         <th>ציון</th></tr></thead>
       <tbody>${KNOWN.map(k => {
         const used = usedIn(k.id);
-        const out = k.time !== cur.time;
+        const out = failsFilter(k);
         return `<tr class="${used.length ? 'used' : ''} ${out ? 'out' : ''}">
           <td class="kid">${esc(k.id)}${used.length
             ? `<span class="kused">${used.map(u => esc(u.replace('N-', ''))).join(' ')}</span>` : ''}</td>
@@ -146,7 +161,8 @@ export function viewNeighbours() {
 
     <div class="nwrap">
       <div class="nside">
-        <div class="eyebrow">שנים־עשר מעברים שכבר נבדקו · מודגשים אלה שפועלים ב${esc(active().time)}, כמו ${esc(activeId())}</div>
+        <div class="eyebrow">שנים־עשר מעברים שכבר נבדקו</div>
+        ${filterBar()}
         ${knownTable()}
       </div>
       <!-- This pane scrolls, and every pick re-renders the whole stage, so
@@ -179,10 +195,19 @@ export function viewNeighbours() {
 
 /* ── actions ──────────────────────────────── */
 register('click', {
-  // Tapping a crossing's header points the table's filter at it. Nothing
-  // else changes: it is a lens, not a commitment.
+  // Tapping a crossing's header points the filters at it. Nothing else
+  // changes: it is a lens, not a commitment.
   focusNb(arg) {
     d().active = arg;
+    set();
+  },
+
+  // The filters persist across crossings on purpose. A group that has
+  // settled on "time, then road" keeps that set-up when they move to the
+  // next one, instead of rebuilding it three times.
+  toggleFilter(arg) {
+    const f = filters();
+    f[arg] = !f[arg];
     set();
   },
 
