@@ -184,7 +184,7 @@ An earlier version reconstructed the series from the docx's prose, because the i
 
 | Envelope | Reconstructed | Actually |
 |---|---|---|
-| א׳ | `98,99,100,99,101,100`, axis 96–102 | `97..102` clean staircase, axis **96–103** vs **0–120** |
+| א׳ | `98,99,100,99,101,100`, axis 96–102 | `97..102` clean staircase, axis **96–104** vs **0–120** |
 | ב׳ | 38/31/23/8, other bars **dimmed** | 38/**35**/**27**/8, other bars left alone |
 | ג׳ | `1,1,1,0,2,3,4,5,4,6,7,8` | only Jan, Mar, Jul carry an incident; everything else zero |
 | ד׳ | 8 weeks | **6** weeks, `3,6,4,5,2,4` |
@@ -197,6 +197,8 @@ Two of those are not cosmetic. **ה׳'s deception is the arrow, not the averagin
 ### Two inconsistencies inside the source, for the content author
 
 - **ג׳: the chart and the text disagree.** The chart shows incidents only in January, March and July, so January to April totals **2**. The docx text says 3. The app follows the chart. If the intended answer is 3, the chart needs a fourth incident.
+Two rendering adjustments on top of the transcription, neither of which touches a figure: the truncated axis runs to **104** rather than 103, so its gridlines land on whole numbers instead of 97.8 / 99.5 / 101.3; and ז׳'s average label sits at the right-hand end of its rule, where a Hebrew reader starts and no bar reaches, because at the left end it landed on the מאי bar's own value label.
+
 - **ב׳: the percentages sum to 108%**, not 100 — 38 + 35 + 27 + 8. Transcribed as-is from the image. Either the categories overlap or one figure is off.
 
 ### One departure from the source, agreed with Hadas

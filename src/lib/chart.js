@@ -115,8 +115,8 @@ export function renderChart(spec) {
   const ref = spec.refLine ? `
     <line x1="${X0}" x2="${X1}" y1="${yOf(spec.refLine.value).toFixed(1)}"
       y2="${yOf(spec.refLine.value).toFixed(1)}" class="cref"/>
-    <text x="${X0 + 4}" y="${(yOf(spec.refLine.value) - 5).toFixed(1)}" class="cv"
-      text-anchor="start">${esc(spec.refLine.label)}</text>` : '';
+    <text x="${X1 - 4}" y="${(yOf(spec.refLine.value) - 5).toFixed(1)}" class="cv creft"
+      text-anchor="end">${esc(spec.refLine.label)}</text>` : '';
 
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true"
     preserveAspectRatio="xMidYMid meet" style="direction:ltr">

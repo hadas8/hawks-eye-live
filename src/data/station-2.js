@@ -35,7 +35,7 @@ export const ENVELOPES = [
     trick: 'ציר Y מ-96 עד 103 — עלייה של חמש נקודות על מדד של מאה נראית כמו מדרגות',
     lyingFirst: false,
     honest: { kind: 'bars', labels: MONTHS_6, values: [97, 98, 99, 100, 101, 102], yFloor: 0, yCeil: 120 },
-    lying:  { kind: 'bars', labels: MONTHS_6, values: [97, 98, 99, 100, 101, 102], yFloor: 96, yCeil: 103 }
+    lying:  { kind: 'bars', labels: MONTHS_6, values: [97, 98, 99, 100, 101, 102], yFloor: 96, yCeil: 104 }
   },
   {
     id: 'ב׳',
@@ -92,7 +92,7 @@ export const ENVELOPES = [
     trick: 'גרף קווי עם ציר Y מ-96 ושטח צבוע מתחתיו — עלייה של 3 נקודות נראית דרמטית',
     lyingFirst: true,
     honest: { kind: 'bars', labels: MONTHS_6, values: [98, 99, 99, 100, 100, 101], yFloor: 0, yCeil: 120 },
-    lying:  { kind: 'line', labels: MONTHS_6, values: [98, 99, 99, 100, 100, 101], yFloor: 96, yCeil: 103, area: true }
+    lying:  { kind: 'line', labels: MONTHS_6, values: [98, 99, 99, 100, 100, 101], yFloor: 96, yCeil: 104, area: true }
   },
   {
     id: 'ז׳',

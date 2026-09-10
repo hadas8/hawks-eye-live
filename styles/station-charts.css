@@ -49,6 +49,9 @@
 .chart .crh{fill:var(--amber)}
 /* the one honest annotation here: a labelled rule at a value */
 .chart .cref{stroke:var(--amber);stroke-width:1.5;stroke-dasharray:5 4}
+/* its label sits at the right end of the rule, where a Hebrew reader starts
+   and where no bar reaches, so it never lands on a value label */
+.chart .creft{fill:var(--amber)}
 
 @media (max-width:700px){
   .gpair{grid-template-columns:1fr}
