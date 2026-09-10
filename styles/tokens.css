@@ -33,12 +33,17 @@
      what the source does too. This is not decoration and it is not the
      per-column colouring that was dropped from station 1's tables: there,
      colour cut across rows being scanned; here it belongs to a place.
-     Deliberately not green or red, which are verdict colours everywhere
-     else, and all three are equally saturated so no box reads as the
-     reject pile before the group has worked out what the boxes mean. */
-  --box-1:#ffb238;  --box-1-soft:rgba(255,178,56,.14);  --box-1-dim:rgba(255,178,56,.45);
+     None of the three is amber: amber is the app's own accent, so an amber
+     box read as active UI rather than as box א׳. None is green or red
+     either, which are verdict colours everywhere else, nor coral, which is
+     --miss. Indigo, teal and pink sit far enough apart on the wheel to
+     survive being read at the size of a 44px button in peripheral vision;
+     blue-next-to-teal did not. All three are equally saturated, so no box
+     reads as the reject pile before the group has worked out what the
+     boxes mean. */
+  --box-1:#7c74f0;  --box-1-soft:rgba(124,116,240,.14); --box-1-dim:rgba(124,116,240,.45);
   --box-2:#3fc7d4;  --box-2-soft:rgba(63,199,212,.14);  --box-2-dim:rgba(63,199,212,.45);
-  --box-3:#b48af5;  --box-3-soft:rgba(180,138,245,.14);  --box-3-dim:rgba(180,138,245,.45);
+  --box-3:#ef7d9d;  --box-3-soft:rgba(239,125,157,.14); --box-3-dim:rgba(239,125,157,.45);
 
   --body:"Heebo",system-ui,-apple-system,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
