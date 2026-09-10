@@ -41,6 +41,15 @@
    group put it, so they are not holding twelve placements in their heads. */
 .ktable tbody tr.used{background:var(--panel-2)}
 .ktable tbody tr.used td{color:var(--ink)}
+/* Ruled out by the active crossing's שעת פעילות — the first step of the
+   rule, applied for the group so they are not scanning twelve rows by eye
+   for something the app already knows. Dimmed rather than removed: the row
+   is still there to be read, and taking rows away would make the filter
+   feel like an answer rather than a lens. Station 4 does the same. */
+.ktable tbody tr{transition:opacity .12s}
+.ktable tbody tr.out{opacity:.24}
+.ktable tbody tr.out td{color:var(--muted)}
+.ktable th.filtered{color:var(--amber)}
 .ktable .kid{font-family:var(--mono);color:var(--ink);white-space:nowrap}
 .ktable .kscore{font-family:var(--mono);color:var(--ink);text-align:center}
 /* Which new crossings this one is standing in for, by number alone — the
@@ -51,8 +60,18 @@
 /* ── the four new crossings ───────────────── */
 .ncase{border:1px solid var(--hair);background:var(--panel);padding:0.75rem 0.875rem}
 .ncase.done{border-color:var(--ink-dim)}
+/* The one the table is currently filtered to. */
+.ncase.cur{border-color:var(--amber)}
+/* After a rejected submission, which crossings were right and which were
+   not — never what was wrong inside one. */
+.ncase.hit{border-color:var(--ok)}
+.ncase.miss{border-color:var(--bad);background:var(--bad-soft)}
 
-.ncase .nhead{margin-bottom:0.5rem}
+.ncase .nhead{display:block;width:100%;text-align:start;background:none;border:0;
+  padding:0;margin-bottom:0.5rem;font-family:var(--body);cursor:pointer}
+.ncase .nmark{display:block;margin-top:0.25rem;font-size:0.75rem;font-family:var(--mono)}
+.ncase.hit .nmark{color:var(--ok)}
+.ncase.miss .nmark{color:var(--bad)}
 .ncase .nid{font-family:var(--mono);font-size:1rem;color:var(--amber);
   margin-inline-end:0.5rem}
 .ncase .nfeat{font-size:0.8125rem;color:var(--muted);line-height:1.5}

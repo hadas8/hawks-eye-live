@@ -1,8 +1,9 @@
 // Station 6 — ארבעה כוכבים. Source: תחנה_6_מעברים.xlsx, transcribed 2026-09-10.
 //
-// Twelve crossings already assessed, four new ones. For each new crossing the
-// group finds its three nearest neighbours among the twelve and takes their
-// average risk score. The four scores are summed and reduced to one digit.
+// Twelve crossings already assessed, three new ones (the source had four;
+// see the note on N-04 below). For each new crossing the group finds its
+// three nearest neighbours among the twelve and takes their average risk
+// score. Those scores are summed and reduced to one digit.
 //
 // Unlike stations 3 and 5, the rule is NOT hidden — the xlsx hands it over in
 // its own header, in priority order:
@@ -15,10 +16,10 @@
 // deterministic, and `NEIGHBOURS` below is computed from it rather than
 // asserted, so the key cannot drift from the rule.
 //
-// THE DIGIT DOES NOT COME OUT AT 2. Working the source's own rule over its
-// own data gives 2 + 3 + 2 + 3 = 10, and 1 + 0 = 1. The roster wanted 2. No
-// rounding convention rescues it: rounding down gives 9, up gives 4. See
-// docs/station-6-neighbours.md.
+// THE DIGIT DOES NOT COME OUT AT 2. With N-04 dropped the three remaining
+// crossings score 2 + 3 + 2 = 7, so the digit is 7. (With N-04 it was
+// 2 + 3 + 2 + 3 = 10 and the digit was 1; the roster wanted 2, and no
+// rounding convention reached it.) See docs/station-6-neighbours.md.
 
 export const FEATURES = [
   { key: 'time',  label: 'שעת פעילות' },
@@ -49,8 +50,13 @@ export const KNOWN = [
 export const NEW = [
   { id: 'N-01', time: 'יום',  veh: 5, road: 'מיוער', alt: 360, cover: 'בינוני' },
   { id: 'N-02', time: 'לילה', veh: 7, road: 'מיוער', alt: 570, cover: 'בינוני' },
-  { id: 'N-03', time: 'יום',  veh: 7, road: 'הררי',  alt: 710, cover: 'נמוך' },
-  { id: 'N-04', time: 'לילה', veh: 6, road: 'מיוער', alt: 560, cover: 'בינוני' }
+  { id: 'N-03', time: 'יום',  veh: 7, road: 'הררי',  alt: 710, cover: 'נמוך' }
+  // N-04 (לילה / מיוער / בינוני / 560 מ׳ / 6) is DROPPED, Hadas 2026-09-10.
+  // It agreed with N-02 on all three deciding features and differed by ten
+  // metres and one vehicle — the two tie-breakers, which cannot move
+  // anything when the nearest candidates are fifty metres apart. Its full
+  // twelve-place ranking was identical to N-02's, so a group did a quarter
+  // of the station's work twice and learned nothing from the second pass.
 ];
 
 export const K = 3;   // three neighbours, as the source says

@@ -1,6 +1,18 @@
-# Station 6 is too hard, and its own rule gives digit 1, not 2
+# Station 6: too hard as written, cut down 2026-09-10
 
-_For the conversation with Lotem. Written 2026-09-10 alongside building the station, revised the same day after Hadas played it and found it far too hard. **Station 6 is built and playable on `dev`.**_
+_For the conversation with Lotem. Written 2026-09-10 alongside building the station, then revised twice the same day: once after Hadas played it and found it far too hard, and again after she decided what to do about it. **Station 6 is built and playable on `dev`.**_
+
+## What was changed, and what it did to the digit
+
+Hadas's calls, applied:
+
+1. **N-04 is dropped.** It was a duplicate of N-02 — see below — so the station is three crossings, not four.
+2. **A rejected submission now names which crossings are wrong**, the way station 1 does. Never what is wrong inside one.
+3. **The table filters live** to whichever crossing is being worked on: rows that fail its שעת פעילות dim out. First step of the rule only.
+
+Together those take the station from 48 comparisons to 36, halve each one's scan, and make a failed attempt worth something. Problems 1, 2 and 6 below are substantially addressed; 3, 4 and 5 are content and remain for Lotem.
+
+**The digit is now 7.** The three remaining crossings score 2 + 3 + 2 = 7, so `CFG.lockCode` is **`3294277`**. It was going to be 1 with N-04 in (2+3+2+3 = 10). The roster wanted 2 and no arrangement of the source's own data produces it.
 
 ## The station works, and its rule is clean
 
@@ -27,19 +39,19 @@ Working the rule over the data:
 | N-03 | K-12, K-06, K-10 | 3, 2, 2 | 2.33 | **2** |
 | N-04 | K-11, K-07, K-03 | 3, 3, 4 | 3.33 | **3** |
 
-Sum **10** → 1 + 0 = **1**. The roster wanted **2**.
+With all four crossings, sum **10** → 1 + 0 = **1**. With N-04 dropped, sum **7** → **7**. The roster wanted **2**, and neither figure is it.
 
 The draft asserted 2 + 3 + 3 + 3 = 11, which is the 2. The single disagreement is **N-03**, where the draft says 3 and the rule gives 2 — and the rule *cannot* give 3. Its only same-time, same-road match is K-12, which scores 3; every remaining daytime crossing scores 1 or 2, so the best three available sum to 3 + 2 + 2 = 7 and average 2.33. Reaching 3 would mean taking a night crossing, which the rule's first feature forbids.
 
 No rounding convention rescues it either. Rounding every average **down** gives 9; rounding every average **up** gives 13 → 4. Only ordinary rounding gives a sum in the right neighbourhood at all, and it lands one short: the digit would need a sum of 11 or 20.
 
-So `CFG.lockCode` is now **`3294217`** — station 3 having already moved position three from 7 to 9. **Two of the seven digits no longer match the draft's code, and both move the physical lock.** Neither is a transcription error; each is what the station's own rule does to its own data.
+So `CFG.lockCode` is now **`3294277`** — station 3 having already moved position three from 7 to 9. **Two of the seven digits no longer match the draft's code, and both move the physical lock.** Neither is a transcription error; each is what the station's own rule does to its own data.
 
 ## Why it plays too hard
 
-**1. The volume.** Four new crossings against twelve known ones is 48 comparisons, each over up to five features, read off a 12-row table, inside seven minutes. That is the dominant cost, and nothing about the rule reduces it.
+**1. The volume.** *Four* new crossings against twelve known ones was 48 comparisons, each over up to five features, read off a 12-row table, inside seven minutes. **Addressed:** three crossings is 36, and the live שעת פעילות filter halves each scan.
 
-**2. All-or-nothing over four sets, with no feedback.** Every one of the four sets of three must be exactly right. One slip anywhere fails the station and the group is told nothing about where, so a rejected attempt buys them nothing to think with.
+**2. All-or-nothing over four sets, with no feedback.** One slip anywhere failed the station and the group was told nothing about where. **Addressed:** a rejection now marks which crossings were right and which were not, so a second attempt starts from somewhere.
 
 **3. The undefined step is the step that decides every answer.** Because no new crossing has three neighbours of its own kind (below), the third pick always comes from a group of four or five candidates *tied on all three categorical features* and separated only by altitude. Checked for all four: the numeric tie-break decides the third neighbour every single time. So the one part of the rule the source never defines is the part that settles all four answers — and it is arithmetic (|360−200| against |360−150| against |360−100| against |360−700|), four times over, at the point where a group is most rushed.
 
@@ -47,7 +59,7 @@ So `CFG.lockCode` is now **`3294217`** — station 3 having already moved positi
 
 **5. Three of the five features do all the work; two do none.** Checked exhaustively: dropping `כיסוי עצים`, or `רכבים/יום`, or both, leaves all four answers unchanged. Only שעת פעילות, סוג כביש and גובה ever decide anything. The station asks a group to hold a five-step priority list under a clock, and two of the steps never fire.
 
-**6. Five of the twelve known crossings are never an answer.** K-01, K-04, K-05, K-08 and K-09 appear in none of the four correct sets. Distractors are legitimate, but they are also 40% of a table that has to be read and re-read.
+**6. Five of the twelve known crossings are never an answer.** K-01, K-04, K-05, K-08 and K-09 appear in none of the correct sets. Distractors are legitimate, but they are also 40% of a table that has to be read and re-read. **Partly addressed:** the live filter dims six rows at a time, so half the table is quiet at any moment.
 
 **A second correction.** The first version of this document said a group reasoning loosely would get it wrong on all four. That is false, and it is the good news here: a group that matches on שעת פעילות, then on סוג כביש, then takes the closest by גובה — skipping tree cover and vehicles entirely — gets **all four sets exactly right**. The intuitive route works. What punishes is the amount of it, not the shape of it.
 
@@ -79,16 +91,18 @@ Every one of the four is short. So the third neighbour — and for N-03, the sec
 
 Roughly by how much they cost. None applied yet.
 
-- **Show the first filter live, the way station 4 does.** Working on a crossing dims the known rows that fail its שעת פעילות. That removes the mechanical half of the scan — problem 1, the biggest — without touching a single judgement: the group still chooses among the survivors. It is the only item here that is a build change rather than a content change, so it is much the cheapest, and Hadas asked for exactly this behaviour in station 4.
-- **Drop N-04.** It is a duplicate of N-02 and buys nothing. Three cases instead of four is a quarter less work. Changes the target sum.
-- **Grade per crossing, or allow more attempts.** Softens problem 2 without touching content.
-- **Cut some of the five never-used crossings.** Checked: removing K-04 and K-08 leaves all four answers unchanged and takes two rows off the table.
-- **Say what closeness means for גובה** in the rule text, so problem 3 stops being a guess.
+~~Show the first filter live~~ · ~~Drop N-04~~ · ~~Name which crossing is wrong~~ — all three done, above.
+
+Still available if it is still too hard:
+
+- **Cut some of the five never-used crossings.** Checked: removing K-04 and K-08 leaves every answer unchanged and takes two rows off the table.
+- **Say what closeness means for גובה** in the rule text, so problem 3 stops being a guess. This one is Lotem's and worth doing regardless — it is the step that decides all three answers.
+- **More than three attempts**, now that a rejection carries information.
 
 ## What is needed from Lotem
 
-1. **The digit.** Its own data gives 1. Either the lock code becomes `3294217`, or the data changes: raising any one crossing's risk score by enough to move one average up by one gets the sum to 11 and the digit to 2.
-2. **N-04.** Make it a genuinely different crossing, or drop it to three cases and adjust the target sum.
-3. **The known set.** Adding a couple of day/mountain and day/forest crossings would give each new one three real neighbours and make the third pick feel earned rather than residual.
+1. **The digit.** Three crossings give 7, so the lock code is `3294277`. If it must be 2, the data has to change — the rule cannot be argued into it.
+2. **What "closest" means for גובה and רכבים/יום.** The rule says crossings *share* features, which is meaningless for numbers, and that undefined step decides all three answers.
+3. **The known set.** Adding a day/mountain and a day/forest crossing would give each new one three real neighbours and make the third pick feel earned rather than residual — and would fix problem 4, where N-03's neighbours look wrong to a person.
 
-Until 1 is settled, the digit is 1 and the physical lock has to match.
+Until 1 is settled, the digit is 7 and the physical lock has to match.

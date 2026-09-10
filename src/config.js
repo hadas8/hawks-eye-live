@@ -6,10 +6,11 @@ export const CFG = {
   bonusQuestPoints: 5,      // facilitators count these on paper; the app never sees them
   // Two digits no longer match the draft's roster, because working each
   // station's own rule over its own data does not reproduce it. Station 3
-  // is 9, not 7 (its union sheet counts box א׳). Station 6 is 1, not 2
-  // (its twelve crossings give 2+3+2+3 = 10). Both are written up in docs/,
-  // and BOTH MOVE THE PHYSICAL LOCK. Neither is settled with Lotem yet.
-  lockCode: '3294217'
+  // is 9, not 7 (its union sheet counts box א׳). Station 6 is 7, not 2
+  // (its three crossings give 2+3+2 = 7, after Hadas dropped the duplicate
+  // N-04). Both are written up in docs/, and BOTH MOVE THE PHYSICAL LOCK.
+  // Neither is settled with Lotem yet.
+  lockCode: '3294277'
 };
 
 // ?dev exposes the test strip. It must be removed before the event.

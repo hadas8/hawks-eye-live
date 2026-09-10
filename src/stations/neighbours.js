@@ -1,8 +1,8 @@
 // The "neighbours" station kind — station 6, ארבעה כוכבים.
 //
-// Twelve assessed crossings sit in a pinned table. Four new ones need three
+// Twelve assessed crossings sit in a pinned table. Three new ones need three
 // neighbours each, chosen from the twelve; the average of those three risk
-// scores is the new crossing's score, and the four scores make the digit.
+// scores is the new crossing's score, and the three scores make the digit.
 //
 // The rule is on screen, in the order the source gives it. This station is
 // not a discovery puzzle like 3 or 5 — the xlsx hands the priority list to
@@ -19,13 +19,20 @@
 // neighbours from a table it has to scroll away from. Side by side above
 // 900px with the table pinned; stacked below it.
 //
-// Feedback is all-or-nothing. Four sets of three from twelve is 220^4, so
-// there is nothing to brute-force, but naming the wrong set would turn the
-// rule into a guessing game played against the app.
+// A rejected submission names WHICH crossings are wrong, not what is wrong
+// inside one — station 1's trade. Three sets of three from twelve is 220^3,
+// so there is nothing to sweep, and knowing that N-02 is wrong tells a group
+// to re-read the rule rather than which chip to swap.
+//
+// The table filters live to whichever crossing is being worked on, dimming
+// the rows that fail its שעת פעילות. That is the first step of the rule and
+// the purely mechanical half of the work; everything that requires judgement
+// is left alone. Filtering by road type as well would leave one or two rows
+// standing and hand over the top of the answer.
 
 import { S, set, station, draftOf, attemptsLeft } from '../state.js';
 import { STATIONS } from '../data/stations.js';
-import { KNOWN, NEW, FEATURES, K, scoreFrom } from '../data/station-6.js';
+import { KNOWN, NEW, FEATURES, K, scoreFrom, isCorrectFor } from '../data/station-6.js';
 import { grade, deriveDigit } from '../engine/answers.js';
 import { esc } from '../lib/text.js';
 import { fx, shake } from '../ui/fx.js';
@@ -35,10 +42,23 @@ import { register } from '../ui/actions.js';
 const N = NEW.length;
 
 /* ── draft accessors ──────────────────────── */
-const picks = () => (draftOf(station().n).picks ||= {});
+const d = () => draftOf(station().n);
+const picks = () => (d().picks ||= {});
 const pickedFor = nId => (picks()[nId] ||= []);
 const answers = () => NEW.map(n => pickedFor(n.id));
 const complete = () => answers().filter(a => a.length === K).length;
+
+// Which crossing the group is working on. The table filters to it, so there
+// always has to be one: the first unfinished crossing, until they say
+// otherwise by tapping another.
+const activeId = () => d().active
+  || (NEW.find(n => pickedFor(n.id).length < K) || NEW[0]).id;
+const active = () => NEW.find(n => n.id === activeId()) || NEW[0];
+
+// Per-crossing verdicts, kept until that crossing is edited. Station 1 does
+// the same: naming WHICH one is wrong, never what is wrong inside it.
+const verdictOf = nId => d().verdict?.[nId];
+const clearVerdict = nId => { if (d().verdict) delete d().verdict[nId]; };
 
 /* ── view ─────────────────────────────────── */
 const cell = (row, f) => `<td>${esc(String(row[f.key]))}${f.unit ? esc(f.unit) : ''}</td>`;
@@ -50,13 +70,23 @@ const usedIn = kId => NEW.filter(n => pickedFor(n.id).includes(kId)).map(n => n.
 // Where a crossing has been used rides in the id cell rather than in a
 // column of its own: eight columns did not fit the pinned pane, and the one
 // that got cut off at the edge was this one.
-const knownTable = () => `<div class="ktable" data-keep-scroll="known">
+const knownTable = () => {
+  // The first feature, applied live to the table for whichever crossing is
+  // being worked on. It halves the twelve without choosing anything: the
+  // group still has to compare road, cover and altitude among the survivors.
+  // Station 4 does the same with one question against the fleet, at Hadas's
+  // own request. Going further — dimming by road type too — would leave one
+  // or two rows standing and hand over the top of the answer.
+  const cur = active();
+  return `<div class="ktable" data-keep-scroll="known">
     <table>
-      <thead><tr><th>מזהה</th>${FEATURES.map(f => `<th>${esc(f.label)}</th>`).join('')}
+      <thead><tr><th>מזהה</th>${FEATURES.map((f, i) =>
+        `<th class="${i === 0 ? 'filtered' : ''}">${esc(f.label)}</th>`).join('')}
         <th>ציון</th></tr></thead>
       <tbody>${KNOWN.map(k => {
         const used = usedIn(k.id);
-        return `<tr class="${used.length ? 'used' : ''}">
+        const out = k.time !== cur.time;
+        return `<tr class="${used.length ? 'used' : ''} ${out ? 'out' : ''}">
           <td class="kid">${esc(k.id)}${used.length
             ? `<span class="kused">${used.map(u => esc(u.replace('N-', ''))).join(' ')}</span>` : ''}</td>
           ${FEATURES.map(f => cell(k, f)).join('')}
@@ -65,16 +95,21 @@ const knownTable = () => `<div class="ktable" data-keep-scroll="known">
       }).join('')}</tbody>
     </table>
   </div>`;
+};
 
 function newBlock(n, i) {
   const chosen = pickedFor(n.id);
   const full = chosen.length === K;
-  return `<div class="ncase ${full ? 'done' : ''}">
-    <div class="nhead">
+  const cur = n.id === activeId();
+  const v = verdictOf(n.id);
+  const mark = v === undefined ? '' : (v ? 'hit' : 'miss');
+  return `<div class="ncase ${full ? 'done' : ''} ${cur ? 'cur' : ''} ${mark}">
+    <button class="nhead" data-act="focusNb" data-arg="${n.id}">
       <span class="nid">${esc(n.id)}</span>
       <span class="nfeat">${FEATURES.map(f =>
         `${esc(f.label)}: <b>${esc(String(n[f.key]))}${f.unit ? esc(f.unit) : ''}</b>`).join(' · ')}</span>
-    </div>
+      ${v === undefined ? '' : `<span class="nmark">${v ? '✓ נכון' : '✗ לא נכון'}</span>`}
+    </button>
     <div class="nchips">${KNOWN.map(k =>
       `<button class="chip ${chosen.includes(k.id) ? 'on' : ''}"
         data-act="pickNb" data-arg="${n.id}:${k.id}"
@@ -111,7 +146,7 @@ export function viewNeighbours() {
 
     <div class="nwrap">
       <div class="nside">
-        <div class="eyebrow">שנים־עשר מעברים שכבר נבדקו</div>
+        <div class="eyebrow">שנים־עשר מעברים שכבר נבדקו · מודגשים אלה שפועלים ב${esc(active().time)}, כמו ${esc(activeId())}</div>
         ${knownTable()}
       </div>
       <!-- This pane scrolls, and every pick re-renders the whole stage, so
@@ -120,7 +155,7 @@ export function viewNeighbours() {
            exact bug; the table pane below was given the attribute and this
            one, the pane that actually scrolls while picking, was not. -->
       <div class="ncases" data-keep-scroll="ncases">
-        <div class="eyebrow">ארבעה מעברים חדשים · שלושה שכנים לכל אחד</div>
+        <div class="eyebrow">שלושה מעברים חדשים · שלושה שכנים לכל אחד</div>
         ${NEW.map(newBlock).join('')}
       </div>
     </div>
@@ -144,12 +179,23 @@ export function viewNeighbours() {
 
 /* ── actions ──────────────────────────────── */
 register('click', {
+  // Tapping a crossing's header points the table's filter at it. Nothing
+  // else changes: it is a lens, not a commitment.
+  focusNb(arg) {
+    d().active = arg;
+    set();
+  },
+
   pickNb(arg) {
     const [nId, kId] = arg.split(':');
+    d().active = nId;
     const list = pickedFor(nId);
     const at = list.indexOf(kId);
     if (at >= 0) list.splice(at, 1);
     else if (list.length < K) list.push(kId);
+    // Editing a crossing retires its verdict: it is about the set that was
+    // submitted, and that set no longer exists.
+    clearVerdict(nId);
     S.submitBlocked = false;
     S.lastResult = null;
     set();
@@ -169,6 +215,9 @@ register('click', {
     S.attempts[s.n] = (S.attempts[s.n] || 0) + 1;
 
     if (!result.allCorrect) {
+      if (s.revealWhichWrong) {
+        d().verdict = Object.fromEntries(NEW.map((n, i) => [n.id, result.res[i]]));
+      }
       S.lastResult = result;
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');

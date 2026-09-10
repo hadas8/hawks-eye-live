@@ -180,12 +180,13 @@ export const STATIONS = [
     })(),
     kind: 'neighbours',
 
-    // Four sets of three from twelve. Nothing to brute-force, but naming the
-    // wrong set would turn the rule into a game played against the app.
+    // Three sets of three from twelve is 220^3, so there is nothing to
+    // brute-force, and naming WHICH crossing is wrong says nothing about
+    // what is wrong inside it — the same trade station 1 makes.
     maxAttempts: 3,
-    revealWhichWrong: false,
+    revealWhichWrong: true,
 
-    brief: 'שנים‑עשר מעברים כבר נבדקו ויש לנו עליהם ציון סיכון, וארבעה חדשים נפתחו הלילה בלי שום היסטוריה. מעבר שמושך למעברים שאנחנו מכירים מתנהג כמותם.',
+    brief: 'שנים‑עשר מעברים כבר נבדקו ויש לנו עליהם ציון סיכון, ושלושה חדשים נפתחו הלילה בלי שום היסטוריה. מעבר שמושך למעברים שאנחנו מכירים מתנהג כמותם.',
 
     answer: {
       // One set of three per new crossing, graded whole: which three, not
