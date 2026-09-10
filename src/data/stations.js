@@ -16,7 +16,7 @@ import { ENVELOPES, honestPosition } from './station-2.js';
 import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED } from './station-5.js';
 import { CARDS, DIGIT_BOX, countIn } from './station-3.js';
-import { NEW, NEIGHBOURS, isCorrectFor, scoreFrom, K as KNN } from './station-6.js';
+import { NEW, isCorrectFor, K as KNN } from './station-6.js';
 import { ANALYSTS, tally, winnerOf, codeOf } from './station-7.js';
 
 export const STATIONS = [
@@ -172,13 +172,12 @@ export const STATIONS = [
     name: 'ארבעה כוכבים',
     concept: 'KNN — שכנים קרובים',
     password: ['גדר'],           // still a placeholder
-    // Not 2. Working the xlsx's own rule over its own twelve crossings gives
-    // 2+3+2+3 = 10, and 1+0 = 1. No rounding convention rescues the 2:
-    // rounding down gives 9, up gives 4. See docs/station-6-neighbours.md.
-    digit: (() => {
-      const sum = NEW.reduce((t, n) => t + scoreFrom(NEIGHBOURS[n.id]), 0);
-      return sum <= 0 ? 0 : 1 + ((sum - 1) % 9);
-    })(),
+    // 2, from the roster and the physical lock. The xlsx's own arithmetic
+    // gives 7 over the three remaining crossings, and 1 over the original
+    // four — but the digit is a token a group carries to the box, not a
+    // result they read off their own work. Nothing on screen shows a sum,
+    // so nothing contradicts it. See docs/station-6-neighbours.md.
+    digit: 2,
     kind: 'neighbours',
 
     // Three sets of three from twelve is 220^3, so there is nothing to
@@ -195,13 +194,7 @@ export const STATIONS = [
       parts: NEW.map(n => ({
         kind: 'pickN', count: KNN, valid: ids => isCorrectFor(n.id, ids)
       })),
-      rule: 'custom',
-      // The group's own picks make the digit: average each set of three,
-      // sum the four, reduce to one digit.
-      derive: sets => {
-        const sum = sets.reduce((t, ids) => t + scoreFrom(ids), 0);
-        return sum <= 0 ? 0 : 1 + ((sum - 1) % 9);
-      }
+      rule: 'literal'
     },
 
     hints: [

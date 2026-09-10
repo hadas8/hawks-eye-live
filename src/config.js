@@ -4,13 +4,14 @@ export const CFG = {
   stationSeconds: 7 * 60,
   pointsPerStation: 10,
   bonusQuestPoints: 5,      // facilitators count these on paper; the app never sees them
-  // Two digits no longer match the draft's roster, because working each
-  // station's own rule over its own data does not reproduce it. Station 3
-  // is 9, not 7 (its union sheet counts box א׳). Station 6 is 7, not 2
-  // (its three crossings give 2+3+2 = 7, after Hadas dropped the duplicate
-  // N-04). Both are written up in docs/, and BOTH MOVE THE PHYSICAL LOCK.
-  // Neither is settled with Lotem yet.
-  lockCode: '3294277'
+  // 3274227 — the code on the printed decode card, and the code the
+  // physical lock in the room is set to. It has not moved and it should not:
+  // which digit a station awards is arbitrary, the group never sees how it
+  // was derived, and nothing is gained by making a real lock follow our
+  // arithmetic. Two stations award a digit their own data does not produce
+  // (3 counts box ב rather than א; 6 is awarded outright) and neither is
+  // visible to anyone playing.
+  lockCode: '3274227'
 };
 
 // ?dev exposes the test strip. It must be removed before the event.

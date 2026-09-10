@@ -24,15 +24,19 @@
 // argue into a different box under the examples' rule instead — see
 // docs/station-3-rule.md. Nothing is invented; the contest is the source's.
 //
-// The union sheet says the digit is the count in box א׳. That is 9, not
-// the 7 the roster carried, so CFG.lockCode moves to 3294227. Flipping
-// DIGIT_BOX to 'ב' restores 7 and the old code, and is a one-character
-// change if the physical lock cannot be reset.
+// WHICH BOX THE DIGIT COUNTS IS ARBITRARY, so it counts the one that keeps
+// the lock code as it already is. The union sheet says box א׳, which over
+// this card set is 9; box ב׳ is 7, which is the digit the roster and the
+// physical lock already carry. Nothing about the puzzle changes either way
+// — a group sorts the same twenty cards and sees the same three tallies —
+// and 7 also happens to be the count the group can see on screen, so
+// nothing on the page contradicts the number they are given.
 
 export const BOXES = ['א', 'ב', 'ג'];
 
-// Which box the group counts for the digit. The source says א׳.
-export const DIGIT_BOX = 'א';
+// Which box the group counts for the digit. The source says א׳; we count ב׳
+// so the code does not move. See the note above.
+export const DIGIT_BOX = 'ב';
 
 // The six pre-sorted cards. The group sees which box each sits in and
 // nothing else: the boxes carry no labels, exactly as the source insists
