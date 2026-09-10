@@ -105,6 +105,12 @@ Still available if it is still too hard:
 - **Say what closeness means for גובה** in the rule text, so problem 3 stops being a guess. This one is Lotem's and worth doing regardless — it is the step that decides all three answers.
 - **More than three attempts**, now that a rejection carries information.
 
+## The roster's 2 comes from nowhere — found 2026-09-10
+
+Reading the original draft closes this off. **The draft's station 6 gives 0**, not 2: a completely different exercise — thirty-two plotted vehicles, four stars, five nearest neighbours measured with a ruler, 2 + 3 + 4 + 1 = 10, last digit 0.
+
+So the roster's **2 for station 6 is supported by nothing**. The draft says 0. The xlsx says 1 with all four crossings, or 7 with N-04 dropped. Every other digit in `3274227` traces to either the draft or one of Lotem's per-station docs; this one traces to neither, and it is worth asking her about directly.
+
 ## What is needed from Lotem
 
 1. **The digit.** Three crossings give 7, so the lock code is `3294277`. If it must be 2, the data has to change — the rule cannot be argued into it.

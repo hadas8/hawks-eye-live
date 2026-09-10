@@ -73,6 +73,12 @@ Card 13 is the sharpest case: it asks for a quantity about a convoy that has alr
 
 Note that the sheet's own check, `סה"כ חייב להיות 20`, is satisfied by both readings, so it does not settle anything.
 
+## Where the roster's 7 came from — settled 2026-09-10
+
+Reading the original draft answers this. **The draft's station 3 gives 7**: a different set of twenty cards, split across four pairs, putting 2 + 1 + 2 + 2 into box א׳. So the roster's 7 was never arbitrary — it is the draft's own answer for a **card set that no longer exists**. Lotem's later `תחנה_3.docx` replaced the cards and reworded the rule without re-deriving the digit, and the new set gives 9.
+
+That also explains the shape of the problem below: the draft's box א׳ is defined as *התשובה היא קטגוריה*, cleanly, and its ג׳ examples are annotated in the draft as two deliberately different reasons — *דוגמה אחת היא מידע שלא קיים אצלנו, והשנייה היא מידע שכבר רשום בטבלה*. The two-rule confusion is not in the draft. It arrived with the rewrite.
+
 ## What this does to the lock code
 
 The union sheet says `הספרה = כרטיסים בקופסה א׳`. Under the sheet's rule that is **9**, not the **7** the roster carried.
