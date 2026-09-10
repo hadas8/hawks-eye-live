@@ -36,10 +36,18 @@ const answered = () => answers().filter(v => v !== null).length;
 const tally = box => CARDS.filter(c => pickOf(c.n) === box).length;
 
 /* ── view ─────────────────────────────────── */
+// A box, and inside it two cards that look exactly like the twenty below.
+// The first cut drew the box and its contents as one panel, so it read as a
+// paragraph with two sentences rather than as a container holding two of the
+// same objects the group is about to sort. The source draws them as separate
+// cards for that reason — it colour-codes them too, which this cannot follow,
+// so the containment has to carry the whole job.
 const exampleBox = box => `<div class="ebox">
-    <div class="ebname">${esc(box)}׳</div>
-    ${EXAMPLES.filter(e => e.box === box)
-      .map(e => `<p class="ecard">${esc(e.text)}</p>`).join('')}
+    <div class="eblid"><span class="ebletter">${esc(box)}׳</span>
+      <span class="ebnote">כבר מוינו</span></div>
+    <div class="ebwell">${EXAMPLES.filter(e => e.box === box).map((e, k) =>
+      `<div class="ecard"><div class="ecn">כרטיס דוגמה ${k + 1}</div>
+        <p class="ect">${esc(e.text)}</p></div>`).join('')}</div>
   </div>`;
 
 const sortCard = c => {
@@ -76,7 +84,7 @@ export function viewBoxes() {
     </div>
 
     <div>
-      <div class="eyebrow">שלוש קופסאות, שני כרטיסים בכל אחת</div>
+      <div class="eyebrow">שלוש קופסאות · שני כרטיסים כבר בפנים</div>
       <div class="eboxes">${BOXES.map(exampleBox).join('')}</div>
     </div>
 

@@ -2,17 +2,33 @@
    cards in three unlabelled boxes, then twenty cards to sort the same way. */
 
 /* ── the three example boxes ──────────────── */
+/* A box has to look like a container with two cards in it, not like a panel
+   with two sentences in it — the group's whole job is to see that the cards
+   below are the same objects, already sorted. The source separates them by
+   colour-coding each box; amber is the only accent here, so the work is done
+   by the lid, the recessed well and giving the example cards the same chrome
+   as the twenty sortable ones. */
+/* stretch, not start: three boxes of different heights read as three
+   different kinds of thing, and one of the six example questions wraps. */
 .eboxes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.75rem}
 
-.ebox{border:1px solid var(--hair);background:var(--panel-2);padding:0.75rem}
-/* The box carries its letter and nothing else. Naming what it holds would
-   be handing over the answer — the source is explicit that the boxes go
-   into the room with no labels on them. */
-.ebox .ebname{font-family:var(--mono);font-size:0.9375rem;color:var(--amber);
-  margin-bottom:0.5rem}
-.ebox .ecard{font-size:0.875rem;color:var(--ink);margin:0 0 0.5rem;max-width:none;
-  border-inline-start:2px solid var(--hair);padding-inline-start:0.5rem}
-.ebox .ecard:last-child{margin-bottom:0}
+.ebox{border:1px solid var(--muted);background:var(--panel);
+  display:flex;flex-direction:column}
+
+.eblid{display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
+  padding:0.5rem 0.75rem;border-bottom:1px solid var(--muted);background:var(--panel-2)}
+.eblid .ebletter{font-family:var(--mono);font-size:1.125rem;color:var(--amber);line-height:1}
+.eblid .ebnote{font-size:0.6875rem;letter-spacing:var(--ls);text-transform:uppercase;
+  color:var(--muted)}
+
+/* recessed, so the cards read as sitting down inside something */
+.ebwell{background:var(--bg);padding:0.625rem;display:flex;flex-direction:column;
+  gap:0.5rem;flex:1}
+
+.ecard{border:1px solid var(--hair);background:var(--panel);padding:0.5rem 0.625rem}
+.ecard .ecn{font-family:var(--mono);font-size:0.6875rem;color:var(--muted);
+  margin-bottom:0.25rem}
+.ecard .ect{font-size:0.9375rem;color:var(--ink);margin:0;max-width:none}
 
 /* ── the twenty cards to sort ─────────────── */
 .qcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:0.625rem}
