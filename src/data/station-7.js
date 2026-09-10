@@ -107,6 +107,12 @@ export function winnerOf(votes) {
 
 export const KEY = ANALYSTS.map(a => a.fires);
 
-// The two best analysts both said תבריז, and both were wrong. This is the
-// whole point of the station and it is shown only after it is solved.
-export const BEST_TWO = [...ANALYSTS].sort((a, b) => b.accuracy - a.accuracy).slice(0, 2);
+// `accuracy` is carried here but NEVER RENDERED. The draft's payoff is that
+// the two best analysts, #3 at 68% and #7 at 66%, both said תבריז and both
+// were wrong — and the draft has a facilitator hand that card over in the
+// room, after the reveal. It was briefly built as an epilogue on the solved
+// screen and removed: Hadas's call, and the right one. Nobody reads a
+// paragraph at the end of a station they have just finished, that slot is
+// their social quest, and station 7's ending has to look like the other
+// six. The numbers stay in the data because they are the source's content
+// and the facilitator still needs them.

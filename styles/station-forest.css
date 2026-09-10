@@ -64,24 +64,6 @@
 .vote.won .vname{color:var(--amber)}
 .vote.won .vn{color:var(--amber)}
 
-/* ── the epilogue, on the solved screen ───── */
-/* The accuracy card. It is not a thinking question and it is not homework —
-   it is the payoff, on the last station of the evening, and the draft is
-   right that it is the point of the whole thing. */
-.epilogue{border:1px solid var(--hair);background:var(--panel);
-  padding:0.875rem 1rem;margin:1.25rem auto 0;max-width:34rem;text-align:start}
-.epilogue .eyebrow{margin-bottom:0.625rem}
-.epilogue p{font-size:0.9375rem;color:var(--ink-dim);margin:0 0 0.5rem;max-width:none}
-.epilogue p:last-child{margin-bottom:0}
-.epilogue b{color:var(--ink);font-weight:500}
-.accrow{display:flex;flex-wrap:wrap;gap:0.3125rem;margin:0 0 0.75rem}
-.acc{display:flex;flex-direction:column;align-items:center;gap:0.0625rem;
-  background:var(--panel-2);border:1px solid var(--hair);padding:0.3125rem 0.5rem;
-  font-family:var(--mono);font-size:0.625rem;color:var(--muted);min-width:3.25rem}
-.acc b{font-size:0.8125rem;color:var(--ink-dim);font-weight:400}
-.acc.best{border-color:var(--bad)}
-.acc.best b{color:var(--bad)}
-
 @media (max-width:700px){
   .acards{grid-template-columns:1fr}
 }

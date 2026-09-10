@@ -63,13 +63,17 @@ That may be exactly right for the last station of an event: the payoff is the ac
 
 ## What was built
 
-Three decisions, all mine, all reversible.
+Three decisions, and one thing built and then taken back out.
 
 **The group picks the row, rather than reading off a verdict.** The draft hands each analyst's answer to the person holding the card, which on paper is fine because the work was the isolation. On one screen that would be eight sentences to copy, so the lookup became the task: two readings against three conditions, eight times. Each row shows its condition and the site it points to, and the group fires one.
 
 **The slips stay covered until the eighth analyst is decided, then all eight turn over at once**, with the reveal effect behind them. This is the only part of the draft's isolation a single screen can keep — eight people writing covered notes and revealing on a countdown becomes eight slips that stay face down while there is still something to decide. No tally is shown before that moment. The line *אף אנליסט לא רואה את התמונה המלאה* is still true and still the point.
 
-**The accuracy card is an epilogue on the solved screen.** A station may now carry an `epilogue`, rendered by `viewOutcome` after the digit; station 7 is the only one that has one. It is not a thinking question and not homework — it is the payoff, on the last station of the evening, and the draft is right that it is the point of the whole hour. **It is withheld from a station that timed out**, because handing someone the punchline to a puzzle they never solved is worse than saying nothing.
+**The accuracy card stays out of the app.** It was built as an epilogue on the solved screen — the two best analysts both said תבריז, both wrong — and removed the same day at Hadas's call: *"they will not read it anyway and it's still time for their social quests, so it needs to be like the other stations."*
+
+That is right on all three counts. Nobody reads a paragraph at the end of a station they have just finished; that slot in the schedule is the group's social quest, not reading time; and station 7's ending has to look like the other six, because a screen that behaves differently on the last station reads as a bug. The `epilogue` field went with it, so `viewOutcome` has one shape again.
+
+The figures stay in `src/data/station-7.js`, unrendered, **because the payoff belongs to the facilitator**. The draft always had it that way: a card handed over in the room after the reveal, spoken out loud. That is the right medium for it — it is a moment between people, and it was never going to survive as body text under a digit.
 
 A rejected submission names **which analysts were misread**, never which row should have fired. Eight picks from three is 6561 combinations, so there is nothing to sweep, and after stations 3 and 6 spend their whole budget on all-or-nothing silence the last one can afford to be kinder.
 
