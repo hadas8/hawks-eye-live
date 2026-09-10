@@ -114,7 +114,12 @@ export function viewNeighbours() {
         <div class="eyebrow">שנים־עשר מעברים שכבר נבדקו</div>
         ${knownTable()}
       </div>
-      <div class="ncases">
+      <!-- This pane scrolls, and every pick re-renders the whole stage, so
+           without data-keep-scroll a tap on N-03 throws the group back up to
+           N-01 and they cannot see what they just chose. Station 4 hit this
+           exact bug; the table pane below was given the attribute and this
+           one, the pane that actually scrolls while picking, was not. -->
+      <div class="ncases" data-keep-scroll="ncases">
         <div class="eyebrow">ארבעה מעברים חדשים · שלושה שכנים לכל אחד</div>
         ${NEW.map(newBlock).join('')}
       </div>
