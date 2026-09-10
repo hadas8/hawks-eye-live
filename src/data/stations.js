@@ -15,6 +15,7 @@ import { TABLES } from './station-1.js';
 import { ENVELOPES, honestPosition } from './station-2.js';
 import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED } from './station-5.js';
+import { CARDS, DIGIT_BOX, countIn } from './station-3.js';
 
 export const STATIONS = [
   {
@@ -72,7 +73,38 @@ export const STATIONS = [
     hints: []   // station 2's hints are per envelope, inside the station
   },
 
-  { n: 3, name: 'הכלל הנסתר',            concept: 'סיווג מול חיזוי',          password: ['מדף'],  digit: 7, kind: null },
+  {
+    n: 3,
+    name: 'הכלל הנסתר',
+    concept: 'סיווג מול חיזוי',
+    password: ['מדף'],           // still a placeholder
+    // Not 7. The union sheet says the digit is the count in box א׳, and
+    // working its own rule over the twenty cards puts 9 there. The roster's
+    // 7 is the count in box ב׳. See docs/station-3-rule.md.
+    digit: countIn(DIGIT_BOX),
+    kind: 'boxes',
+
+    // Twenty cards over three boxes. Per-card feedback across three
+    // submissions would let a group read the rule off the app one card at
+    // a time, so the verdict is all or nothing.
+    maxAttempts: 3,
+    revealWhichWrong: false,
+
+    brief: 'שלוש קופסאות על השולחן ובכל אחת שני כרטיסים שמישהו כבר מיין, אבל אף קופסה לא מסמנת לפי מה.',
+
+    answer: {
+      parts: CARDS.map(c => ({ kind: 'choice', value: c.box })),
+      rule: 'custom',
+      // The group's own sort produces the digit, rather than the app
+      // asserting it: count what they put in the box the sheet names.
+      derive: values => values.filter(v => v === DIGIT_BOX).length
+    },
+
+    hints: [
+      'שני הכרטיסים שבכל קופסה חולקים משהו, וזה לא הנושא שלהם. הסתכלו על סוג התשובה שהשאלה מבקשת.',
+      'קופסה אחת לא ממוינת לפי סוג התשובה. שאלו מה משותף דווקא לשני הכרטיסים שבה.'
+    ]
+  },
 
   {
     n: 4,

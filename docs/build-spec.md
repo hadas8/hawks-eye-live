@@ -56,7 +56,7 @@ Persistent chrome: the station clock and score in the top bar, and a 7-slot code
 
 Declarative per station, with a `custom` escape hatch:
 
-- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice`, `multiChoice`, `rows`, `dragToBucket` (station 3), `pickN` (station 4), `pairPick` (station 2)
+- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice` (stations 2, 3 and 5), `multiChoice`, `rows`, `pickN` (station 4), `pairPick` (station 2)
 - Combine rules: `digitalRoot`, `count`, `literal`, `custom`
 - **Attempt policy comes from the station config, not a global rule.** Station 1 allows 3 submissions; station 2 is all-or-nothing with unlimited redos; station 3 allows 3 attempts; station 4 allows one retry. Running out closes the station immediately rather than leaving a group idle at a dead button.
 - No lockout timer. After a failed submit, disable submit until an input actually changes.
@@ -115,7 +115,7 @@ Vanilla ES modules loaded straight from `index.html` — no build step, no bundl
 Decisions taken during the build:
 
 - **Interaction goes through delegated `data-act` / `data-submit` / `data-input` attributes on `#app`**, not inline `onclick` and a `window.go` global as in the prototype. Modules register handlers by name, so a station file owns its own actions.
-- **The answer engine implements only what a built station needs** — the `number` kind and the `digitalRoot` rule. The remaining kinds the roster will need (`choice`, `multiChoice`, `rows`, `dragToBucket`, `pickN`, `pairPick`) are absent by design, and an unimplemented kind throws rather than silently grading as wrong.
+- **The answer engine implements only what a built station needs** — the `number` kind and the `digitalRoot` rule. The remaining kinds the roster will need (`multiChoice`, `rows`, `pairPick`) are absent by design, and an unimplemented kind throws rather than silently grading as wrong.
 - **The prototype's leftover per-column colour tokens were dropped.** `--c-id`, `--c-st` and `--c-wt` are gone; only the coral missing-value dash survives, as `--miss`. The union sheet's ידני tag, which used the identifier colour in the prototype, is now plain `--ink-dim`.
 - **Persisted state is versioned** under `hawkseye.v1` with a schema field. A stored blob from an older shape is ignored rather than half-restored.
 - **A station clock is never restarted.** `openStation` sets the start timestamp only if one is not already stored, so re-submitting a password cannot buy a group more time.
@@ -307,7 +307,7 @@ There is deliberate air between the ten they learn from and the six they answer,
 
 ### What this added to the engine
 
-The `choice` sub-answer kind, which covers the yes/no case and any future pick-from-a-set. Combined with the existing `count` rule, that is the whole of station 5. The remaining kinds — `multiChoice`, `rows`, `dragToBucket`, `pickN`, `pairPick` — still land with their stations.
+The `choice` sub-answer kind, which covers the yes/no case and any future pick-from-a-set. Combined with the existing `count` rule, that is the whole of station 5. The remaining kinds — `multiChoice`, `rows`, `pairPick` — still land with their stations. `dragToBucket` was never needed: station 3 sorts twenty cards into three boxes with three buttons per card rather than by dragging, which grades as plain `choice` and is far kinder on a tablet.
 
 ## Visual direction
 
@@ -392,8 +392,8 @@ Three aphorisms stacked in six lines is itself the tell. The rewrite uses none o
 Being worked one at a time with the content author. Recorded here so nothing is lost.
 
 1. ~~**Station 2's digit has no source.**~~ **Resolved — the source states it outright.** `תחנה_2_גרפים_סופי.docx`: *עדכנו את ספרת תחנה 2 ל-2 (במקום 6). הקוד המעודכן: 3274227*. The digit is 2, awarded on a clean sweep, and the lock code is intact. Built 2026-09-09.
-2. **Station 3's key is wrong — confirmed against `תחנה_3.docx` 2026-09-09.** The authoritative file has no answer key at all: its union sheet is blank. Working its stated rule over the twenty cards gives א=9 (cards 1, 4, 6, 8, 10, 12, 15, 18, 20), ב=7 (2, 5, 7, 11, 13, 16, 19) and ג=4 (3, 9, 14, 17). The docx says the digit is the count in box א, which is **9**, not the 7 the roster needs. **7 is the count for box ב.** Redefining the digit as box ב keeps the code `3274227` intact; otherwise the digit is 9 and the code becomes `3294227`. The draft's own key lists nine cards while claiming seven, then says "רגע, ספרו שוב".
-3. **Station 3's rule is ambiguous for about six cards**, because "is the answer a category" and "do we have this data" are independent axes but box ג mixes them. Cards 12, 15, 18 and 20 are yes/no questions with no available data and can be argued into either box. A drag-to-bucket station with 3 attempts needs one unambiguous key.
+2. **Station 3's digit is 9, not 7 — and the lock code moved. Built 2026-09-10.** Its union sheet says the digit is the count in box א׳, and working its own rule over the twenty cards puts 9 there: א=9 (cards 1, 4, 6, 8, 10, 12, 15, 18, 20), ב=7 (2, 5, 7, 11, 13, 16, 19), ג=4 (3, 9, 14, 17). The roster's 7 is the count for box ב׳. `CFG.lockCode` is now **`3294227`**, which means **the physical lock in the room has to be reset**. Flipping `DIGIT_BOX` in `src/data/station-3.js` from `'א'` to `'ב'` restores 7 and the old code in one character, if the lock cannot move. Hadas's call; see [station-3-rule.md](station-3-rule.md).
+3. **Station 3's rule is stated twice, differently, and the station is built on one of the two.** The union sheet sorts by the type of the answer; the six example cards, which are all a group ever sees, sort by whether the answer is available — ג׳'s own examples are a *name* and a *quantity*, which the sheet assigns to א׳ and ב׳. Seven cards land differently under the two readings (12, 13, 15, 16, 18, 19, 20), moving box א׳ between 9 and 5. The app follows the sheet, because it is the only rule written down. **A group can reason correctly from what it is shown and still be marked wrong**, and with three submissions and no per-card feedback that is unforgiving. Needs one sentence from Lotem saying which rule governs, plus a rewording of the seven. Full write-up in [station-3-rule.md](station-3-rule.md).
 4. ~~**Station 4's truth check is mathematically false.**~~ **Withdrawn 2026-09-09 — this blocker was written against the draft, not the authoritative file, and does not survive contact with it.** `תחנה_4_.docx` is internally consistent: all twenty questions' stated answers match the vehicle table, and its truth check — each chosen question must filter exactly 8 — is satisfiable. Ten of the twenty questions filter exactly 8. The error is in the *draft*, which nominates {1, 2, 3, 5} as the best four; question 5, the stained windshield, filters 15, so the draft's own key contradicts the docx's rule. The draft is superseded, so there is nothing to fix.
 
    What the verification did turn up, which matters more for building it:
