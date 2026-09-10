@@ -41,47 +41,15 @@
    group put it, so they are not holding twelve placements in their heads. */
 .ktable tbody tr.used{background:var(--panel-2)}
 .ktable tbody tr.used td{color:var(--ink)}
-/* Ruled out by a filter the GROUP switched on. Dimmed rather than removed:
-   the row is still there to be read and still pickable, so a group that
-   disagrees with its own filter is not blocked by it. */
-.ktable tbody tr{transition:opacity .12s}
-.ktable tbody tr.out{opacity:.24}
-.ktable tbody tr.out td{color:var(--muted)}
-.ktable th.filtered{color:var(--amber)}
-
-/* The filter bar. Three buttons, one per feature two crossings can SHARE —
-   גובה and רכבים/יום have none, because nothing in the table sits at exactly
-   360 מ׳ and comparing them is the tie-break the group has to do by eye. */
-.fbar{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin:0 0 0.5rem}
-.fbar .flabel{font-size:0.75rem;color:var(--muted)}
-.fbar .flabel b{font-family:var(--mono);color:var(--amber);font-weight:400}
-.fbtns{display:flex;gap:0.3125rem;flex-wrap:wrap}
-.fb{min-height:2rem;padding:0 0.625rem;background:var(--panel-2);
-  border:1px solid var(--hair);color:var(--ink-dim);font-family:var(--body);
-  font-size:0.8125rem;cursor:pointer}
-.fb:hover{border-color:var(--muted);color:var(--ink)}
-.fb.on{border-color:var(--amber);background:var(--amber-soft);color:var(--amber)}
-.fcount{margin-inline-start:auto;font-family:var(--mono);font-size:0.75rem;color:var(--muted)}
-.fcount.on{color:var(--ink)}
-.ktable .kid{font-family:var(--mono);color:var(--ink);white-space:nowrap}
-.ktable .kscore{font-family:var(--mono);color:var(--ink);text-align:center}
-/* Which new crossings this one is standing in for, by number alone — the
-   N- prefix is the same on all four and only costs width. */
-.ktable .kused{font-family:var(--mono);font-size:0.6875rem;color:var(--amber);
-  margin-inline-start:0.375rem}
-
-/* ── the four new crossings ───────────────── */
+/* ── the three new crossings ───────────────── */
 .ncase{border:1px solid var(--hair);background:var(--panel);padding:0.75rem 0.875rem}
 .ncase.done{border-color:var(--ink-dim)}
-/* The one the table is currently filtered to. */
-.ncase.cur{border-color:var(--amber)}
 /* After a rejected submission, which crossings were right and which were
    not — never what was wrong inside one. */
 .ncase.hit{border-color:var(--ok)}
 .ncase.miss{border-color:var(--bad);background:var(--bad-soft)}
 
-.ncase .nhead{display:block;width:100%;text-align:start;background:none;border:0;
-  padding:0;margin-bottom:0.5rem;font-family:var(--body);cursor:pointer}
+.ncase .nhead{margin-bottom:0.5rem}
 .ncase .nmark{display:block;margin-top:0.25rem;font-size:0.75rem;font-family:var(--mono)}
 .ncase.hit .nmark{color:var(--ok)}
 .ncase.miss .nmark{color:var(--bad)}

@@ -8,13 +8,15 @@ Hadas's calls, applied:
 
 1. **N-04 is dropped.** It was a duplicate of N-02 — see below — so the station is three crossings, not four.
 2. **A rejected submission now names which crossings are wrong**, the way station 1 does. Never what is wrong inside one.
-3. **The table has a filter the group drives.** Three buttons — שעת פעילות, סוג כביש, כיסוי עצים — each dimming the rows that fail the *active* crossing on that feature. Nothing dims until they switch one on.
+3. **No filter on the table.** Two were built and both were dropped, both on Hadas's call.
 
-   The first attempt at this applied שעת פעילות automatically, and Hadas rejected it: *"the filter doesn't make any sense."* She was right twice over. It made the first decision before the group had done anything — you landed on the station with half the table already faded — and there was no principle by which step 1 should be automatic and steps 2 to 5 not. Driven by the group, applying the rule in priority order stops being something the app hides and becomes something they *do*, in whatever order they choose, including the wrong one.
+   The first applied שעת פעילות automatically: *"the filter doesn't make any sense."* It was wrong twice over — it made the first decision before the group had done anything, so you landed on the station with half the table already faded, and there was no principle by which step 1 should be automatic and steps 2 to 5 not. It was also mis-sold as station 4's behaviour, which it is not: station 4 shows the consequence of a choice the group made, this pre-empted one.
 
-   **Only the three matchable features get a button.** There is no filter for גובה or רכבים/יום, because nothing in the table sits at exactly 360 מ׳ — those are compared by eye, which is the whole of the tie-break. That also puts the source's blind spot on screen rather than papering over it: the rule says two crossings *share* features and then lists two that cannot be shared.
+   The second gave the group three buttons to drive it themselves. It was principled, and it still went: two taps collapsed twelve rows to two, and **reading the table is the station.** A tool that does the reading leaves very little exercise behind.
 
-Together those take the station from 48 comparisons to 36, give the group a tool that collapses the twelve to two in two taps, and make a failed attempt worth something. Problems 1, 2 and 6 below are substantially addressed; 3, 4 and 5 are content and remain for Lotem.
+   So the volume problem is addressed by having less material, not by helping with it.
+
+Together those take the station from 48 comparisons to 36 and make a failed attempt worth something. Problems 1, 2 and 6 below are substantially addressed; 3, 4 and 5 are content and remain for Lotem.
 
 **The digit is now 7.** The three remaining crossings score 2 + 3 + 2 = 7, so `CFG.lockCode` is **`3294277`**. It was going to be 1 with N-04 in (2+3+2+3 = 10). The roster wanted 2 and no arrangement of the source's own data produces it.
 
@@ -53,7 +55,7 @@ So `CFG.lockCode` is now **`3294277`** — station 3 having already moved positi
 
 ## Why it plays too hard
 
-**1. The volume.** *Four* new crossings against twelve known ones was 48 comparisons, each over up to five features, read off a 12-row table, inside seven minutes. **Addressed:** three crossings is 36, and the filter buttons take twelve rows down to two in two taps — but only when the group asks, and only in the order they ask.
+**1. The volume.** *Four* new crossings against twelve known ones was 48 comparisons, each over up to five features, read off a 12-row table, inside seven minutes. **Partly addressed:** three crossings is 36. Deliberately not addressed by tooling — see change 3 — so if it is still too much, the remaining lever is cutting rows.
 
 **2. All-or-nothing over four sets, with no feedback.** One slip anywhere failed the station and the group was told nothing about where. **Addressed:** a rejection now marks which crossings were right and which were not, so a second attempt starts from somewhere.
 
@@ -63,7 +65,7 @@ So `CFG.lockCode` is now **`3294277`** — station 3 having already moved positi
 
 **5. Three of the five features do all the work; two do none.** Checked exhaustively: dropping `כיסוי עצים`, or `רכבים/יום`, or both, leaves all four answers unchanged. Only שעת פעילות, סוג כביש and גובה ever decide anything. The station asks a group to hold a five-step priority list under a clock, and two of the steps never fire.
 
-**6. Five of the twelve known crossings are never an answer.** K-01, K-04, K-05, K-08 and K-09 appear in none of the correct sets. Distractors are legitimate, but they are also 40% of a table that has to be read and re-read. **Partly addressed:** a group that filters can quiet most of the table at will.
+**6. Five of the twelve known crossings are never an answer.** K-01, K-04, K-05, K-08 and K-09 appear in none of the correct sets. Distractors are legitimate, but they are also 40% of a table that has to be read and re-read. **Not addressed** — and now the main lever left if the station is still too heavy.
 
 **A second correction.** The first version of this document said a group reasoning loosely would get it wrong on all four. That is false, and it is the good news here: a group that matches on שעת פעילות, then on סוג כביש, then takes the closest by גובה — skipping tree cover and vehicles entirely — gets **all four sets exactly right**. The intuitive route works. What punishes is the amount of it, not the shape of it.
 
@@ -95,11 +97,11 @@ Every one of the four is short. So the third neighbour — and for N-03, the sec
 
 Roughly by how much they cost. None applied yet.
 
-~~Show the first filter live~~ (replaced by a group-driven one) · ~~Drop N-04~~ · ~~Name which crossing is wrong~~ — all three done, above.
+~~Show the first filter live~~ (built twice, dropped twice) · ~~Drop N-04~~ · ~~Name which crossing is wrong~~ — all three done, above.
 
 Still available if it is still too hard:
 
-- **Cut some of the five never-used crossings.** Checked: removing K-04 and K-08 leaves every answer unchanged and takes two rows off the table.
+- **Cut some of the five never-used crossings — the main lever left.** Checked: removing K-04 and K-08 leaves every answer unchanged and takes two rows off the table. This is content, so it needs Lotem, or Hadas's say-so.
 - **Say what closeness means for גובה** in the rule text, so problem 3 stops being a guess. This one is Lotem's and worth doing regardless — it is the step that decides all three answers.
 - **More than three attempts**, now that a rejection carries information.
 

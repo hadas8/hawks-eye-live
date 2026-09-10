@@ -24,18 +24,16 @@
 // so there is nothing to sweep, and knowing that N-02 is wrong tells a group
 // to re-read the rule rather than which chip to swap.
 //
-// The table has a filter the GROUP drives, not the app: three buttons, one
-// per matchable feature, each dimming the rows that fail the active crossing
-// on that feature. An earlier version applied שעת פעילות automatically and
-// was wrong twice over — it made the first decision before the group had
-// done anything, and there was no principle by which step 1 should be
-// automatic and steps 2 to 5 not. Driven by the group, applying the rule in
-// priority order stops being something the app hides and becomes something
-// they do, in whatever order they choose, including the wrong one.
+// There is deliberately no filter on the table. Two were built and both
+// were dropped: one that applied שעת פעילות automatically, which made the
+// first decision before the group had acted, and one the group drove with
+// three buttons. Hadas's call on the second — reading the table IS the
+// station, and a tool that collapses twelve rows to two in two taps leaves
+// very little of it. What is left is the reading, which is the exercise.
 
 import { S, set, station, draftOf, attemptsLeft } from '../state.js';
 import { STATIONS } from '../data/stations.js';
-import { KNOWN, NEW, FEATURES, MATCHABLE, K, scoreFrom, isCorrectFor } from '../data/station-6.js';
+import { KNOWN, NEW, FEATURES, K, scoreFrom, isCorrectFor } from '../data/station-6.js';
 import { grade, deriveDigit } from '../engine/answers.js';
 import { esc } from '../lib/text.js';
 import { fx, shake } from '../ui/fx.js';
@@ -51,20 +49,6 @@ const pickedFor = nId => (picks()[nId] ||= []);
 const answers = () => NEW.map(n => pickedFor(n.id));
 const complete = () => answers().filter(a => a.length === K).length;
 
-// Which crossing the filters measure against. There always has to be one:
-// the first unfinished crossing, until the group says otherwise.
-const activeId = () => d().active
-  || (NEW.find(n => pickedFor(n.id).length < K) || NEW[0]).id;
-const active = () => NEW.find(n => n.id === activeId()) || NEW[0];
-
-// Which features the group has switched on. Empty by default: the table
-// starts whole, and nothing dims until they ask for it.
-const filters = () => (d().filters ||= {});
-const filterOn = key => !!filters()[key];
-const anyFilter = () => MATCHABLE.some(f => filterOn(f.key));
-const failsFilter = k => MATCHABLE.some(f => filterOn(f.key) && k[f.key] !== active()[f.key]);
-const litCount = () => KNOWN.filter(k => !failsFilter(k)).length;
-
 // Per-crossing verdicts, kept until that crossing is edited. Station 1 does
 // the same: naming WHICH one is wrong, never what is wrong inside it.
 const verdictOf = nId => d().verdict?.[nId];
@@ -79,31 +63,21 @@ const usedIn = kId => NEW.filter(n => pickedFor(n.id).includes(kId)).map(n => n.
 
 // Where a crossing has been used rides in the id cell rather than in a
 // column of its own: eight columns did not fit the pinned pane, and the one
-// that got cut off at the edge was this one.
-// The filter bar. Only the three matchable features get a button: you cannot
-// filter on גובה, because no known crossing is AT 360 מ׳ — that one is read
-// off the table by eye, which is the whole of the tie-break.
-const filterBar = () => `<div class="fbar">
-    <span class="flabel">מודדים מול <b>${esc(activeId())}</b></span>
-    <div class="fbtns">${MATCHABLE.map(f =>
-      `<button class="fb ${filterOn(f.key) ? 'on' : ''}" data-act="toggleFilter"
-        data-arg="${f.key}">${esc(f.label)}</button>`).join('')}</div>
-    <span class="fcount ${anyFilter() ? 'on' : ''}">${
-      anyFilter() ? `${litCount()} מתוך ${KNOWN.length}` : `${KNOWN.length} מעברים`}</span>
-  </div>`;
-
+// that got cut off at the edge was this one. The cell is dir="ltr" because
+// its contents are all Latin and digits — left to the table's RTL, bidi
+// reordering ran the id straight into the numbers and produced "K-0102 03".
+// The marker is bare numbers, "K-10·01": the N- prefix is the same on all
+// three and spelling it out pushed the table past the width of its pane.
 const knownTable = () => {
   return `<div class="ktable" data-keep-scroll="known">
     <table>
-      <thead><tr><th>מזהה</th>${FEATURES.map(f =>
-        `<th class="${f.match && filterOn(f.key) ? 'filtered' : ''}">${esc(f.label)}</th>`).join('')}
+      <thead><tr><th>מזהה</th>${FEATURES.map(f => `<th>${esc(f.label)}</th>`).join('')}
         <th>ציון</th></tr></thead>
       <tbody>${KNOWN.map(k => {
         const used = usedIn(k.id);
-        const out = failsFilter(k);
-        return `<tr class="${used.length ? 'used' : ''} ${out ? 'out' : ''}">
-          <td class="kid">${esc(k.id)}${used.length
-            ? `<span class="kused">${used.map(u => esc(u.replace('N-', ''))).join(' ')}</span>` : ''}</td>
+        return `<tr class="${used.length ? 'used' : ''}">
+          <td class="kid" dir="ltr">${esc(k.id)}${used.length
+            ? `<span class="kused">·${used.map(u => esc(u.replace('N-', ''))).join('·')}</span>` : ''}</td>
           ${FEATURES.map(f => cell(k, f)).join('')}
           <td class="kscore">${k.score}</td>
         </tr>`;
@@ -115,16 +89,15 @@ const knownTable = () => {
 function newBlock(n, i) {
   const chosen = pickedFor(n.id);
   const full = chosen.length === K;
-  const cur = n.id === activeId();
   const v = verdictOf(n.id);
   const mark = v === undefined ? '' : (v ? 'hit' : 'miss');
-  return `<div class="ncase ${full ? 'done' : ''} ${cur ? 'cur' : ''} ${mark}">
-    <button class="nhead" data-act="focusNb" data-arg="${n.id}">
+  return `<div class="ncase ${full ? 'done' : ''} ${mark}">
+    <div class="nhead">
       <span class="nid">${esc(n.id)}</span>
       <span class="nfeat">${FEATURES.map(f =>
         `${esc(f.label)}: <b>${esc(String(n[f.key]))}${f.unit ? esc(f.unit) : ''}</b>`).join(' · ')}</span>
       ${v === undefined ? '' : `<span class="nmark">${v ? '✓ נכון' : '✗ לא נכון'}</span>`}
-    </button>
+    </div>
     <div class="nchips">${KNOWN.map(k =>
       `<button class="chip ${chosen.includes(k.id) ? 'on' : ''}"
         data-act="pickNb" data-arg="${n.id}:${k.id}"
@@ -162,7 +135,6 @@ export function viewNeighbours() {
     <div class="nwrap">
       <div class="nside">
         <div class="eyebrow">שנים־עשר מעברים שכבר נבדקו</div>
-        ${filterBar()}
         ${knownTable()}
       </div>
       <!-- This pane scrolls, and every pick re-renders the whole stage, so
@@ -195,25 +167,8 @@ export function viewNeighbours() {
 
 /* ── actions ──────────────────────────────── */
 register('click', {
-  // Tapping a crossing's header points the filters at it. Nothing else
-  // changes: it is a lens, not a commitment.
-  focusNb(arg) {
-    d().active = arg;
-    set();
-  },
-
-  // The filters persist across crossings on purpose. A group that has
-  // settled on "time, then road" keeps that set-up when they move to the
-  // next one, instead of rebuilding it three times.
-  toggleFilter(arg) {
-    const f = filters();
-    f[arg] = !f[arg];
-    set();
-  },
-
   pickNb(arg) {
     const [nId, kId] = arg.split(':');
-    d().active = nId;
     const list = pickedFor(nId);
     const at = list.indexOf(kId);
     if (at >= 0) list.splice(at, 1);
