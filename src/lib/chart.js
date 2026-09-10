@@ -14,6 +14,11 @@
 //               on the category axis disappear.
 //   flatten     replaces every value with their mean, turning a series into
 //               a straight line at its average.
+//   area        fills under a line, so a shallow climb reads as a mass.
+//   arrow       draws a straight annotation from one category to another,
+//               asserting a trend the points in between contradict.
+//   refLine     an honest device, not a distortion: a labelled rule at a
+//               value, so the reader can see the data against its mean.
 //
 // RTL throughout: category index 0 sits at the RIGHT of the plot and the
 // value axis is on the right, which is where a Hebrew reader starts.
@@ -69,14 +74,20 @@ export function renderChart(spec) {
     const bw = Math.min(band * 0.62, 30);
     marks = rows.map((r, i) => {
       const y = yOf(r.value), h = Math.max(1, Y1 - y);
-      const cls = highlight === null ? 'cb' : (i === highlight ? 'cb hot' : 'cb cool');
+      // Only the highlighted bar changes. Dimming the others turns a chart
+      // with misleading emphasis into one that looks broken, which is a
+      // different and much cruder trick than the source's.
+      const cls = i === highlight ? 'cb hot' : 'cb';
       return `<rect x="${(xOf(i) - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}"
         height="${h.toFixed(1)}" class="${cls}"/>` +
         (showValues ? `<text x="${xOf(i).toFixed(1)}" y="${(y - 5).toFixed(1)}" class="cv">${esc(nice(r.value))}${esc(unit)}</text>` : '');
     }).join('');
   } else {
     const pts = rows.map((r, i) => `${xOf(i).toFixed(1)},${yOf(r.value).toFixed(1)}`).join(' ');
-    marks = `<polyline points="${pts}" class="cl"/>` +
+    const fill = spec.area
+      ? `<polygon points="${xOf(0).toFixed(1)},${Y1} ${pts} ${xOf(rows.length - 1).toFixed(1)},${Y1}" class="cf"/>`
+      : '';
+    marks = fill + `<polyline points="${pts}" class="cl"/>` +
       rows.map((r, i) => `<circle cx="${xOf(i).toFixed(1)}" cy="${yOf(r.value).toFixed(1)}" r="3" class="cd"/>`).join('') +
       (showValues ? rows.map((r, i) =>
         `<text x="${xOf(i).toFixed(1)}" y="${(yOf(r.value) - 8).toFixed(1)}" class="cv">${esc(nice(r.value))}${esc(unit)}</text>`).join('') : '');
@@ -85,11 +96,35 @@ export function renderChart(spec) {
   // direction:ltr inside the SVG so text-anchor means what it says. The
   // right-to-left reading order is produced by xOf() putting category 0 on
   // the right, not by the document's direction leaking in here.
+  // An asserted trend, drawn over data that does not support it.
+  const arrow = spec.arrow ? (() => {
+    const { from, to } = spec.arrow;
+    const [x1, y1] = [xOf(from), yOf(rows[from].value)];
+    const [x2, y2] = [xOf(to), yOf(rows[to].value)];
+    const a = Math.atan2(y2 - y1, x2 - x1), h = 7;
+    const head = [
+      [x2, y2],
+      [x2 - h * Math.cos(a - 0.4), y2 - h * Math.sin(a - 0.4)],
+      [x2 - h * Math.cos(a + 0.4), y2 - h * Math.sin(a + 0.4)]
+    ].map(pt => pt.map(v => v.toFixed(1)).join(',')).join(' ');
+    return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" class="cr"/>
+      <polygon points="${head}" class="crh"/>`;
+  })() : '';
+
+  // A labelled rule at a value — the one honest annotation here.
+  const ref = spec.refLine ? `
+    <line x1="${X0}" x2="${X1}" y1="${yOf(spec.refLine.value).toFixed(1)}"
+      y2="${yOf(spec.refLine.value).toFixed(1)}" class="cref"/>
+    <text x="${X0 + 4}" y="${(yOf(spec.refLine.value) - 5).toFixed(1)}" class="cv"
+      text-anchor="start">${esc(spec.refLine.label)}</text>` : '';
+
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true"
     preserveAspectRatio="xMidYMid meet" style="direction:ltr">
     ${grid}
     <line x1="${X0}" x2="${X1}" y1="${Y1}" y2="${Y1}" class="ca"/>
     ${marks}
+    ${ref}
+    ${arrow}
     ${xLabels}
   </svg>`;
 }

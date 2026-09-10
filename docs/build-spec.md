@@ -172,20 +172,40 @@ Feedback is pass or fail and nothing else, per `נראות התחנות`. **Subm
 
 ### The charts are drawn, not imported
 
-The source's fourteen charts are images inside the docx and cannot be read out of it. They are rebuilt as inline SVG by `src/lib/chart.js`, which takes the distortions as parameters rather than treating them as faults to avoid: `yFloor` (where the value axis starts), `highlight` (one bar in the accent colour while the rest recede), `order: 'desc'` (largest first, destroying chronology), `pick` (render only these indices, evenly spaced, so unequal gaps vanish) and `flatten` (replace every value with the mean). RTL: category 0 sits at the right and the value axis is on the right.
+The source's charts are images inside the docx. They are re-drawn as inline SVG by `src/lib/chart.js`, which takes the distortions as parameters rather than treating them as faults to avoid: `yFloor` (where the value axis starts), `highlight` (one bar in the accent colour), `order: 'desc'` (largest first, destroying chronology), `pick` (render only these indices, evenly spaced, so unequal gaps vanish), `flatten` (replace every value with the mean), `area` (fill under a line so a shallow climb reads as a mass) and `arrow` (an asserted trend drawn over data that contradicts it). `refLine` is the one honest device: a labelled rule at a value.
 
-Drawing rather than importing was deliberate. The distortions have to be exact — an axis starting at precisely 96, precisely the smallest bar highlighted — which is controllable in SVG and inherited by luck from a spreadsheet export. It also keeps the repo free of an asset pipeline, and the charts theme to the dark palette and scale on a tablet.
+Drawing rather than importing keeps the distortions exact, keeps the repo free of an asset pipeline, and lets the charts theme to the dark palette and scale on a tablet.
 
-### Two departures from the source, both agreed with Hadas
+### The data is transcribed, not reconstructed
 
-1. **The liar's position is redistributed.** In the source the lying chart is GRAPH 1 in six of seven envelopes, so "always pick graph 2" scored six of seven. It is now first in three envelopes and second in four, so there is no position to learn instead of reading the charts. The key is 1, 2, 2, 1, 1, 2, 1.
-2. **The numeric chain is dropped.** The source carries `5+4+3+4+4+4+5 = 29 → 2`, but it does not derive from its own answers: envelope ו׳'s stated answer is a rise of 3 points while the chain uses 4, and ז׳'s is 25 while the chain uses 5. `נראות התחנות` replaces the numeric task with click-the-honest-chart anyway, so the chain is unused and the digit is simply 2.
+**Lotem's original chart images are in [`docs/source-charts/`](source-charts/), supplied 2026-09-10, and every series is transcribed from them.**
 
-### What the source gave, and what was invented
+An earlier version reconstructed the series from the docx's prose, because the images could not be read out of the file. **Five of the seven were wrong.** What the prose could not convey:
 
-**Used exactly as stated:** ציר צפוני 8% and ג'נתא 38% (ב׳); the 98→101 activity index (ו׳); three events between January and April (ג׳); a weekly average of 4 (ד׳); `3+6+4+7+5 = 25` and its mean of 5 (ז׳); every trick, question and answer.
+| Envelope | Reconstructed | Actually |
+|---|---|---|
+| א׳ | `98,99,100,99,101,100`, axis 96–102 | `97..102` clean staircase, axis **96–103** vs **0–120** |
+| ב׳ | 38/31/23/8, other bars **dimmed** | 38/**35**/**27**/8, other bars left alone |
+| ג׳ | `1,1,1,0,2,3,4,5,4,6,7,8` | only Jan, Mar, Jul carry an incident; everything else zero |
+| ד׳ | 8 weeks | **6** weeks, `3,6,4,5,2,4` |
+| ה׳ | 16 weeks, monthly `4.5,4.5,6,7` | **12** weeks, monthly `5, 2.7, 5, 6.7` **plus a trend arrow** |
+| ו׳ | correct series | correct, plus an **area fill** under the line |
+| ז׳ | correct series | correct, plus an **average rule** on the honest chart |
 
-**Invented, and needing the content author's eye:** the remaining series in each envelope, listed in `src/data/station-2.js`. Specifically א׳'s monthly index `98, 99, 100, 99, 101, 100`; ב׳'s two middle crossings at 31% and 23%, chosen to sum to 100 with the two stated figures; ג׳'s full twelve months `1,1,1,0,2,3,4,5,4,6,7,8`, built so January to April sums to the stated 3 while the four sampled months read as smooth growth; ד׳'s eight weeks `3,6,2,5,4,4,5,3`, built to average exactly 4 with no real trend; ה׳'s sixteen weeks and their monthly means `4.5, 4.5, 6, 7`, built so the monthly view rises cleanly while week 5 crashes to 1; ו׳'s monotonic `98,99,99,100,100,101`, kept distinct from א׳'s noisier series so the two truncated-axis envelopes do not feel identical.
+Two of those are not cosmetic. **ה׳'s deception is the arrow, not the averaging** — the monthly view shows month 2 dipping perfectly clearly, and it is the arrow drawn from month 1 to month 4 that papers over it. And **ב׳'s other bars are not dimmed**; dimming them, which the reconstruction did, turns misleading emphasis into a chart that merely looks broken.
+
+### Two inconsistencies inside the source, for the content author
+
+- **ג׳: the chart and the text disagree.** The chart shows incidents only in January, March and July, so January to April totals **2**. The docx text says 3. The app follows the chart. If the intended answer is 3, the chart needs a fourth incident.
+- **ב׳: the percentages sum to 108%**, not 100 — 38 + 35 + 27 + 8. Transcribed as-is from the image. Either the categories overlap or one figure is off.
+
+### One departure from the source, agreed with Hadas
+
+The lying chart is GRAPH 1 in six of the source's seven envelopes, so "always pick graph 2" scored six of seven. The liar's position is redistributed — first in three envelopes, second in four — so there is no position to learn instead of reading the charts. Which chart of each pair is honest is unchanged; only where it appears. The key is 1, 2, 2, 1, 1, 2, 1.
+
+The source's numeric chain, `5+4+3+4+4+4+5 = 29 → 2`, is unused: it does not derive from its own answers, and `נראות התחנות` replaces the numeric task with click-the-honest-chart. The digit is simply 2.
+
+**A note on the source images themselves:** GRAPH 1 is titled in red and GRAPH 2 in blue, and red marks the liar in six of the seven. That is a facilitator aid, but if those images are ever put in front of participants the title colour gives the answer away. The app re-draws them, so it does not inherit the problem.
 
 ## Station 4 — built and verified
 

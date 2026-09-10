@@ -2,19 +2,21 @@
 
 Drop the fourteen charts from `תחנה_2_גרפים_סופי.docx` here as PNG or JPEG.
 
-Naming, so it is unambiguous which is which:
+Supplied by Hadas 2026-09-10. One image per envelope, holding both graphs:
 
-    a-1.png  a-2.png     envelope א׳, graph 1 and graph 2
-    b-1.png  b-2.png     envelope ב׳
-    c-1.png  c-2.png     envelope ג׳
-    d-1.png  d-2.png     envelope ד׳
-    e-1.png  e-2.png     envelope ה׳
-    f-1.png  f-2.png     envelope ו׳
-    g-1.png  g-2.png     envelope ז׳
+    a.png   envelope א׳ — truncated axis, 96 to 103
+    b.png   envelope ב׳ — the smallest bar recoloured
+    c.png   envelope ג׳ — only four of twelve months plotted
+    d.png   envelope ד׳ — bars sorted largest first
+    e.png   envelope ה׳ — monthly average with a trend arrow
+    f.png   envelope ו׳ — truncated axis with an area fill
+    g.png   envelope ז׳ — the average drawn as if it were the data
 
-Graph 1 and graph 2 as they are numbered in the docx, not as they are
-ordered in the app — the app deliberately shuffles which of the pair comes
-first, and that shuffle should not leak back into the source material.
+In every one, GRAPH 1 is titled in red and GRAPH 2 in blue, and **red marks
+the lying chart** in six of the seven — the exception is ה׳, where the liar
+is GRAPH 2. That colour coding is a facilitator aid. If these images are
+ever shown to participants as they are, the answer is given away by the
+title colour; the app re-draws them, so it does not inherit the problem.
 
 These are reference only. The app draws its charts as SVG; these exist so
 the series and the exact distortions can be transcribed rather than
