@@ -1,6 +1,6 @@
-# Station 6's own rule gives digit 1, not 2
+# Station 6 is too hard, and its own rule gives digit 1, not 2
 
-_For the conversation with Lotem. Written 2026-09-10, alongside building the station. **Station 6 is built and playable on `dev`.** The rule is sound and unambiguous — unlike station 3's. What does not work is the arithmetic at the end._
+_For the conversation with Lotem. Written 2026-09-10 alongside building the station, revised the same day after Hadas played it and found it far too hard. **Station 6 is built and playable on `dev`.**_
 
 ## The station works, and its rule is clean
 
@@ -10,7 +10,9 @@ This is the one station whose rule is **given rather than discovered** — the x
 
 > כיצד מוצאים שכנים קרובים: (1) שעת פעילות (2) סוג כביש (3) כיסוי עצים (4) גובה (5) רכבים ביום. שני מעברים דומים = חולקים כמה שיותר תכונות מהתחלת הרשימה.
 
-So the comparison is lexicographic: agree on the first feature, then the second, and the numeric features break ties by closeness. That is fully determined — there is no interpretation to argue about, which is a real strength and the opposite of station 3. The key in the app is **computed from that rule** rather than typed in, so it cannot drift from it.
+So the comparison is lexicographic: agree on the first feature, then the second, and so on. The key in the app is **computed from that rule** rather than typed in, so it cannot drift from it.
+
+**A correction to the first version of this document, which called the rule "fully determined" and "unambiguous".** It is, for the first three features. It is not defined at all for the last two. `שני מעברים דומים = חולקים כמה שיותר תכונות` — *sharing* is a clear idea for יום/לילה, for road type, for tree cover. Two crossings cannot share 360 מ׳ and 350 מ׳. The app reads features 4 and 5 as *closeness*, which is the only workable reading, but the source never says so and a group has to invent that step themselves. Below is why that matters more than it sounds.
 
 One change to the source's presentation: the table's columns run in the **rule's** priority order, not the spreadsheet's. The xlsx puts `רכבים/יום` third, which is the feature the rule cares about least, and buries `סוג כביש` behind it. Reading left to right now matches working down the rule.
 
@@ -32,6 +34,22 @@ The draft asserted 2 + 3 + 3 + 3 = 11, which is the 2. The single disagreement i
 No rounding convention rescues it either. Rounding every average **down** gives 9; rounding every average **up** gives 13 → 4. Only ordinary rounding gives a sum in the right neighbourhood at all, and it lands one short: the digit would need a sum of 11 or 20.
 
 So `CFG.lockCode` is now **`3294217`** — station 3 having already moved position three from 7 to 9. **Two of the seven digits no longer match the draft's code, and both move the physical lock.** Neither is a transcription error; each is what the station's own rule does to its own data.
+
+## Why it plays too hard
+
+**1. The volume.** Four new crossings against twelve known ones is 48 comparisons, each over up to five features, read off a 12-row table, inside seven minutes. That is the dominant cost, and nothing about the rule reduces it.
+
+**2. All-or-nothing over four sets, with no feedback.** Every one of the four sets of three must be exactly right. One slip anywhere fails the station and the group is told nothing about where, so a rejected attempt buys them nothing to think with.
+
+**3. The undefined step is the step that decides every answer.** Because no new crossing has three neighbours of its own kind (below), the third pick always comes from a group of four or five candidates *tied on all three categorical features* and separated only by altitude. Checked for all four: the numeric tie-break decides the third neighbour every single time. So the one part of the rule the source never defines is the part that settles all four answers — and it is arithmetic (|360−200| against |360−150| against |360−100| against |360−700|), four times over, at the point where a group is most rushed.
+
+**4. N-03 looks wrong even when it is right.** Its neighbours are K-12, K-06 and K-10: one mountain crossing plus two *forest* crossings at 350–400 m, for a mountain crossing at 710 m. Correct under the stated rule. A group that gets there will not believe it and will spend time undoing it.
+
+**5. Three of the five features do all the work; two do none.** Checked exhaustively: dropping `כיסוי עצים`, or `רכבים/יום`, or both, leaves all four answers unchanged. Only שעת פעילות, סוג כביש and גובה ever decide anything. The station asks a group to hold a five-step priority list under a clock, and two of the steps never fire.
+
+**6. Five of the twelve known crossings are never an answer.** K-01, K-04, K-05, K-08 and K-09 appear in none of the four correct sets. Distractors are legitimate, but they are also 40% of a table that has to be read and re-read.
+
+**A second correction.** The first version of this document said a group reasoning loosely would get it wrong on all four. That is false, and it is the good news here: a group that matches on שעת פעילות, then on סוג כביש, then takes the closest by גובה — skipping tree cover and vehicles entirely — gets **all four sets exactly right**. The intuitive route works. What punishes is the amount of it, not the shape of it.
 
 ## Two more things worth Lotem's eye
 
@@ -55,9 +73,17 @@ The rule leans hardest on the first two features, so the honest question is how 
 | N-03 | יום / הררי | **1** — K-12 |
 | N-04 | לילה / מיוער | **2** — K-07, K-11 |
 
-Every one of the four is short. So the third neighbour — and for N-03, the second and third — always comes from a crossing that fails on road type, and which one it is gets decided by כיסוי עצים and then by altitude. The rule handles that correctly and the answer is well defined, but it means **the third pick is never the intuitive one**, and a group reasoning loosely ("same kind of road, roughly the same size") will get it wrong on all four.
+Every one of the four is short. So the third neighbour — and for N-03, the second and third — always comes from a crossing that fails on road type, decided by altitude among a tied group. That is the mechanism behind problem 3 above.
 
-For N-03 in particular, two of its three neighbours are forest crossings at 350–400 m when N-03 is a mountain crossing at 710 m. That is defensible under the stated rule and looks wrong to a person.
+## Ways to bring the difficulty down
+
+Roughly by how much they cost. None applied yet.
+
+- **Show the first filter live, the way station 4 does.** Working on a crossing dims the known rows that fail its שעת פעילות. That removes the mechanical half of the scan — problem 1, the biggest — without touching a single judgement: the group still chooses among the survivors. It is the only item here that is a build change rather than a content change, so it is much the cheapest, and Hadas asked for exactly this behaviour in station 4.
+- **Drop N-04.** It is a duplicate of N-02 and buys nothing. Three cases instead of four is a quarter less work. Changes the target sum.
+- **Grade per crossing, or allow more attempts.** Softens problem 2 without touching content.
+- **Cut some of the five never-used crossings.** Checked: removing K-04 and K-08 leaves all four answers unchanged and takes two rows off the table.
+- **Say what closeness means for גובה** in the rule text, so problem 3 stops being a guess.
 
 ## What is needed from Lotem
 
