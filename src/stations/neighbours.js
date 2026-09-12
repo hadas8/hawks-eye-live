@@ -129,7 +129,7 @@ export function viewNeighbours() {
       <p class="q">מי שלושת השכנים של כל מעבר חדש?</p>
       <p class="sub">שני מעברים דומים ככל שהם חולקים תכונות מתחילת הרשימה. השוו לפי הסדר הזה:</p>
       <ol class="prio">${FEATURES.map(f => `<li>${esc(f.label)}</li>`).join('')}</ol>
-      <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
     </div>
 
     <div class="nwrap">
@@ -155,12 +155,12 @@ export function viewNeighbours() {
     <div class="row">
       <button class="btn" data-act="submitNb" ${S.submitBlocked || done < N ? 'disabled' : ''}>${
         done < N ? `הושלמו ${done} מתוך ${N} מעברים`
-        : S.submitBlocked ? 'שנו בחירה כדי לשלוח שוב'
+        : S.submitBlocked ? 'שנו בחירה כדי לנסות שוב'
         : 'שליחת פענוח'}</button>
       ${shown < s.hints.length
         ? `<button class="btn-ghost" data-act="hintNb">רמז (${shown + 1}/${s.hints.length})</button>`
         : '<span class="label">אין רמזים נוספים</span>'}
-      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} שליחות נותרו</span>
+      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} ניסיונות נותרו</span>
     </div>
   </div>`;
 }
@@ -202,7 +202,7 @@ register('click', {
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');
       const left = attemptsLeft();
-      fx('reject', 'נדחה', 2100, left === 1 ? 'נותרה שליחה אחת' : `נותרו ${left} שליחות`);
+      fx('reject', 'נדחה', 2100, left === 1 ? 'נותר ניסיון אחד' : `נותרו ${left} ניסיונות`);
       shake();
       return set();
     }

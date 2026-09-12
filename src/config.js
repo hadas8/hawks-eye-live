@@ -2,7 +2,7 @@
 // not here — attempt caps and feedback granularity in particular.
 export const CFG = {
   stationSeconds: 7 * 60,
-  pointsPerStation: 10,
+  pointsPerStation: 20,
   bonusQuestPoints: 5,      // facilitators count these on paper; the app never sees them
   // 3274227 — the code on the printed decode card, and the code the
   // physical lock in the room is set to. It has not moved and it should not:

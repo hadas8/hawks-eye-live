@@ -34,10 +34,10 @@ Timing to plan around: 7 × 7 = 49 minutes of station time plus password screens
 
 ## Expiry and scoring
 
-- Solve in time: **10 points**, digit shown in amber in the ribbon.
+- Solve in time: **20 points**, digit shown in amber in the ribbon. Raised from 10 on 2026-09-12 — a station is worth four social quests, not two. Bonus quests stay at 5.
 - Station closes unsolved, whether by clock or by exhausted submissions: the group **still receives the correct digit** so the box can open, but it lands **greyed** in the ribbon and scores **0**. **No strikethrough.** It was struck through in red until 2026-09-09; the ribbon is what the code is read off at the end, and a line through a digit at 23px is a misread waiting to happen at the lock. The dashed border and the muted colour carry the distinction on their own, and the closing screen says הספרה נמסרה לכם · 0 נקודות in words. The reveal marks it נמסרה. The closing screen distinguishes נגמר הזמן from נגמרו הניסיונות.
 - Social bonus quests: **5 points each**, counted by facilitators on paper. The app never sees them.
-- The app shows only the technical score (max 70) on the reveal screen and states that facilitators add the bonus points and announce winners. No cross-group comparison in the app, by design.
+- The app shows only the technical score (max 140) on the reveal screen and states that facilitators add the bonus points and announce winners. No cross-group comparison in the app, by design.
 - **No speed bonus, deliberately.** Finishing fast buys time, time buys social quests, and social quests buy points. The incentive to move fast already exists without the app scoring it.
 
 ## Screen model
@@ -364,7 +364,7 @@ Rewritten with Hadas 2026-09-09. It is a closing frame, not another page: full s
 [lead]     המשלוח נעצר, והרקטות שלהם ימשיכו לפספס.
 [punch]    מצאתם אותו בתוך טבלה.            (amber)
 
-           ── 70 ──                        (amber rules, no box)
+           ── 140 ──                       (amber rules, no box)
 
 [finale]   לזה קוראים למידת מכונה            (amber, inside a faint ring)
 [sub]      כל תחנה כאן היא שיטה שמנתחי מודיעין עובדים איתה באמת.

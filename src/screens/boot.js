@@ -63,7 +63,6 @@ export const viewBoot = () => `<div class="stack">
         <span class="idmark" aria-hidden="true">&gt;</span>
         <input type="text" id="gname" value="${esc(S.group)}" placeholder="הקלידו כאן" autocomplete="off">
       </div>
-      <p class="idnote">זה השם שהמדריכים יראו כל הערב.</p>
     </div>
   </div>
   <div class="row">

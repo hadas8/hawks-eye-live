@@ -26,7 +26,7 @@ export const viewBriefing = () => `<div class="stack">
       <span class="v">סיימתם מוקדם? פנו למדריך למשימה חברתית.
         <small>כל משימה כזאת שווה ${CFG.bonusQuestPoints} נקודות שהמדריכים סופרים בנפרד</small></span>
       <span class="k">05</span>
-      <span class="v">סיימתם לקרוא? תצדיעו.
+      <span class="v">סיימתם לקרוא? תצדיעו <span class="emoji">🫡</span>
         <small>ככה המדריך רואה מי מוכן, בלי לעבור בין השולחנות ולשאול</small></span>
     </div>
   </div>

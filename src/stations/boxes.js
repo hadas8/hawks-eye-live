@@ -84,7 +84,7 @@ export function viewBoxes() {
     <div class="ask">
       <p class="q">לאיזו קופסה שייך כל כרטיס?</p>
       <p class="sub">שישה כרטיסים כבר מוינו. מצאו לפי מה, והמשיכו באותו כלל.</p>
-      <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
     </div>
 
     <div>
@@ -110,12 +110,12 @@ export function viewBoxes() {
     <div class="row">
       <button class="btn" data-act="submitBoxes" ${S.submitBlocked || done < N ? 'disabled' : ''}>${
         done < N ? `נותרו ${N - done} כרטיסים`
-        : S.submitBlocked ? 'שנו מיון כדי לשלוח שוב'
+        : S.submitBlocked ? 'שנו מיון כדי לנסות שוב'
         : 'שליחת פענוח'}</button>
       ${shown < s.hints.length
         ? `<button class="btn-ghost" data-act="hintBoxes">רמז (${shown + 1}/${s.hints.length})</button>`
         : '<span class="label">אין רמזים נוספים</span>'}
-      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} שליחות נותרו</span>
+      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} ניסיונות נותרו</span>
     </div>
   </div>`;
 }
@@ -148,7 +148,7 @@ register('click', {
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');
       const left = attemptsLeft();
-      fx('reject', 'נדחה', 2100, left === 1 ? 'נותרה שליחה אחת' : `נותרו ${left} שליחות`);
+      fx('reject', 'נדחה', 2100, left === 1 ? 'נותר ניסיון אחד' : `נותרו ${left} ניסיונות`);
       shake();
       return set();
     }

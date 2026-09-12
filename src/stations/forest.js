@@ -104,7 +104,7 @@ export function viewForest() {
     <div class="ask">
       <p class="q">איזו שורה מתאימה לכל אנליסט?</p>
       <p class="sub">לכל אנליסט שני נתונים בלבד ושלוש שורות. סמנו את השורה הראשונה שמתאימה לשניהם, והיא זו שקובעת את האתר שלו.</p>
-      <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
     </div>
 
     <div class="acards">${ANALYSTS.map(analystCard).join('')}</div>
@@ -118,12 +118,12 @@ export function viewForest() {
     <div class="row">
       <button class="btn" data-act="submitForest" ${S.submitBlocked || !allIn() ? 'disabled' : ''}>${
         !allIn() ? `הוכרעו ${done()} מתוך ${N} אנליסטים`
-        : S.submitBlocked ? 'שנו הכרעה כדי לשלוח שוב'
+        : S.submitBlocked ? 'שנו הכרעה כדי לנסות שוב'
         : 'שליחת פענוח'}</button>
       ${shown < s.hints.length
         ? `<button class="btn-ghost" data-act="hintForest">רמז (${shown + 1}/${s.hints.length})</button>`
         : '<span class="label">אין רמזים נוספים</span>'}
-      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} שליחות נותרו</span>
+      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} ניסיונות נותרו</span>
     </div>
   </div>`;
 }
@@ -165,7 +165,7 @@ register('click', {
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');
       const left = attemptsLeft();
-      fx('reject', 'נדחה', 2100, left === 1 ? 'נותרה שליחה אחת' : `נותרו ${left} שליחות`);
+      fx('reject', 'נדחה', 2100, left === 1 ? 'נותר ניסיון אחד' : `נותרו ${left} ניסיונות`);
       shake();
       return set();
     }

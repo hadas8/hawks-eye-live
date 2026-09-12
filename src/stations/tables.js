@@ -145,7 +145,7 @@ export function viewTables() {
         <li>אותו מזהה פעמיים הוא אותה שיירה — סמנו אחת.</li>
         <li>שורה עם <span class="dash">—</span> לא נספרת, גם אם חצתה.</li>
       </ul>
-      <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> בכל שליחה תראו איזו טבלה נכונה ואיזו לא. נגמרו השליחות, נגמרה התחנה.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> בכל ניסיון תראו איזו טבלה נכונה ואיזו לא. נגמרו הניסיונות, נגמרה התחנה.</p>
     </div>
 
     <div class="tabs">${tabs}</div>
@@ -180,12 +180,12 @@ export function viewTables() {
     <div class="row">
       <button class="btn" data-act="submit" ${S.submitBlocked || filled < N ? 'disabled' : ''}>${
         filled < N ? `נותרו ${N - filled} טבלאות`
-        : S.submitBlocked ? 'שנו תשובה כדי לשלוח שוב'
+        : S.submitBlocked ? 'שנו תשובה כדי לנסות שוב'
         : 'שליחת פענוח'}</button>
       ${hintsShown < s.hints.length
         ? `<button class="btn-ghost" data-act="hint">רמז (${hintsShown + 1}/${s.hints.length})</button>`
         : '<span class="label">אין רמזים נוספים</span>'}
-      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} שליחות נותרו</span>
+      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} ניסיונות נותרו</span>
     </div>
   </div>`;
 }
@@ -291,7 +291,7 @@ register('click', {
       // group idle at a dead button.
       if (attemptsLeft() <= 0) return closeStation('attempts');
       const left = attemptsLeft();
-      fx('reject', 'נדחה', 2100, left === 1 ? 'נותרה שליחה אחת' : `נותרו ${left} שליחות`);
+      fx('reject', 'נדחה', 2100, left === 1 ? 'נותר ניסיון אחד' : `נותרו ${left} ניסיונות`);
       shake();
       return set();
     }

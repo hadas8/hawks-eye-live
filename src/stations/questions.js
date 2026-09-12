@@ -94,7 +94,7 @@ export function viewQuestions() {
       <ul class="keys">
         <li>לחצו על שאלה כדי לראות מי נפסל בגללה. הסדר לא משנה.</li>
       </ul>
-      <p class="cap"><b>${s.maxAttempts} שליחות בלבד.</b> אחרי כל שליחה תראו כמה כל שאלה שלכם פסלה.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> אחרי כל ניסיון תראו כמה כל שאלה שלכם פסלה.</p>
     </div>
 
     <div class="q-layout">
@@ -130,12 +130,12 @@ export function viewQuestions() {
       <button class="btn" data-act="submitQ" ${S.submitBlocked || picked.length !== PICK ? 'disabled' : ''}>${
         filled() < PICK ? `נרשמו ${filled()} מתוך ${PICK}`
         : picked.length !== PICK ? 'מספרי שאלות לא תקינים'
-        : S.submitBlocked ? 'שנו בחירה כדי לשלוח שוב'
+        : S.submitBlocked ? 'שנו בחירה כדי לנסות שוב'
         : 'שליחת פענוח'}</button>
       ${hintsShown < s.hints.length
         ? `<button class="btn-ghost" data-act="hintQ">רמז (${hintsShown + 1}/${s.hints.length})</button>`
         : '<span class="label">אין רמזים נוספים</span>'}
-      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} שליחות נותרו</span>
+      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} ניסיונות נותרו</span>
     </div>
   </div>`;
 }
@@ -207,7 +207,7 @@ register('click', {
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');
       const n = attemptsLeft();
-      fx('reject', 'נדחה', 2100, n === 1 ? 'נותרה שליחה אחת' : `נותרו ${n} שליחות`);
+      fx('reject', 'נדחה', 2100, n === 1 ? 'נותר ניסיון אחד' : `נותרו ${n} ניסיונות`);
       shake();
       return set();
     }

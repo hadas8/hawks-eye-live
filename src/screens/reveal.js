@@ -22,7 +22,6 @@ export function viewReveal() {
       <div class="eyebrow">מעבר ג'נתא · 03:41</div>
       <h1>כל הכבוד, סיכלתם את המבצע</h1>
       <p class="lead">המשלוח נעצר, והרקטות שלהם ימשיכו לפספס.</p>
-      <p class="punch">מצאתם אותו בתוך טבלה.</p>
     </div>
 
     <div class="scorebox">

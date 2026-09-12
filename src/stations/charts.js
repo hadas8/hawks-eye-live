@@ -86,7 +86,7 @@ export function viewCharts() {
     <div class="row">
       <button class="btn" data-act="submitCharts" ${S.submitBlocked || done < N ? 'disabled' : ''}>${
         done < N ? `נבחרו ${done} מתוך ${N}`
-        : S.submitBlocked ? 'שנו בחירה כדי לשלוח שוב'
+        : S.submitBlocked ? 'שנו בחירה כדי לנסות שוב'
         : 'שליחת פענוח'}</button>
       <span class="label">${done} מתוך ${N} מעטפות</span>
     </div>

@@ -28,7 +28,6 @@
   font-family:var(--mono);font-size:1.125rem;color:var(--ink)}
 .idrow input[type="text"]:focus{border:0}
 .idrow input::placeholder{color:var(--muted)}
-.idnote{font-size:0.75rem;color:var(--muted);margin:0.5rem 0 0;max-width:none}
 
 /* ── password gate ───────────────────────── */
 .lockwrap{display:flex;flex-direction:column;align-items:center;text-align:center;
@@ -37,6 +36,12 @@
 .lockwrap p{text-align:center;max-width:46ch}
 .lockform{display:flex;gap:0.625rem;margin-top:0.875rem;width:100%;max-width:25rem}
 .lockform input{text-align:center;letter-spacing:.1em;font-family:var(--body);font-size:1.125rem}
+
+/* The one emoji in the app. Heebo has no glyph for it, so it falls through
+   to the system emoji font; naming that stack explicitly keeps the fallback
+   from dragging the surrounding Hebrew with it. */
+.emoji{font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+  font-size:1.1em;line-height:1;vertical-align:-0.08em}
 
 /* ── briefing / reveal list ──────────────── */
 .faculty{display:grid;grid-template-columns:auto 1fr;gap:0.625rem 1.125rem;align-items:baseline}
