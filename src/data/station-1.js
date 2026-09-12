@@ -1,8 +1,18 @@
 // Station 1 — הטבלאות המשקרות. Source: תחנה_1_שמונה_טבלאות.xlsx.
 //
-// Eight tables, one number each: how many unique convoys actually crossed.
-// Per-table answers 5, 6, 4, 8, 7, 3, 6, 9 — sum 48, digital root 3.
-// Verified independently against tables 1, 3, 6 and 8.
+// FIVE tables, one number each: how many unique convoys actually crossed.
+// Per-table answers 5, 6, 4, 8, 7 — sum 30, digital root 3.
+//
+// The source has eight and Hadas cut it to five on 2026-09-12, after her
+// team lead flagged the station as too long. Nothing was lost: the eight are
+// not eight kinds of dirt, they are the same three rules — status wording,
+// duplicate identifiers, missing values — run eight times over different
+// data. Tables 6 to 8 taught nothing 1 to 5 had not already taught, and the
+// cut takes a group from 128 rows to 80 inside the same seven minutes.
+//
+// The digit survives the cut honestly: 5+6+4+8+7 = 30, and 3+0 = 3, which is
+// the digit the eight tables gave. So the digital root is still the group's
+// own arithmetic rather than a number we award.
 //
 // The rule the answer key uses that the source instructions never state:
 // a row with a missing value is unusable and is not counted, EVEN when its
@@ -111,56 +121,6 @@ export const TABLES = [
      ['W-07', '14/05/2026', Q, '28', TON, 'הושלם'],
      JUNK], 7),
 
-  T([['X-06', '12/06/2026', A, '17000', KG, 'נכשל'],
-     ['X-05', '10/06/2026', Q, '15', TON, 'כשל'],
-     ['X-09', '18/06/2026', A, '', '', 'הושלם'],
-     ['X-02', '04/06/2026', A, '23', TON, 'CROSSED'],
-     ['X-01', '02/06/2026', Q, '22', TON, 'הושלם'],
-     ['X-04', '08/06/2026', G, '15000', KG, 'בוטל'],
-     ['X-07', '14/06/2026', G, '17', TON, 'ממתין'],
-     ['X-02', '2026-06-04', A, '23', TON, 'CROSSED'],
-     ['X-01', '2026-06-02', Q, '22', TON, 'הושלם'],
-     ['X-08', '16/06/2026', Q, '', '', 'חצה'],
-     ['X-03', '2026-06-06', G, '22500', KG, 'חצה'],
-     ['X-03', '06/06/2026', G, '22500', KG, 'חצה'],
-     JUNK], 3),
-
-  T([['Y-07', '14/07/2026', G, '15000', KG, 'בוטל'],
-     ['Y-12', '24/07/2026', A, '', '', 'הושלם'],
-     ['Y-09', '18/07/2026', A, '17000', KG, 'נכשל'],
-     ['Y-11', '22/07/2026', Q, '', '', 'חצה'],
-     ['Y-02', '04/07/2026', A, '23', TON, 'CROSSED'],
-     ['Y-01', '02/07/2026', Q, '22', TON, 'הושלם'],
-     ['Y-10', '20/07/2026', G, '17', TON, 'ממתין'],
-     ['Y-06', '12/07/2026', G, '24000', KG, 'חצה'],
-     ['Y-04', '08/07/2026', Q, '25', TON, 'הושלם'],
-     ['Y-03', '2026-07-06', G, '22500', KG, 'חצה'],
-     ['Y-08', '16/07/2026', Q, '15', TON, 'כשל'],
-     ['Y-05', '10/07/2026', A, '26', TON, 'CROSSED'],
-     ['Y-01', '2026-07-02', Q, '22', TON, 'הושלם'],
-     ['Y-02', '2026-07-04', A, '23', TON, 'CROSSED'],
-     ['Y-03', '06/07/2026', G, '22500', KG, 'חצה'],
-     JUNK], 6),
-
-  T([['Z-01', '02/08/2026', Q, '22', TON, 'הושלם'],
-     ['Z-02', '2026-08-04', A, '23', TON, 'CROSSED'],
-     ['Z-10', '20/08/2026', G, '15000', KG, 'בוטל'],
-     ['Z-05', '10/08/2026', A, '26', TON, 'CROSSED'],
-     ['Z-15', '30/08/2026', A, '', '', 'הושלם'],
-     ['Z-14', '28/08/2026', Q, '', '', 'חצה'],
-     ['Z-02', '04/08/2026', A, '23', TON, 'CROSSED'],
-     ['Z-11', '22/08/2026', Q, '15', TON, 'כשל'],
-     ['Z-13', '26/08/2026', G, '17', TON, 'ממתין'],
-     ['Z-08', '16/08/2026', A, '29', TON, 'CROSSED'],
-     ['Z-04', '08/08/2026', Q, '25', TON, 'הושלם'],
-     ['Z-06', '12/08/2026', G, '24000', KG, 'חצה'],
-     ['Z-03', '2026-08-06', G, '22500', KG, 'חצה'],
-     ['Z-01', '2026-08-02', Q, '22', TON, 'הושלם'],
-     ['Z-12', '24/08/2026', A, '17000', KG, 'נכשל'],
-     ['Z-07', '14/08/2026', Q, '28', TON, 'הושלם'],
-     ['Z-03', '06/08/2026', G, '22500', KG, 'חצה'],
-     ['Z-09', '18/08/2026', G, '25500', KG, 'חצה'],
-     JUNK], 9)
 ];
 
 export const isJunkRow = row => row[0].startsWith('—');

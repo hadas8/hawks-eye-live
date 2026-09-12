@@ -9,6 +9,27 @@
 .caret{display:inline-block;width:0.5rem;height:0.9375rem;background:var(--amber);
   vertical-align:-2px;animation:blink 1s steps(2) infinite}
 
+/* ── the team name, inside the terminal ───── */
+/* The one thing a group must type before anything starts. As a quiet field
+   under the panel it got skipped: the terminal said ממתין לזיהוי צוות and
+   nothing connected that line to the box below it. It now sits inside the
+   same panel, directly under the line that asks for it, at terminal scale
+   and with a prompt glyph, so the question and the answer are one thing. */
+.idblock{margin-top:1.125rem;border-top:1px solid var(--hair);padding-top:1rem}
+.idlabel{display:block;font-size:0.6875rem;letter-spacing:var(--ls);
+  text-transform:uppercase;color:var(--amber);margin-bottom:0.5rem}
+.idrow{display:flex;align-items:center;gap:0.625rem;background:var(--panel-2);
+  border:1px solid var(--amber-dim);padding:0 0.75rem;max-width:24rem}
+.idrow:focus-within{border-color:var(--amber)}
+.idmark{font-family:var(--mono);font-size:1.125rem;color:var(--amber);line-height:1}
+/* Overrides the global input box: this one IS the box. */
+.idrow input[type="text"]{flex:1;min-width:0;min-height:var(--tap);
+  background:transparent;border:0;padding:0;
+  font-family:var(--mono);font-size:1.125rem;color:var(--ink)}
+.idrow input[type="text"]:focus{border:0}
+.idrow input::placeholder{color:var(--muted)}
+.idnote{font-size:0.75rem;color:var(--muted);margin:0.5rem 0 0;max-width:none}
+
 /* ── password gate ───────────────────────── */
 .lockwrap{display:flex;flex-direction:column;align-items:center;text-align:center;
   gap:0.3125rem;padding:2.5rem 0 1.25rem}
@@ -95,6 +116,8 @@
 .scorebox .n{font-family:var(--mono);font-size:clamp(2.25rem,min(7.2vw,8.6vh),4.5rem);font-weight:600;
   color:var(--amber);line-height:1;text-shadow:0 0 2.5rem var(--amber-dim)}
 .scorebox p{max-width:none;text-align:center;margin:0.5rem 0 0}
+.scorebox .showto{margin:0.875rem 0 0.25rem;font-size:1.0625rem;color:var(--amber);
+  font-weight:500}
 .scorebox .fine{margin:0.375rem 0 0;color:var(--muted);font-size:0.875rem}
 .vin{font-family:var(--mono);letter-spacing:.45em;text-align:center;font-size:1.5rem}
 

@@ -15,7 +15,11 @@ const LINES = [
   'יחידה 4400 של חיזבאללה מעבירה מטען אסטרטגי מסוריה ללבנון.',
   "<span class='hi'>שבע תחנות. שבע ספרות. מטען אחד.</span>",
   '',
-  'ממתין לזיהוי צוות_'
+  // The terminal asks for the name and the field answers it directly below.
+  // "ממתין לזיהוי צוות" alone left a group unsure that anything was being
+  // asked of them, or where the answer went.
+  "<span class='hi'>נדרש זיהוי צוות</span>",
+  'הקלידו את שם הצוות שלכם כדי להיכנס.'
 ];
 
 // Typing speeds. Tuned so the whole sequence lands near 4s: slower and a
@@ -46,11 +50,21 @@ function atomize(line) {
 let typing = false;
 let run = 0;   // guards against a stale timer writing into a fresh terminal
 
+// The name field lives INSIDE the terminal panel, directly under the line
+// that asks for it. As a separate quiet box below the panel it read as
+// optional and groups walked straight past it to the button — which is how
+// teams ended up scored as ללא שם on the facilitators' sheet.
 export const viewBoot = () => `<div class="stack">
-  <div class="panel"><div class="term" id="term"></div></div>
-  <div class="field">
-    <span class="label">שם הצוות</span>
-    <input type="text" id="gname" value="${esc(S.group)}" placeholder="למשל: שלישייה 3" autocomplete="off">
+  <div class="panel">
+    <div class="term" id="term"></div>
+    <div class="idblock">
+      <label class="idlabel" for="gname">שם הצוות</label>
+      <div class="idrow">
+        <span class="idmark" aria-hidden="true">&gt;</span>
+        <input type="text" id="gname" value="${esc(S.group)}" placeholder="הקלידו כאן" autocomplete="off">
+      </div>
+      <p class="idnote">זה השם שהמדריכים יראו כל הערב.</p>
+    </div>
   </div>
   <div class="row">
     <button class="btn" data-act="enter">כניסה למבצע</button>

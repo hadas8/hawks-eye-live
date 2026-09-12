@@ -27,7 +27,7 @@ export function viewOutcome(expired) {
       : 'האלגוריתם שהרגע הפעלתם נקרא ' + esc(s.concept) + '.'}</p>
     <p class="next">${last
       ? 'שבע התחנות מאחוריכם.'
-      : 'פנו למדריך למשימה חברתית עד שכל החדר מסיים, ואז לסיסמה הבאה.'}</p>
+      : `פנו למדריך למשימה חברתית ועוד ${CFG.bonusQuestPoints} נקודות, עד שהטיימר מתאפס.`}</p>
     <button class="btn" data-act="next">${last ? 'לפתיחת המטען' : 'לתחנה הבאה'}</button>
   </div>`;
 }

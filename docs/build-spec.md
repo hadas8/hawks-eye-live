@@ -84,7 +84,9 @@ Lock code `3274227`.
 
 ## Station 1 — built and verified
 
-Source: `תחנה_1_שמונה_טבלאות.xlsx`. Eight tables, one number each, digit is the digital root of the sum.
+Source: `תחנה_1_שמונה_טבלאות.xlsx`. **Five** tables, one number each, digit is the digital root of the sum.
+
+The source has eight and Hadas cut it to five on 2026-09-12, after her team lead flagged the station as too long. Nothing was lost: the eight are not eight kinds of dirt, they are the same three rules — status wording, duplicate identifiers, missing values — run eight times over different data, so tables 6 to 8 taught nothing 1 to 5 had not. It takes a group from 128 rows to 80 inside the same seven minutes. **The digit survives honestly**: 5+6+4+8+7 = 30 and 3+0 = 3, the same digit the eight gave, so the digital root is still the group's own arithmetic rather than an awarded token.
 
 Answers **5, 6, 4, 8, 7, 3, 6, 9**, sum 48, digital root **3**. Verified independently against tables 1, 3, 6 and 8 by hand, and since the build against **all eight** by re-deriving each count from the stated rule and comparing it to the key: status in {חצה, הושלם, CROSSED}, missing-value rows dropped first, then distinct identifiers counted. All eight match. Truth check shown to groups: the sum must fall between 30 and 60.
 

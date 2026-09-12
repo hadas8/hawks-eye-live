@@ -29,7 +29,8 @@ export function viewReveal() {
       <div class="label">ניקוד התחנות</div>
       <div class="n">${S.score}</div>
       <p>מתוך ${MAX_TECH} · ${solved} מתוך ${STATIONS.length} תחנות נפתרו בזמן</p>
-      <p class="fine">המדריכים מוסיפים לזה את נקודות המשימות החברתיות שלכם, ואז מכריזים על המנצחים.</p>
+      <p class="showto">הציגו את המסך הזה למדריכים.</p>
+      <p class="fine">הם מוסיפים לניקוד את נקודות המשימות החברתיות שלכם, ואז מכריזים על המנצחים.</p>
     </div>
 
     <div class="close">
