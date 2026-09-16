@@ -16,9 +16,13 @@
 // נוצה, אופק, מדף, ענף, מצפן, גדר, חורש. Changing one now means reprinting
 // the facilitators' sheet, so do not touch them casually.
 //
-// `maxAttempts` is per station, deliberately, and is coupled to
+// `maxAttempts` is per station, deliberately, and is COUPLED to
 // `revealWhichWrong`: precise per-part feedback is only safe when there are
-// too few submissions to sweep the answer space by watching the count move.
+// too few submissions to sweep the answer space by watching the marks move.
+// Station 3 is the worked example — twenty cards over three boxes with
+// per-card marks is brute-forceable in exactly three attempts and airtight
+// in two. Never raise a station's attempts without re-checking what its
+// feedback gives away.
 
 import { TABLES } from './station-1.js';
 import { ENVELOPES, honestPosition } from './station-2.js';
@@ -103,19 +107,21 @@ export const STATIONS = [
     // marks every card right or wrong. It never says which box a wrong card
     // belongs in — that is the answer.
     //
-    // THE COST, and it is real: with three attempts this is brute-forceable
-    // without ever finding the rule. Submit once to learn which cards are
-    // wrong; move every wrong card to a second box and submit again; the
-    // ones still wrong must be the third box. Three attempts is exactly
-    // enough. See docs/station-3-rewrite.md — if that matters more than the
-    // feedback, dropping to 2 closes it, because the last move then has to
-    // be a guess on every wrong card at once.
+    // TWO attempts, not three, and the two settings are locked together.
+    // With three, per-card feedback is a complete brute-force: submit once
+    // to learn which cards are wrong, move every wrong card to a second box
+    // and submit again, and the ones still wrong must be the third — twenty
+    // cards placed without ever finding the rule. Two attempts kills it,
+    // because the second submit has to be a simultaneous two-way guess on
+    // every wrong card at once. Hadas's call, 2026-09-16.
     //
-    // The rewrite broke the opening-word shortcut, which is how this was
-    // solved at speed before, so the station is harder than the version that
-    // was play-tested. If it runs long, 4 is the lever — but 4 also widens
-    // the brute-force margin.
-    maxAttempts: 3,
+    // SO DO NOT RAISE THIS WITHOUT TURNING revealWhichWrong OFF. Three
+    // attempts plus per-card marks is exactly the exploit above, and the
+    // station teaches nothing to anyone who notices.
+    //
+    // This is the strictest station in the evening, and deliberately: the
+    // feedback is precise, so the budget is short.
+    maxAttempts: 2,
     revealWhichWrong: true,
 
     brief: 'שלוש קופסאות על השולחן ובכל אחת שני כרטיסים שמישהו כבר מיין, אבל אף קופסה לא מסמנת לפי מה.',
