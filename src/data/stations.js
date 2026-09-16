@@ -179,10 +179,11 @@ export const STATIONS = [
 
     hints: [
       'חמש מהמשאיות שנבדקו בסבב הראשון נושאות אמל"ח וחמש לא. חפשו תכונה שיש לכל החמש הנושאות ואין לאף אחת מהאחרות.',
-      // "לבדה" matters: in round two both אנטנה and ארגז appear on either
-      // side of the split, and together they are still the rule. Without
-      // that word this hint is false for half the station.
-      'תכונה שמופיעה משני צדי החלוקה לא יכולה להיות הכלל לבדה.'
+      // Round two's rule is an interaction, so no feature survives the
+      // one-column test at all — and unlike round one, the carriers share
+      // nothing either. This points at the only route in without naming
+      // which two features or what they do to each other.
+      'תכונה שמופיעה משני צדי החלוקה לא יכולה להיות הכלל לבדה. בסבב ב׳ אף תכונה לא שורדת את המבחן הזה, אז חפשו שתיים שתלויות זו בזו.'
     ]
   },
 

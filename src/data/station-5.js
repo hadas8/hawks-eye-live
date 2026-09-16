@@ -52,40 +52,51 @@ export const UNLABELLED = [
   known(card('U-06', 'חול', 'אין', '6', 'סגור'), false)
 ];
 
-// ── round two: a rule made of TWO features ────────────────────────────
+// ── round two: two features that only mean anything together ──────────
 //
-// אנטנה יש AND ארגז סגור. Written here 2026-09-16 because the station was
-// one insight and ran in ninety seconds of a seven-minute slot; see
-// docs/station-5-difficulty.md. These cards are not from the source — the
-// source has no second round — so they were designed and then checked.
+// A truck carries when EXACTLY ONE of אנטנה יש / ארגז סגור holds — never
+// both, never neither. Written here 2026-09-16; the source has no second
+// round. See docs/station-5-difficulty.md.
 //
-// The habit round one teaches is "find the one column that works", and
-// round two breaks it twice in opposite directions: W-03 and W-04 have
-// antennas and do not carry, W-05 and W-06 have closed boxes and do not
-// carry. Neither column survives alone; together they explain all eight.
+// A conjunction was built first and thrown away for being too easy, and
+// the reason is worth keeping: with an AND rule, the features that every
+// carrier shares ARE the rule. One pass over the carriers hands it over
+// and the non-carriers never get read. That is the same one-step move as
+// round one, with two columns instead of one.
 //
-// VERIFIED, not asserted: 144 rules a person might actually propose —
-// every single feature, every AND / OR / XOR of two, every AND / OR of
-// three — were swept over these eight labels, and exactly one fits. No
-// single feature fits. Round one was swept the same way and also comes out
-// unique, at אנטנה יש. Kept honest by the station-5 data test.
+// This rule cannot be reached that way. Checked: the four carriers share
+// NO feature, and neither do the four non-carriers, so intersecting either
+// side yields nothing. The group has to notice that אנטנה means the
+// opposite thing depending on the ארגז beside it — which is the whole idea
+// of two features interacting, and is the only route in.
 //
-// No unlabelled truck here repeats a labelled one, in either round, so
-// nothing can be answered by matching a card instead of reading the rule.
+// VERIFIED, not asserted: 144 rules a person might propose — every single
+// feature, every AND / OR / XOR of two, every AND / OR of three — were
+// swept over these eight labels. Two survive, and they are the same
+// function written from opposite ends (negating both sides of an XOR
+// leaves it unchanged); they agree on every unlabelled truck. No single
+// feature fits. Round one was swept the same way and is unique at אנטנה יש.
+//
+// The six to classify cover all four (אנטנה, ארגז) combinations, and no
+// single feature predicts their answers either — so a group cannot land on
+// all six while holding a wrong rule. None of them repeats a labelled
+// truck, in either round.
 export const LABELLED_2 = [
-  known(card('W-01', 'לבן', 'יש', '6', 'סגור'), true),
-  known(card('W-02', 'חול', 'יש', '8', 'סגור'), true),
-  known(card('W-03', 'לבן', 'יש', '8', 'פתוח'), false),
-  known(card('W-04', 'חול', 'יש', '6', 'פתוח'), false),
-  known(card('W-05', 'לבן', 'אין', '6', 'סגור'), false),
-  known(card('W-06', 'חול', 'אין', '8', 'סגור'), false),
-  known(card('W-07', 'חול', 'אין', '6', 'פתוח'), false),
-  known(card('W-08', 'לבן', 'אין', '8', 'פתוח'), false)
+  known(card('W-01', 'לבן', 'יש', '6', 'פתוח'), true),
+  known(card('W-02', 'חול', 'יש', '8', 'פתוח'), true),
+  known(card('W-03', 'חול', 'אין', '6', 'סגור'), true),
+  known(card('W-04', 'לבן', 'אין', '8', 'סגור'), true),
+  known(card('W-05', 'לבן', 'יש', '8', 'סגור'), false),
+  known(card('W-06', 'חול', 'יש', '6', 'סגור'), false),
+  known(card('W-07', 'חול', 'אין', '8', 'פתוח'), false),
+  known(card('W-08', 'לבן', 'אין', '6', 'פתוח'), false)
 ];
 
 export const UNLABELLED_2 = [
-  known(card('V-01', 'חול', 'יש', '6', 'סגור'), true),
-  known(card('V-02', 'חול', 'יש', '8', 'פתוח'), false),
-  known(card('V-03', 'לבן', 'יש', '8', 'סגור'), true),
-  known(card('V-04', 'לבן', 'אין', '6', 'פתוח'), false)
+  known(card('V-01', 'לבן', 'יש', '8', 'פתוח'), true),
+  known(card('V-02', 'חול', 'יש', '6', 'פתוח'), true),
+  known(card('V-03', 'חול', 'אין', '8', 'סגור'), true),
+  known(card('V-04', 'לבן', 'יש', '6', 'סגור'), false),
+  known(card('V-05', 'חול', 'יש', '8', 'סגור'), false),
+  known(card('V-06', 'חול', 'אין', '6', 'פתוח'), false)
 ];

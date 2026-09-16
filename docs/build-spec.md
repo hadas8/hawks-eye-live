@@ -301,11 +301,17 @@ Per `נראות התחנות`: the cards are shown and the group answers כן / 
 
 The station was one insight and ran in 60 to 90 seconds of a 7-minute slot. Hadas raised that on 2026-09-09; the options are in [station-5-difficulty.md](station-5-difficulty.md) and she chose option B, a second labelled round whose rule is a conjunction.
 
-**The rule is `אנטנה יש AND ארגז סגור`.** Eight labelled trucks, four unlabelled. The habit round one teaches is *find the one column that works*, and round two breaks it twice in opposite directions: W-03 and W-04 have antennas and do not carry, W-05 and W-06 have closed boxes and do not carry. Neither column survives alone.
+**The rule is: exactly one of `אנטנה יש` / `ארגז סגור` — never both, never neither.** Eight labelled trucks, six to classify.
 
-**These cards are not from the source** — there is no second round in `תחנה_5_.docx` — so they were designed here and then checked rather than trusted. A sweep of 144 rules a person might actually propose (every single feature, every AND / OR / XOR of two, every AND / OR of three) leaves **exactly one** fitting the eight labels. No single feature fits. Round one was swept the same way and is also unique, at `אנטנה יש`. No unlabelled truck repeats a labelled one in either round, so nothing can be answered by matching a card instead of reading the rule.
+**A conjunction was built first and thrown away for being too easy**, and the reason disqualifies every AND rule: *with a conjunction, the features all the carriers share **are** the rule.* One pass over the carriers hands it over and the non-carriers are never read — the same one-step move round one teaches, with two columns instead of one.
 
-Only 2 of the 8 labelled trucks carry, against 5 of 10 in round one. That is inherent to a conjunction — it is true of one feature combination in four — and it is why round two's grid is four per row rather than five: the split cannot land on a row boundary, and the amber border and the tag carry it instead.
+This rule cannot be reached that way. **The four carriers share no feature, and neither do the four non-carriers**, so intersecting either side yields nothing; the only route in is noticing that `אנטנה` means the opposite thing depending on the `ארגז` beside it. That is two features that only mean something together, as against two features stacked.
+
+**These cards are not from the source** — there is no second round in `תחנה_5_.docx` — so they were designed here and then checked. A sweep of 144 rules a person might propose (every single feature, every AND / OR / XOR of two, every AND / OR of three) leaves **two**, and they are the same function written from opposite ends: negating both sides of an XOR leaves it unchanged, and they agree on every unlabelled truck. No single feature fits. Round one was swept identically and is unique at `אנטנה יש`. The six to classify cover all four `(אנטנה, ארגז)` combinations and **no single feature predicts their answers either**, so a group cannot land on all six holding a wrong rule. No unlabelled truck repeats a labelled one in either round.
+
+Round two splits 4/4 like round one, at four cards per row rather than five.
+
+**The risk to watch:** an interaction rule is the harder direction, and it is the classic case a single split cannot separate. If groups stall in testing, the lever is hint 2, which points at "two features that depend on each other" without naming them.
 
 **The concept label changed with it**, from `למידה מפוקחת ולא מפוקחת` to `למידה מפוקחת`. Two supervised rounds do not touch the unsupervised half, so **unsupervised learning is now previewed nowhere in the evening.** Hadas's call, made deliberately rather than drifted into — the alternative was option A, clustering, which has no determinate answer unless the cards are built to an exacting standard and would have repeated station 6's problem.
 

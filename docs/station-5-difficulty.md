@@ -67,24 +67,38 @@ A card set. Specifically:
 
 Option B, on 2026-09-16, with the card set written here rather than by the content author.
 
-**Round two's rule: `אנטנה יש AND ארגז סגור`.** Eight labelled trucks (W-01..W-08), four unlabelled (V-01..V-04), two of which carry.
+### The conjunction that was built first, and thrown away
+
+Round two started as `אנטנה יש AND ארגז סגור`. Hadas played it: **too easy.** The reason is worth keeping, because it is not obvious and it disqualifies every AND rule:
+
+> With a conjunction, *the features that all the carriers share **are** the rule.* One pass over the carriers hands it over, and the non-carriers never get read at all.
+
+That is the same one-step move round one teaches — scan a column — just with two columns instead of one. The traps built into the non-carriers were never reached.
+
+### What shipped: two features that only mean anything together
+
+**A truck carries when exactly one of `אנטנה יש` / `ארגז סגור` holds — never both, never neither.**
 
 | | צבע | אנטנה | גלגלים | ארגז | |
 |---|---|---|---|---|---|
-| W-01 | לבן | יש | 6 | סגור | נושאת |
-| W-02 | חול | יש | 8 | סגור | נושאת |
-| W-03 | לבן | יש | 8 | פתוח | לא |
-| W-04 | חול | יש | 6 | פתוח | לא |
-| W-05 | לבן | אין | 6 | סגור | לא |
-| W-06 | חול | אין | 8 | סגור | לא |
-| W-07 | חול | אין | 6 | פתוח | לא |
-| W-08 | לבן | אין | 8 | פתוח | לא |
+| W-01 | לבן | יש | 6 | פתוח | נושאת |
+| W-02 | חול | יש | 8 | פתוח | נושאת |
+| W-03 | חול | אין | 6 | סגור | נושאת |
+| W-04 | לבן | אין | 8 | סגור | נושאת |
+| W-05 | לבן | יש | 8 | סגור | לא |
+| W-06 | חול | יש | 6 | סגור | לא |
+| W-07 | חול | אין | 8 | פתוח | לא |
+| W-08 | לבן | אין | 6 | פתוח | לא |
 
-W-03 and W-04 kill "antenna alone"; W-05 and W-06 kill "closed box alone". That is the whole design: the habit round one teaches fails immediately, twice, in opposite directions.
+Six to classify: V-01 (לבן·יש·8·פתוח ✓), V-02 (חול·יש·6·פתוח ✓), V-03 (חול·אין·8·סגור ✓), V-04 (לבן·יש·6·סגור), V-05 (חול·יש·8·סגור), V-06 (חול·אין·6·פתוח).
 
-To classify: V-01 (חול·יש·6·סגור, carries), V-02 (חול·יש·8·פתוח), V-03 (לבן·יש·8·סגור, carries), V-04 (לבן·אין·6·פתוח).
+**Why this one cannot be shortcut.** The four carriers share **no** feature. Neither do the four non-carriers. So intersecting either side yields nothing, and the only way in is to notice that `אנטנה` means the opposite thing depending on the `ארגז` beside it. That is what "two differentiating features" actually looks like, as against two features stacked.
 
-**Verified, not asserted.** 144 rules a person might propose — every single feature, every AND / OR / XOR of two, every AND / OR of three — were swept over the eight labels and **exactly one fits**. No single feature fits. Round one was swept identically and is also unique at `אנטנה יש`, so neither round has a second answer hiding in it. No unlabelled truck repeats a labelled one.
+**Verified, not asserted.** 144 rules a person might propose — every single feature, every AND / OR / XOR of two, every AND / OR of three — swept over the eight labels. Two survive, and they are the same function written from opposite ends (negating both sides of an XOR leaves it unchanged); they agree on every unlabelled truck. No single feature fits. Round one was swept identically and is unique at `אנטנה יש`.
+
+The six to classify cover all four `(אנטנה, ארגז)` combinations, and **no single feature predicts their answers either** — so a group cannot get all six right while holding a wrong rule. None repeats a labelled truck, in either round.
+
+It also splits 4/4, which round one does and the conjunction could not: an AND rule is true of one combination in four, so it could only ever produce two carriers out of eight.
 
 **Decisions taken with it:**
 
@@ -92,3 +106,5 @@ To classify: V-01 (חול·יש·6·סגור, carries), V-02 (חול·יש·8·�
 - **4 attempts**, up from 3, and a rejected submit names **which round** is wrong — never which truck.
 - **One submit for both rounds**, like station 1. No phases; no other station has them.
 - **The digit is unchanged at 2** and still comes from round one alone.
+
+**The risk to watch.** This is the harder direction, and an interaction rule is a real step up from a column scan — it is the classic case a single split cannot separate. If groups stall on round two in testing, the lever is hint 2, which already points at "two features that depend on each other" without naming them.
