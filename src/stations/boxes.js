@@ -94,7 +94,7 @@ export function viewBoxes() {
     <div class="ask">
       <p class="q">לאיזו קופסה שייך כל כרטיס?</p>
       <p class="sub">שישה כרטיסים כבר מוינו. מצאו לפי מה, והמשיכו באותו כלל.</p>
-      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b></p>
     </div>
 
     <div>

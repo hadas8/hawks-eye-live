@@ -112,7 +112,7 @@ export function viewForest() {
     <div class="ask">
       <p class="q">איזו שורה מתאימה לכל אנליסט?</p>
       <p class="sub">לכל אנליסט שני נתונים בלבד ושלוש שורות. סמנו את השורה הראשונה שמתאימה לשניהם, והיא זו שקובעת את האתר שלו.</p>
-      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b></p>
     </div>
 
     <div class="acards">${ANALYSTS.map(analystCard).join('')}</div>

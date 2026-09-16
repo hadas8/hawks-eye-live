@@ -129,7 +129,7 @@ export function viewNeighbours() {
       <p class="q">מי שלושת השכנים של כל מעבר חדש?</p>
       <p class="sub">שני מעברים דומים ככל שהם חולקים תכונות מתחילת הרשימה. השוו לפי הסדר הזה:</p>
       <ol class="prio">${FEATURES.map(f => `<li>${esc(f.label)}</li>`).join('')}</ol>
-      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b></p>
     </div>
 
     <div class="nwrap">
