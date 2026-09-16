@@ -103,7 +103,7 @@ It also splits 4/4, which round one does and the conjunction could not: an AND r
 **Decisions taken with it:**
 
 - **Concept is now `למידה מפוקחת`.** Unsupervised learning is previewed nowhere in the evening. This was the known cost of option B and Hadas took it deliberately.
-- **4 attempts**, up from 3, and a rejected submit names **which round** is wrong — never which truck.
+- **3 attempts** — briefly 4, back to 3 on 2026-09-16 — and a rejected submit marks each round ✓ or ✗, never a truck. The verdict sentence is generic; the marks say which round failed.
 - **One submit for both rounds**, like station 1. No phases; no other station has them.
 - **The digit is unchanged at 2** and still comes from round one alone.
 

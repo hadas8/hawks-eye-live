@@ -183,10 +183,14 @@ export const STATIONS = [
     digit: 2,
     kind: 'cards',
 
-    // Four, up from three: the station roughly doubled. A wrong submit now
-    // says WHICH ROUND is wrong, never which truck — ten binary answers
-    // would be brute-forceable card by card, two rounds are not.
-    maxAttempts: 4,
+    // Three. Four was too many for twelve binary answers — Hadas's call,
+    // 2026-09-16 — and three is what stations 1 and 7 get.
+    //
+    // Safe at three because the feedback is per ROUND, never per truck: a
+    // round holds six binary answers, so being told "round two is wrong"
+    // leaves 64 possibilities and there is nothing to sweep. Station 3 is
+    // the contrast — per-CARD marks, so it only gets two.
+    maxAttempts: 3,
     revealWhichWrong: true,
 
     brief: 'עשר משאיות כבר נבדקו ואנחנו יודעים על כל אחת אם נשאה אמל"ח. על שש אחרות אין לנו כלום, ואין זמן לעצור כל אחת ולבדוק.',

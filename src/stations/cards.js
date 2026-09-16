@@ -100,11 +100,10 @@ function roundBlock(r) {
   </div>`;
 }
 
-function verdictText(res) {
-  const bad = ROUNDS.filter(r => !res[r.id]);
-  if (bad.length === 2) return 'לא. שני הסבבים לא נכונים. בכל סבב חזרו למשאיות שכבר נבדקו ובדקו מה באמת מבדיל ביניהן.';
-  return `לא. ${bad[0].label} לא נכון. חזרו למשאיות שכבר נבדקו בסבב הזה ובדקו מה מבדיל ביניהן.`;
-}
+// Generic on purpose. The ✓ and ✗ on each round already say which one is
+// wrong, and naming it again in prose was the only place in the app where
+// a sentence did a mark's job.
+const VERDICT = 'לא. חזרו לסבבים המסומנים ב-✗ ובדקו שוב מה מבדיל בין המשאיות שכבר נבדקו.';
 
 export function viewCards() {
   const s = station();
@@ -125,12 +124,12 @@ export function viewCards() {
     <div class="ask">
       <p class="q">אילו משאיות נושאות אמל"ח?</p>
       <p class="sub">שני סבבים, וכל אחד עובד לפי כלל אחר. בכל סבב: מצאו מה מבדיל בין המשאיות שכבר נבדקו, ואז החליטו על החדשות.</p>
-      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> שולחים את שני הסבבים יחד, ונאמר לכם באיזה סבב טעיתם — לא באיזו משאית.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> שולחים את שני הסבבים יחד.</p>
     </div>
 
     ${ROUNDS.map(roundBlock).join('')}
 
-    ${result ? `<p class="verdict bad">${esc(verdictText(d().verdict || {}))}</p>` : ''}
+    ${result ? `<p class="verdict bad">${esc(VERDICT)}</p>` : ''}
 
     ${hints}
 
