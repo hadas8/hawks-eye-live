@@ -74,7 +74,7 @@ export function viewCards() {
     </div>
 
     <div class="ask">
-      <p class="q">כמה מהשש נושאות אמל"ח?</p>
+      <p class="q">כמה משאיות מתוך השש נושאות אמל"ח?</p>
       <p class="sub">מצאו מה מבדיל בין העשר שכבר נבדקו, ואז החליטו על כל אחת מהשש.</p>
       <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
     </div>
