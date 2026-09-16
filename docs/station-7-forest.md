@@ -67,7 +67,7 @@ Three decisions, and one thing built and then taken back out.
 
 **The group picks the row, rather than reading off a verdict.** The draft hands each analyst's answer to the person holding the card, which on paper is fine because the work was the isolation. On one screen that would be eight sentences to copy, so the lookup became the task: two readings against three conditions, eight times. Each row shows its condition and the site it points to, and the group fires one.
 
-**The slips stay covered until the eighth analyst is decided, then all eight turn over at once**, with the reveal effect behind them. This is the only part of the draft's isolation a single screen can keep — eight people writing covered notes and revealing on a countdown becomes eight slips that stay face down while there is still something to decide. No tally is shown before that moment. The line *אף אנליסט לא רואה את התמונה המלאה* is still true and still the point.
+**The slips stay covered until the eighth analyst is decided, then all eight turn over at once.** This is the only part of the draft's isolation a single screen can keep — eight people writing covered notes and revealing on a countdown becomes eight slips that stay face down while there is still something to decide. No tally is shown before that moment. The line *אף אנליסט לא רואה את התמונה המלאה* is still true and still the point.
 
 **The accuracy card stays out of the app.** It was built as an epilogue on the solved screen — the two best analysts both said תבריז, both wrong — and removed the same day at Hadas's call: *"they will not read it anyway and it's still time for their social quests, so it needs to be like the other stations."*
 

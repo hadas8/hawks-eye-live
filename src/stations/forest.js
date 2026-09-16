@@ -16,6 +16,14 @@
 // shown until all eight rows are fired, and then all eight resolve at once.
 // "No analyst sees the whole picture" is still true, and still the point.
 //
+// The eighth pick used to fire a full-screen wipe reading שמונה קולות,
+// staging the countdown. Removed 2026-09-16: a curtain over the whole page
+// means "something has been decided" everywhere else in the app — solved,
+// rejected, out of time — so firing one mid-station read as a verdict on an
+// answer nobody had submitted yet. No other station interrupts itself, and
+// this one should not either. The slips still turn over; the page just does
+// it quietly, in place.
+//
 // Feedback is all-or-nothing. Eight picks from three is 6561, so there is
 // nothing to sweep, and naming the wrong analyst would turn a lookup into
 // a guessing game.
@@ -132,16 +140,11 @@ export function viewForest() {
 register('click', {
   fireRow(arg) {
     const [n, row] = arg.split(':').map(Number);
-    const was = allIn();
     picks()[n] = row;
     clearVerdict(n);
     S.submitBlocked = false;
     S.lastResult = null;
     set();
-    // The reveal: the moment the eighth analyst is decided, all eight slips
-    // turn over at once. This is the countdown from the draft, which is the
-    // only part of its isolation that a single screen can keep.
-    if (!was && allIn()) fx('wipe', 'שמונה קולות', 900, 'נחשפים');
   },
 
   hintForest() {
