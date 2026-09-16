@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node tools/dev-server.js",
-    "dev": "node tools/dev-server.js"
+    "dev": "node tools/dev-server.js",
+    "check": "node tools/check-sheet.js"
   }
 }
