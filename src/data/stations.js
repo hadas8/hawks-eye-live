@@ -7,6 +7,11 @@
 // to fill those gaps — a station without a `kind` shows a plain "not built
 // yet" panel and the flow still runs end to end.
 //
+// THE PASSWORDS ARE FINAL. All seven were chosen here rather than supplied
+// by the source, and Hadas adopted them as the real ones on 2026-09-16 —
+// נוצה, אופק, מדף, ענף, מצפן, גדר, חורש. Changing one now means reprinting
+// the facilitators' sheet, so do not touch them casually.
+//
 // `maxAttempts` is per station, deliberately, and is coupled to
 // `revealWhichWrong`: precise per-part feedback is only safe when there are
 // too few submissions to sweep the answer space by watching the count move.
@@ -52,7 +57,7 @@ export const STATIONS = [
     n: 2,
     name: 'הגרפים המשקרים',
     concept: 'ויזואליזציית מידע',
-    password: ['אופק'],          // still a placeholder
+    password: ['אופק'],
     digit: 2,
     kind: 'charts',
 
@@ -79,7 +84,7 @@ export const STATIONS = [
     n: 3,
     name: 'הכלל הנסתר',
     concept: 'סיווג מול חיזוי',
-    password: ['מדף'],           // still a placeholder
+    password: ['מדף'],
     // Not 7. The union sheet says the digit is the count in box א׳, and
     // working its own rule over the twenty cards puts 9 there. The roster's
     // 7 is the count in box ב׳. See docs/station-3-rule.md.
@@ -112,7 +117,7 @@ export const STATIONS = [
     n: 4,
     name: 'השאלה ששווה לשאול',
     concept: 'עצי החלטה',
-    password: ['ענף'],           // still a placeholder
+    password: ['ענף'],
     digit: 4,
     kind: 'questions',
 
@@ -142,7 +147,7 @@ export const STATIONS = [
     n: 5,
     name: 'מי קיבל תשובות ומי לא',
     concept: 'למידה מפוקחת ולא מפוקחת',
-    password: ['מצפן'],          // still a placeholder
+    password: ['מצפן'],
     digit: 2,
     kind: 'cards',
 
@@ -171,7 +176,7 @@ export const STATIONS = [
     n: 6,
     name: 'ארבעה כוכבים',
     concept: 'KNN — שכנים קרובים',
-    password: ['גדר'],           // still a placeholder
+    password: ['גדר'],
     // 2, from the roster and the physical lock. The xlsx's own arithmetic
     // gives 7 over the three remaining crossings, and 1 over the original
     // four — but the digit is a token a group carries to the box, not a
@@ -206,7 +211,7 @@ export const STATIONS = [
     n: 7,
     name: 'שמונה אנליסטים',
     concept: 'Random Forest — יער אקראי',
-    password: ['חורש'],          // still a placeholder
+    password: ['חורש'],
     // 7 — the site code for סמנאן, which wins 5 votes to 2 to 1. This is
     // the one station whose digit the roster already had right.
     digit: codeOf('סמנאן'),

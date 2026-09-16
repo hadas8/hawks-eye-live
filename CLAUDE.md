@@ -48,4 +48,6 @@ When a decision changes something meaningful, update `docs/build-spec.md` in the
 
 ## Content status
 
-A colleague (Lotem) is still writing the final per-station data in Drive. Station 1's content is final and verified. Stations 2 to 7 exist only as roster entries with placeholder passwords; each has open content questions listed at the end of the build spec. Do not invent station content to fill the gaps, and do not build placeholder stations.
+**All seven stations are built, and all seven passwords are final** — נוצה, אופק, מדף, ענף, מצפן, גדר, חורש. They were chosen here rather than supplied by the source, and Hadas adopted them as the real ones on 2026-09-16. Facilitators announce them from paper, so changing one means reprinting; do not touch them casually.
+
+Stations 1, 4, 5 and 7 are verified against their sources and closed. Three still have open questions for the content author, all of them about whether the station plays fairly rather than about the digits: station 2 reads as unclear, station 3's rule is stated two contradictory ways, and station 6 never defines what "closest" means for a number. They are written up in `docs/station-2-clarity.md`, `docs/station-3-rule.md` and `docs/station-6-neighbours.md`. Do not invent content to close them.

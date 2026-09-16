@@ -70,7 +70,7 @@ Declarative per station, with a `custom` escape hatch:
 
 ## Station roster
 
-Names taken from the draft, which are the real ones. Passwords are still placeholders.
+Names taken from the draft, which are the real ones. **Passwords are final too**, adopted 2026-09-16: they were chosen here rather than supplied by the source, and Hadas took them as the real ones. Facilitators read them off paper, so a change means a reprint.
 
 | # | Name | Concept | Digit | State |
 |---|------|---------|-------|-------|
