@@ -24,6 +24,10 @@
   --ok:#3ad48c;
   --bad:#ff4a5e;
   --bad-soft:rgba(255,74,94,.15);
+  /* Same red, for a panel rather than a card. --bad-soft is tuned for
+     something card-sized; across a whole round of station 5 it reads as a
+     red page, not as a mark. */
+  --bad-wash:rgba(255,74,94,.05);
 
   /* the single sanctioned exception: the missing-value dash */
   --miss:#ff7a59;

@@ -23,19 +23,28 @@
 .exercise-set{margin-top:1.75rem}
 
 /* ── the two rounds ───────────────────────── */
-.round + .round{margin-top:2.25rem;border-top:1px solid var(--hair);padding-top:1.5rem}
+/* Each round is a framed panel. It used to be a hairline rule between two
+   stretches of page, which left the verdict with no edge to colour — the
+   ✓ and ✗ were tinted text floating over the same background either way,
+   and every other station marks by putting a coloured frame around the
+   thing being judged. The frame is always drawn, so a verdict recolours it
+   rather than shifting the layout under a group mid-read. */
+.round{border:1px solid var(--hair);padding:1.25rem}
+.round + .round{margin-top:1.25rem}
 .rhead{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;
   margin-bottom:0.5rem}
 .rname{font-size:1.0625rem;font-weight:800;color:var(--ink)}
 .rleft{font-size:0.8125rem;color:var(--muted)}
 /* After a rejected submission: which ROUND was right and which was not.
-   Never which truck — ten binary answers with per-truck verdicts would let
-   a group read the rule off the app one card at a time. */
-.rmark{font-family:var(--mono);font-size:0.8125rem}
-.round.hit .rname{color:var(--ok)}
-.round.hit .rmark{color:var(--ok)}
-.round.miss .rname{color:var(--bad)}
-.round.miss .rmark{color:var(--bad)}
+   Never which truck — twelve binary answers with per-truck verdicts would
+   let a group read the rule off the app one card at a time. Green border
+   for a hit, red border plus a wash for a miss, which is exactly what
+   stations 3 and 7 do to a marked card; the unit here is a round. */
+.rmark{font-family:var(--mono);font-size:0.875rem;font-weight:700}
+.round.hit{border-color:var(--ok)}
+.round.hit .rname,.round.hit .rmark{color:var(--ok)}
+.round.miss{border-color:var(--bad);background:var(--bad-wash)}
+.round.miss .rname,.round.miss .rmark{color:var(--bad)}
 .rnote{font-size:0.8125rem;color:var(--amber);margin:0 0 0.75rem;max-width:none}
 
 .card{background:var(--panel);border:1px solid var(--hair);padding:0.75rem 0.8125rem;
@@ -72,4 +81,5 @@
   .cards{grid-template-columns:repeat(auto-fill,minmax(8.25rem,1fr));gap:0.5rem}
   .card{padding:0.625rem}
   .exercise-set{margin-top:1.25rem}
+  .round{padding:0.875rem}
 }
