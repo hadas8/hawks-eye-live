@@ -29,8 +29,15 @@ import { register } from '../ui/actions.js';
 const N = CARDS.length;
 
 /* ── draft accessors ──────────────────────── */
-const picks = () => (draftOf(station().n).picks ||= {});
+const d = () => draftOf(station().n);
+const picks = () => (d().picks ||= {});
 const pickOf = n => picks()[n];                    // 'א' | 'ב' | 'ג' | undefined
+
+// Per-card verdicts from the last rejected submission. A card's mark is
+// dropped the moment it is moved, because the verdict was about a sort
+// that no longer exists. Station 1 does the same with its tables.
+const verdictOf = n => d().verdict?.[n];
+const clearVerdict = n => { if (d().verdict) delete d().verdict[n]; };
 const answers = () => CARDS.map(c => pickOf(c.n) ?? null);
 const answered = () => answers().filter(v => v !== null).length;
 const tally = box => CARDS.filter(c => pickOf(c.n) === box).length;
@@ -56,8 +63,11 @@ const exampleBox = box => `<div class="ebox ${boxClass(box)}">
 
 const sortCard = c => {
   const pick = pickOf(c.n);
-  return `<div class="qcard ${pick ? 'placed ' + boxClass(pick) : ''}">
-    <div class="qn">${c.n}</div>
+  const v = verdictOf(c.n);
+  const mark = v === undefined ? '' : (v ? 'hit' : 'miss');
+  return `<div class="qcard ${pick ? 'placed ' + boxClass(pick) : ''} ${mark}">
+    <div class="qn">${c.n}<span class="qmark">${
+      v === undefined ? '' : (v ? '✓' : '✗')}</span></div>
     <p class="qt">${esc(c.text)}</p>
     <div class="qboxes">${BOXES.map(b =>
       `<button class="qb ${boxClass(b)} ${pick === b ? 'on' : ''}" data-act="putCard"
@@ -103,7 +113,7 @@ export function viewBoxes() {
       <div class="tal total"><span class="tk">סה"כ</span><span class="tv">${done}</span></div>
     </div>
 
-    ${result ? '<p class="verdict bad">לא. חזרו לשישה הכרטיסים שכבר מוינו ובדקו מה באמת משותף לכל זוג.</p>' : ''}
+    ${result ? `<p class="verdict bad">${result.correct} מתוך ${result.total} כרטיסים במקום הנכון. המסומנים ב-✗ לא — חזרו לשישה הכרטיסים שכבר מוינו ובדקו מה באמת משותף לכל זוג.</p>` : ''}
 
     ${hints}
 
@@ -125,6 +135,7 @@ register('click', {
   putCard(arg) {
     const [n, box] = arg.split(':');
     picks()[n] = box;
+    clearVerdict(n);
     S.submitBlocked = false;
     S.lastResult = null;
     set();
@@ -144,6 +155,9 @@ register('click', {
     S.attempts[s.n] = (S.attempts[s.n] || 0) + 1;
 
     if (!result.allCorrect) {
+      if (s.revealWhichWrong) {
+        d().verdict = Object.fromEntries(CARDS.map((c, i) => [c.n, result.res[i]]));
+      }
       S.lastResult = result;
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');

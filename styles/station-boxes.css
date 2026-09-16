@@ -48,7 +48,18 @@
    on its own card. */
 .qcard.placed{border-color:var(--bcd)}
 .qcard.placed{border-inline-start:3px solid var(--bc)}
-.qcard .qn{font-family:var(--mono);font-size:0.6875rem;color:var(--muted)}
+.qcard .qn{font-family:var(--mono);font-size:0.6875rem;color:var(--muted);
+  display:flex;align-items:center;justify-content:space-between;gap:0.375rem}
+/* After a rejected submission: which cards are in the right box and which
+   are not. Never which box a wrong card belongs in — that is the answer. */
+.qcard.hit{border-color:var(--ok)}
+.qcard.miss{border-color:var(--bad);background:var(--bad-soft)}
+.qmark{font-size:0.8125rem}
+.qcard.hit .qmark{color:var(--ok)}
+.qcard.miss .qmark{color:var(--bad)}
+/* A wrong card keeps its box colour on the button so the group can see what
+   they chose, but the card's own edge now carries the verdict instead. */
+.qcard.hit,.qcard.miss{border-inline-start-width:1px}
 .qcard .qt{font-size:0.9375rem;color:var(--ink);margin:0;max-width:none;flex:1}
 
 .qboxes{display:flex;gap:0.375rem}

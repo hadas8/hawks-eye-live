@@ -1,11 +1,15 @@
 // The station roster. Names are the real ones, from the draft.
 //
-// Station 1 is final and verified. Stations 2 to 7 are roster entries only:
-// their passwords are placeholders, several of their digits are still
-// disputed (see the blockers at the end of docs/build-spec.md), and none of
-// them has a `kind`, so none renders an interaction. Do not invent content
-// to fill those gaps — a station without a `kind` shows a plain "not built
-// yet" panel and the flow still runs end to end.
+// ALL SEVEN ARE BUILT. Stations 1, 4, 5 and 7 are verified against their
+// sources and closed; 3 was closed by rewriting its cards. Two carry open
+// questions for the content author, both about whether the station plays
+// fairly rather than about its digit — see the blockers at the end of
+// docs/build-spec.md. Do not invent content to close them.
+//
+// A station's digit does not have to be derivable from its own data. The
+// derivation is never on screen and no participant can tell, so a digit is
+// a token that keeps CFG.lockCode where it is. Stations 3 and 6 award
+// theirs outright for that reason.
 //
 // THE PASSWORDS ARE FINAL. All seven were chosen here rather than supplied
 // by the source, and Hadas adopted them as the real ones on 2026-09-16 —
@@ -51,8 +55,6 @@ export const STATIONS = [
     ]
   },
 
-  // ── not built. Passwords and several digits are still placeholders. ──
-
   {
     n: 2,
     name: 'הגרפים המשקרים',
@@ -95,15 +97,26 @@ export const STATIONS = [
     digit: 7,
     kind: 'boxes',
 
-    // Twenty cards over three boxes. Per-card feedback across three
-    // submissions would let a group read the rule off the app one card at
-    // a time, so the verdict is all or nothing.
+    // Per-card feedback, at Hadas's request 2026-09-16: "you are wrong
+    // somewhere in twenty cards" gives a group nothing to act on, which is
+    // the same complaint that reshaped station 6. A rejected submit now
+    // marks every card right or wrong. It never says which box a wrong card
+    // belongs in — that is the answer.
+    //
+    // THE COST, and it is real: with three attempts this is brute-forceable
+    // without ever finding the rule. Submit once to learn which cards are
+    // wrong; move every wrong card to a second box and submit again; the
+    // ones still wrong must be the third box. Three attempts is exactly
+    // enough. See docs/station-3-rewrite.md — if that matters more than the
+    // feedback, dropping to 2 closes it, because the last move then has to
+    // be a guess on every wrong card at once.
     //
     // The rewrite broke the opening-word shortcut, which is how this was
     // solved at speed before, so the station is harder than the version that
-    // was play-tested. If it runs long, 4 is the lever.
+    // was play-tested. If it runs long, 4 is the lever — but 4 also widens
+    // the brute-force margin.
     maxAttempts: 3,
-    revealWhichWrong: false,
+    revealWhichWrong: true,
 
     brief: 'שלוש קופסאות על השולחן ובכל אחת שני כרטיסים שמישהו כבר מיין, אבל אף קופסה לא מסמנת לפי מה.',
 
