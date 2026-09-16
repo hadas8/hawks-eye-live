@@ -93,8 +93,13 @@ export function viewQuestions() {
     <div class="ask">
       <p class="q">איזה רכב נושא את המטען?</p>
       <p class="sub">בחרו ארבע שאלות שכל אחת חותכת את הצי בחצי, וביחד מצמצמות אותו לרכב אחד.</p>
+      <!-- That more than one set works is a RULE, not a clue, so it belongs
+           here rather than behind a hint. Thirty-six of the 4845 possible
+           sets of four are valid. Without saying so, a group that has found
+           a working set doubts it and goes hunting for "the" one. -->
       <ul class="keys">
-        <li>לחצו על שאלה כדי לראות מי נפסל בגללה. הסדר לא משנה.</li>
+        <li>לחצו על שאלה כדי לראות מי נפסל בגללה.</li>
+        <li>הסדר לא משנה, ויש יותר מצירוף אחד שמצמצם לרכב הנכון.</li>
       </ul>
       <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> אחרי כל ניסיון תראו כמה כל שאלה שלכם פסלה.</p>
     </div>

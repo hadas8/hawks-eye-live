@@ -223,6 +223,8 @@ The source's numeric chain, `5+4+3+4+4+4+5 = 29 → 2`, is unused: it does not d
 
 ## Station 4 — built and verified
 
+**The instructions say outright that more than one set of four works**, added 2026-09-16 at Hadas's request. Thirty-six of the 4,845 possible sets are valid. This is a *rule* of the puzzle rather than a clue toward it, which is why it sits in the instructions and not behind a hint: withholding it does not make the station harder, it makes a group that has already found a working set doubt it and go hunting for "the" one. The two hints stay for the two things that actually are clues — that a question the whole fleet answers alike eliminates nobody, and that four questions cutting in the same place are worth one.
+
 Source: `תחנה_4_.docx`. Sixteen vehicles, twenty candidate questions, four allowed. The digit is the vehicle left standing: **4**.
 
 ### The maths, verified rather than trusted
