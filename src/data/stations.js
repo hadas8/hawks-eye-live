@@ -183,14 +183,17 @@ export const STATIONS = [
     digit: 2,
     kind: 'cards',
 
-    // Three. Four was too many for twelve binary answers — Hadas's call,
-    // 2026-09-16 — and three is what stations 1 and 7 get.
+    // Two. Went 4 → 3 → 2 over 2026-09-16, all Hadas's call, the last one
+    // because the station reads as an easy one and three tries made it
+    // easier still.
     //
-    // Safe at three because the feedback is per ROUND, never per truck: a
-    // round holds six binary answers, so being told "round two is wrong"
-    // leaves 64 possibilities and there is nothing to sweep. Station 3 is
-    // the contrast — per-CARD marks, so it only gets two.
-    maxAttempts: 3,
+    // This is a difficulty lever here, NOT a safety one — the direction
+    // that needs justifying is upward. The feedback is per ROUND and never
+    // per truck, so a round is six binary answers and a rejection leaves 64
+    // possibilities with nothing to sweep; three was already safe and two
+    // is safe for the same reason. Contrast station 3, where two is forced:
+    // its marks are per CARD, and a third attempt there IS the exploit.
+    maxAttempts: 2,
     revealWhichWrong: true,
 
     brief: 'עשר משאיות כבר נבדקו ואנחנו יודעים על כל אחת אם נשאה אמל"ח. על שש אחרות אין לנו כלום, ואין זמן לעצור כל אחת ולבדוק.',

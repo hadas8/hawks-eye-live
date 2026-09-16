@@ -103,7 +103,7 @@ It also splits 4/4, which round one does and the conjunction could not: an AND r
 **Decisions taken with it:**
 
 - **Concept is now `למידה מפוקחת`.** Unsupervised learning is previewed nowhere in the evening. This was the known cost of option B and Hadas took it deliberately.
-- **3 attempts** — briefly 4, back to 3 on 2026-09-16 — and a rejected submit frames each round green or red with a ✓ or ✗ in its header, never a truck. The frame is the feedback, matching how stations 3 and 7 mark a card; the verdict sentence is generic and just points at the ✗.
+- **2 attempts** — 4 → 3 → 2 over 2026-09-16, the last step because the station plays easy — and a rejected submit frames each round green or red with a ✓ or ✗ in its header, never a truck. The frame is the feedback, matching how stations 3 and 7 mark a card; the verdict sentence is generic and just points at the ✗.
 - **One submit for both rounds**, like station 1. No phases; no other station has them.
 - **The digit is unchanged at 2** and still comes from round one alone.
 
