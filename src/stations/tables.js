@@ -121,8 +121,14 @@ export function viewTables() {
       : `<span class="src ${manual ? 'man' : 'auto'}">${has ? (manual ? 'ידני' : 'מסומן') : ''}</span>`;
     return `<label class="cell ${cls} ${i === tab ? 'cur' : ''}">
       <span class="k">טבלה ${i + 1}</span>
-      <input type="number" inputmode="numeric" value="${esc(valueOf(i))}"
-             data-input="cell" data-arg="${i}">
+      <!-- type="text", NOT type="number". A focused number input steps its
+           value on a mouse wheel or a two-finger trackpad swipe, so on a Mac
+           a group scrolling the page over an answer they had already typed
+           silently changed it — 5 became 8 with three notches, and nothing on
+           screen said so. Arrow keys do the same. inputmode keeps the numeric
+           keypad on a tablet; the input handler strips anything but digits. -->
+      <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2"
+             value="${esc(valueOf(i))}" data-input="cell" data-arg="${i}">
       ${tag}
     </label>`;
   }).join('');
@@ -303,6 +309,12 @@ register('click', {
 register('input', {
   cell(arg, el) {
     const i = Number(arg);
+    // Digits only. The box is type="text" rather than type="number" — see
+    // the note on the markup — so nothing stops a letter getting in except
+    // this. Only rewrite when it actually differs, or the caret jumps to the
+    // end on every keystroke.
+    const clean = el.value.replace(/\D/g, '');
+    if (clean !== el.value) el.value = clean;
     const draft = d();
     draft.man ||= {};
     draft.typed ||= {};

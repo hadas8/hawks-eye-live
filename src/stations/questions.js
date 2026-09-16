@@ -66,7 +66,9 @@ export function viewQuestions() {
 
   const slots = sheet().map((v, i) => `<label class="slot-q">
       <span class="k">שאלה ${i + 1}</span>
-      <input type="number" inputmode="numeric" min="1" max="${QUESTIONS.length}"
+      <!-- type="text" for the reason spelled out in tables.js: a number
+           input steps on scroll and on arrow keys. -->
+      <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2"
              value="${esc(v)}" data-input="slotQ" data-arg="${i}">
     </label>`).join('');
 
@@ -219,6 +221,10 @@ register('click', {
 register('input', {
   slotQ(arg, el) {
     const i = Number(arg);
+    // Digits only — see the note in tables.js. The range check lives in
+    // `sheet()`, which already discards anything outside 1..20.
+    const clean = el.value.replace(/\D/g, '');
+    if (clean !== el.value) el.value = clean;
     sheet()[i] = el.value;
     S.submitBlocked = false;
     S.lastResult = null;

@@ -54,6 +54,8 @@ Persistent chrome: the station clock and score in the top bar, and a 7-slot code
 
 - **The lock code is `3274227` and it does not move.** Which digit a station awards is arbitrary. A group solves the station, takes the number, and goes — nobody asks why station 3's digit is 7, the derivation is never on screen, and no participant can tell whether it came from their own arithmetic or from a table. Two stations award a digit their own data does not produce (3 counts box ב׳ rather than א׳; 6 is awarded outright) and it is invisible to everyone playing. **A station's digit disagreeing with the roster is not a defect and is not a question for the content author.** Set `station.digit`, move on. The physical lock in the room is set once.
 
+- **Answer boxes are `type="text"`, never `type="number"`.** Fixed 2026-09-16 after Hadas reported Mac users' answers changing by themselves. A focused number input steps on a wheel or trackpad scroll and on arrow keys, so scrolling the page over a typed answer silently edited it — reproduced at 5 → 8 in three notches in station 1 and 7 → 10 in station 4. Both now use `type="text" inputmode="numeric" pattern="[0-9]*"` with the handler stripping non-digits, which keeps the tablet keypad and the digits-only guard that `type="number"` was providing. `wheelbug.mjs` dispatches a real CDP wheel event over each box — a synthetic `WheelEvent` from page JS is untrusted and will not step the value, so a JS-only test reports no bug and is wrong.
+
 ## Answer engine
 
 Declarative per station, with a `custom` escape hatch:
