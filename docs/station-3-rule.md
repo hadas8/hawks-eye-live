@@ -1,3 +1,5 @@
+> **SUPERSEDED 2026-09-16 by [station-3-rewrite.md](station-3-rewrite.md), which closes this.** The contradiction described here was resolved by rewriting the cards rather than by choosing between the two readings. Kept because the analysis of *how* the contradiction arose is the reason the rewrite can be trusted — and because it records that the app's old key was right on nineteen of twenty.
+
 # Station 3's sorting rule is stated twice, differently
 
 _For the conversation with Lotem. Written 2026-09-10, alongside building the station. **Station 3 is now built and playable on `dev`** — this is not a blocker on implementation. It is a blocker on trusting the digit._

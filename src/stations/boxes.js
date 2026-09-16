@@ -19,7 +19,7 @@
 
 import { S, set, station, draftOf, attemptsLeft } from '../state.js';
 import { STATIONS } from '../data/stations.js';
-import { BOXES, EXAMPLES, CARDS, DIGIT_BOX } from '../data/station-3.js';
+import { BOXES, EXAMPLES, CARDS } from '../data/station-3.js';
 import { grade, deriveDigit } from '../engine/answers.js';
 import { esc } from '../lib/text.js';
 import { fx, shake } from '../ui/fx.js';
@@ -157,4 +157,4 @@ register('click', {
   }
 });
 
-export { DIGIT_BOX };
+

@@ -20,7 +20,7 @@ import { TABLES } from './station-1.js';
 import { ENVELOPES, honestPosition } from './station-2.js';
 import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED, UNLABELLED_2 } from './station-5.js';
-import { CARDS, DIGIT_BOX, countIn } from './station-3.js';
+import { CARDS } from './station-3.js';
 import { NEW, isCorrectFor, K as KNN } from './station-6.js';
 import { ANALYSTS, tally, winnerOf, codeOf } from './station-7.js';
 
@@ -85,15 +85,23 @@ export const STATIONS = [
     name: 'הכלל הנסתר',
     concept: 'סיווג מול חיזוי',
     password: ['מדף'],
-    // Not 7. The union sheet says the digit is the count in box א׳, and
-    // working its own rule over the twenty cards puts 9 there. The roster's
-    // 7 is the count in box ב׳. See docs/station-3-rule.md.
-    digit: countIn(DIGIT_BOX),
+    // 7, awarded outright. The rewritten card set sorts 8 / 8 / 4, so no
+    // box holds 7 and the digit is not a count any more. That costs nothing:
+    // the union sheet's "הספרה = כרטיסים בקופסה א׳" was never rendered, the
+    // boxes carry no labels, and nothing on screen claims the digit comes
+    // from a tally — so the counts stay visible for the group's own
+    // bookkeeping while the digit keeps the lock code where it is. Station 6
+    // does the same for the same reason.
+    digit: 7,
     kind: 'boxes',
 
     // Twenty cards over three boxes. Per-card feedback across three
     // submissions would let a group read the rule off the app one card at
     // a time, so the verdict is all or nothing.
+    //
+    // The rewrite broke the opening-word shortcut, which is how this was
+    // solved at speed before, so the station is harder than the version that
+    // was play-tested. If it runs long, 4 is the lever.
     maxAttempts: 3,
     revealWhichWrong: false,
 
@@ -101,14 +109,14 @@ export const STATIONS = [
 
     answer: {
       parts: CARDS.map(c => ({ kind: 'choice', value: c.box })),
-      rule: 'custom',
-      // The group's own sort produces the digit, rather than the app
-      // asserting it: count what they put in the box the sheet names.
-      derive: values => values.filter(v => v === DIGIT_BOX).length
+      rule: 'literal'
     },
 
     hints: [
       'שני הכרטיסים שבכל קופסה חולקים משהו, וזה לא הנושא שלהם. הסתכלו על סוג התשובה שהשאלה מבקשת.',
+      // Sharper under the rewritten rule than it was before: ג׳ genuinely is
+      // the box that is not sorted by answer type, and its two examples now
+      // share exactly one thing — the answer is inside somebody's head.
       'קופסה אחת לא ממוינת לפי סוג התשובה. שאלו מה משותף דווקא לשני הכרטיסים שבה.'
     ]
   },
