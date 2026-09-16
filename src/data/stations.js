@@ -19,7 +19,7 @@
 import { TABLES } from './station-1.js';
 import { ENVELOPES, honestPosition } from './station-2.js';
 import { PICK, isProperSet, survivors } from './station-4.js';
-import { UNLABELLED } from './station-5.js';
+import { UNLABELLED, UNLABELLED_2 } from './station-5.js';
 import { CARDS, DIGIT_BOX, countIn } from './station-3.js';
 import { NEW, isCorrectFor, K as KNN } from './station-6.js';
 import { ANALYSTS, tally, winnerOf, codeOf } from './station-7.js';
@@ -146,29 +146,43 @@ export const STATIONS = [
   {
     n: 5,
     name: 'מי קיבל תשובות ומי לא',
-    concept: 'למידה מפוקחת ולא מפוקחת',
+    // Not 'למידה מפוקחת ולא מפוקחת' any more. Round two is a second
+    // supervised round, so the station no longer touches the unsupervised
+    // half — and unsupervised learning is now previewed nowhere in the
+    // evening. Hadas's call, 2026-09-16, made deliberately rather than
+    // drifting into it. See docs/station-5-difficulty.md.
+    concept: 'למידה מפוקחת',
     password: ['מצפן'],
     digit: 2,
     kind: 'cards',
 
-    // Six binary choices is 64 combinations, so per-card feedback plus
-    // retries would be brute-forceable. It is really one insight, not six
-    // judgements: get the rule and all six follow. So the verdict is
-    // all-or-nothing, and a wrong submit sends them back to the ten
-    // labelled cards rather than telling them which of the six moved.
-    maxAttempts: 3,
-    revealWhichWrong: false,
+    // Four, up from three: the station roughly doubled. A wrong submit now
+    // says WHICH ROUND is wrong, never which truck — ten binary answers
+    // would be brute-forceable card by card, two rounds are not.
+    maxAttempts: 4,
+    revealWhichWrong: true,
 
     brief: 'עשר משאיות כבר נבדקו ואנחנו יודעים על כל אחת אם נשאה אמל"ח. על שש אחרות אין לנו כלום, ואין זמן לעצור כל אחת ולבדוק.',
 
     answer: {
-      parts: UNLABELLED.map(c => ({ kind: 'choice', value: c.carries })),
-      rule: 'count'
+      // Round one first, then round two — the station module splits `res`
+      // at this boundary to say which round was wrong.
+      parts: [
+        ...UNLABELLED.map(c => ({ kind: 'choice', value: c.carries })),
+        ...UNLABELLED_2.map(c => ({ kind: 'choice', value: c.carries }))
+      ],
+      rule: 'custom',
+      // The digit is still round one's count, so it stays 2 and the lock
+      // code is untouched. Round two is a second gate, not a second number.
+      derive: vals => vals.slice(0, UNLABELLED.length).filter(Boolean).length
     },
 
     hints: [
-      'חמש מהמשאיות שנבדקו נושאות אמל"ח וחמש לא. חפשו תכונה שיש לכל החמש הנושאות ואין לאף אחת מהאחרות.',
-      'תכונה שמופיעה גם אצל נושאת וגם אצל לא נושאת לא יכולה להיות הכלל. עברו על ארבע התכונות ופסלו.'
+      'חמש מהמשאיות שנבדקו בסבב הראשון נושאות אמל"ח וחמש לא. חפשו תכונה שיש לכל החמש הנושאות ואין לאף אחת מהאחרות.',
+      // "לבדה" matters: in round two both אנטנה and ארגז appear on either
+      // side of the split, and together they are still the rule. Without
+      // that word this hint is false for half the station.
+      'תכונה שמופיעה משני צדי החלוקה לא יכולה להיות הכלל לבדה.'
     ]
   },
 

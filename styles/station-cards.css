@@ -7,14 +7,36 @@
 
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.25rem,1fr));gap:0.625rem}
 
-/* The ten labelled trucks are pinned to five per row, so the first row is
-   the five that carry and the second is the five that do not. auto-fill
-   packed six into the first row and broke the split down the middle,
-   which is the one thing this set exists to show. */
-.cards.taught{grid-template-columns:repeat(5,minmax(0,1fr))}
+/* Round one's ten labelled trucks are pinned to five per row, so the first
+   row is the five that carry and the second is the five that do not.
+   auto-fill packed six into the first row and broke the split down the
+   middle, which is the one thing that set exists to show. */
+.cards.taught.t10{grid-template-columns:repeat(5,minmax(0,1fr))}
+/* Round two's eight go four per row, two tidy rows. The split cannot land
+   on a row boundary here — a conjunction is true of one combination in
+   four, so only two of the eight carry — and that is fine: the amber
+   border and the tag carry it, and the point of round two is that no
+   single arrangement of the cards gives the rule away. */
+.cards.taught.t8{grid-template-columns:repeat(4,minmax(0,1fr))}
 
-/* Clear air between the data they learn from and the six they answer. */
+/* Clear air between the data they learn from and the trucks they answer. */
 .exercise-set{margin-top:1.75rem}
+
+/* ── the two rounds ───────────────────────── */
+.round + .round{margin-top:2.25rem;border-top:1px solid var(--hair);padding-top:1.5rem}
+.rhead{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;
+  margin-bottom:0.5rem}
+.rname{font-size:1.0625rem;font-weight:800;color:var(--ink)}
+.rleft{font-size:0.8125rem;color:var(--muted)}
+/* After a rejected submission: which ROUND was right and which was not.
+   Never which truck — ten binary answers with per-truck verdicts would let
+   a group read the rule off the app one card at a time. */
+.rmark{font-family:var(--mono);font-size:0.8125rem}
+.round.hit .rname{color:var(--ok)}
+.round.hit .rmark{color:var(--ok)}
+.round.miss .rname{color:var(--bad)}
+.round.miss .rmark{color:var(--bad)}
+.rnote{font-size:0.8125rem;color:var(--amber);margin:0 0 0.75rem;max-width:none}
 
 .card{background:var(--panel);border:1px solid var(--hair);padding:0.75rem 0.8125rem;
   display:flex;flex-direction:column;gap:0.1875rem}
@@ -44,7 +66,7 @@
 /* Below this, five columns are too narrow to read and the grouping has to
    give way to fitting on the screen. */
 @media (max-width:700px){
-  .cards.taught{grid-template-columns:repeat(auto-fill,minmax(8.25rem,1fr))}
+  .cards.taught.t10,.cards.taught.t8{grid-template-columns:repeat(auto-fill,minmax(8.25rem,1fr))}
 }
 @media (max-width:620px){
   .cards{grid-template-columns:repeat(auto-fill,minmax(8.25rem,1fr));gap:0.5rem}

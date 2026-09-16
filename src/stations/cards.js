@@ -1,34 +1,54 @@
 // The "cards" station kind — station 5, מי קיבל תשובות ומי לא.
 //
-// Ten labelled trucks sit above six unlabelled ones. The group reads the
-// rule out of the labelled set and applies it to the six, answering כן or
-// לא on each. The digit is how many of the six they mark as carrying.
+// TWO ROUNDS, one submit. Each round shows labelled trucks above unlabelled
+// ones; the group reads the rule out of the labelled set and answers כן or
+// לא on each unlabelled truck. Round one's rule is one feature, round two's
+// is two at once — see src/data/station-5.js.
 //
-// The six answers are checked, not the rule itself: the group never writes
-// the rule down anywhere, exactly as in the source. Getting all six right
-// is the proof they found it.
+// The rules are never written down by the group. Getting the trucks right
+// is the proof they found the rule, exactly as in the source.
 //
-// Feedback is all-or-nothing (`revealWhichWrong: false`). With six binary
-// answers, saying which ones are wrong — or even how many — would let a
-// group flip one card at a time and read the rule off the app instead of
-// off the data.
+// Feedback names the ROUND, never the truck. Ten binary answers with
+// per-truck verdicts would let a group flip one card at a time and read the
+// rule off the app instead of off the data; two rounds tell them only where
+// to look again, which is what station 1 does with its tables.
+//
+// The digit is round one's count and nothing else, so round two is a second
+// gate rather than a second number and the lock code never moves.
 
 import { S, set, station, draftOf, attemptsLeft } from '../state.js';
 import { STATIONS } from '../data/stations.js';
-import { LABELLED, UNLABELLED, FEATURES } from '../data/station-5.js';
+import { LABELLED, UNLABELLED, LABELLED_2, UNLABELLED_2, FEATURES } from '../data/station-5.js';
 import { grade, deriveDigit } from '../engine/answers.js';
 import { esc } from '../lib/text.js';
 import { fx, shake } from '../ui/fx.js';
 import { solveStation, closeStation } from '../flow.js';
 import { register } from '../ui/actions.js';
 
-const N = UNLABELLED.length;
+// Round one occupies answer slots 0..N1-1, round two the rest. Everything
+// that splits a result uses this, so the two never drift apart.
+const N1 = UNLABELLED.length;
+const N2 = UNLABELLED_2.length;
+const N = N1 + N2;
+
+const ROUNDS = [
+  { id: 1, label: 'סבב א׳', taught: LABELLED, ask: UNLABELLED, from: 0 },
+  { id: 2, label: 'סבב ב׳', taught: LABELLED_2, ask: UNLABELLED_2, from: N1 }
+];
 
 /* ── draft accessors ──────────────────────── */
-const picks = () => (draftOf(station().n).picks ||= {});
+const d = () => draftOf(station().n);
+const picks = () => (d().picks ||= {});
 const pickOf = i => picks()[i];               // true | false | undefined
-const answers = () => UNLABELLED.map((_, i) => pickOf(i) ?? null);
+const answers = () => Array.from({ length: N }, (_, i) => pickOf(i) ?? null);
 const answered = () => answers().filter(v => v !== null).length;
+
+// Which rounds were wrong last time. Cleared for a round as soon as any
+// truck in it moves, because the verdict was about the answer that was
+// submitted and that answer no longer exists.
+const verdictOf = id => d().verdict?.[id];
+const clearVerdict = id => { if (d().verdict) delete d().verdict[id]; };
+const roundOf = i => (i < N1 ? 1 : 2);
 
 /* ── view ─────────────────────────────────── */
 
@@ -57,6 +77,35 @@ const unlabelledCard = (c, i) => {
   </div>`;
 };
 
+function roundBlock(r) {
+  const v = verdictOf(r.id);
+  const mark = v === undefined ? '' : (v ? 'hit' : 'miss');
+  const left = r.ask.filter((_, k) => pickOf(r.from + k) === undefined).length;
+  return `<div class="round ${mark}">
+    <div class="rhead">
+      <span class="rname">${esc(r.label)}</span>
+      ${v === undefined
+        ? `<span class="rleft">${left ? `נותרו ${left} משאיות` : 'הושלם'}</span>`
+        : `<span class="rmark">${v ? '✓ נכון' : '✗ לא נכון'}</span>`}
+    </div>
+    ${r.id === 2
+      ? '<p class="rnote">הכלל בסבב הזה אינו הכלל של סבב א׳.</p>'
+      : ''}
+    <div class="eyebrow">${r.taught.length} משאיות שכבר נבדקו</div>
+    <div class="cards taught t${r.taught.length}">${r.taught.map(labelledCard).join('')}</div>
+    <div class="exercise-set">
+      <div class="eyebrow">${r.ask.length} משאיות שלא נבדקו · החליטו על כל אחת</div>
+      <div class="cards">${r.ask.map((c, k) => unlabelledCard(c, r.from + k)).join('')}</div>
+    </div>
+  </div>`;
+}
+
+function verdictText(res) {
+  const bad = ROUNDS.filter(r => !res[r.id]);
+  if (bad.length === 2) return 'לא. שני הסבבים לא נכונים. בכל סבב חזרו למשאיות שכבר נבדקו ובדקו מה באמת מבדיל ביניהן.';
+  return `לא. ${bad[0].label} לא נכון. חזרו למשאיות שכבר נבדקו בסבב הזה ובדקו מה מבדיל ביניהן.`;
+}
+
 export function viewCards() {
   const s = station();
   const shown = S.hints[s.n] || 0;
@@ -74,22 +123,14 @@ export function viewCards() {
     </div>
 
     <div class="ask">
-      <p class="q">כמה משאיות מתוך השש נושאות אמל"ח?</p>
-      <p class="sub">מצאו מה מבדיל בין העשר שכבר נבדקו, ואז החליטו על כל אחת מהשש.</p>
-      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> תדעו רק אם הכל נכון, לא איפה טעיתם.</p>
+      <p class="q">אילו משאיות נושאות אמל"ח?</p>
+      <p class="sub">שני סבבים, וכל אחד עובד לפי כלל אחר. בכל סבב: מצאו מה מבדיל בין המשאיות שכבר נבדקו, ואז החליטו על החדשות.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> שולחים את שני הסבבים יחד, ונאמר לכם באיזה סבב טעיתם — לא באיזו משאית.</p>
     </div>
 
-    <div>
-      <div class="eyebrow">עשר משאיות שכבר נבדקו</div>
-      <div class="cards taught">${LABELLED.map(labelledCard).join('')}</div>
-    </div>
+    ${ROUNDS.map(roundBlock).join('')}
 
-    <div class="exercise-set">
-      <div class="eyebrow">שש משאיות שלא נבדקו · החליטו על כל אחת</div>
-      <div class="cards">${UNLABELLED.map(unlabelledCard).join('')}</div>
-    </div>
-
-    ${result ? '<p class="verdict bad">לא. חזרו לעשר הראשונות ובדקו שוב מה מבדיל בין הנושאות ללא נושאות.</p>' : ''}
+    ${result ? `<p class="verdict bad">${esc(verdictText(d().verdict || {}))}</p>` : ''}
 
     ${hints}
 
@@ -111,6 +152,7 @@ register('click', {
   pick(arg) {
     const [i, value] = arg.split(':');
     picks()[i] = value === '1';
+    clearVerdict(roundOf(Number(i)));
     S.submitBlocked = false;
     S.lastResult = null;
     set();
@@ -130,6 +172,9 @@ register('click', {
     S.attempts[s.n] = (S.attempts[s.n] || 0) + 1;
 
     if (!result.allCorrect) {
+      // Per ROUND, never per truck.
+      d().verdict = Object.fromEntries(
+        ROUNDS.map(r => [r.id, result.res.slice(r.from, r.from + r.ask.length).every(Boolean)]));
       S.lastResult = result;
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');

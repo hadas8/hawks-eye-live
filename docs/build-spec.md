@@ -289,7 +289,7 @@ The `pickN` sub-answer kind: a whole set graded together by a predicate, for cas
 
 ## Station 5 — built and verified
 
-Source: `תחנה_5_.docx`, which supersedes the draft's own card set. Ten labelled trucks, six unlabelled, digit is how many of the six carry.
+Source: `תחנה_5_.docx`, which supersedes the draft's own card set. **Two rounds since 2026-09-16**: round one is the source's — ten labelled trucks, six unlabelled, and the digit is how many of the six carry — and round two was written here.
 
 **The rule is the antenna, and it is the only rule that works.** Verified mechanically rather than by eye: of the four features, colour, wheels and box each appear on both sides of the labelled 5/5 split, so none of them can explain the labels; only `אנטנה` separates cleanly. Applying it to the six unlabelled gives U-01 and U-03, so the digit is **2**, matching the roster and keeping the lock code intact.
 
@@ -297,9 +297,21 @@ Source: `תחנה_5_.docx`, which supersedes the draft's own card set. Ten label
 
 Per `נראות התחנות`: the cards are shown and the group answers כן / לא on each of the six. The rule itself is never typed anywhere — getting all six right is the proof they found it, exactly as in the source.
 
-**It is one insight and will run in 60 to 90 seconds of a 7-minute slot, against station 1's eight tables.** Hadas raised this as too easy on 2026-09-09 and it is unresolved, pending a conversation with the content author. The options, the constraint that the digit must stay 2, and what is needed from Lotem are written up in [station-5-difficulty.md](station-5-difficulty.md); Hadas leans toward a second labelled round on a two-feature rule, which would also make the station's concept plain `למידה מפוקחת`. **Station 5 ships as it is until that is settled.** Note this is a separate concern from padding a station to fill the clock, which is still not something to do — see *What this is, and what it is not*.
+### Round two — a two-feature rule, added 2026-09-16
 
-**Attempt policy: 3 submissions, `revealWhichWrong: false`.** Chosen here, not specified anywhere; confirm with the content author. The reasoning: six binary answers is 64 combinations, so naming which cards are wrong — or even how many — would let a group flip one card at a time and read the rule off the app instead of off the data. It is really one insight rather than six judgements, so the verdict is all-or-nothing and a failed submit points them back at the ten labelled cards.
+The station was one insight and ran in 60 to 90 seconds of a 7-minute slot. Hadas raised that on 2026-09-09; the options are in [station-5-difficulty.md](station-5-difficulty.md) and she chose option B, a second labelled round whose rule is a conjunction.
+
+**The rule is `אנטנה יש AND ארגז סגור`.** Eight labelled trucks, four unlabelled. The habit round one teaches is *find the one column that works*, and round two breaks it twice in opposite directions: W-03 and W-04 have antennas and do not carry, W-05 and W-06 have closed boxes and do not carry. Neither column survives alone.
+
+**These cards are not from the source** — there is no second round in `תחנה_5_.docx` — so they were designed here and then checked rather than trusted. A sweep of 144 rules a person might actually propose (every single feature, every AND / OR / XOR of two, every AND / OR of three) leaves **exactly one** fitting the eight labels. No single feature fits. Round one was swept the same way and is also unique, at `אנטנה יש`. No unlabelled truck repeats a labelled one in either round, so nothing can be answered by matching a card instead of reading the rule.
+
+Only 2 of the 8 labelled trucks carry, against 5 of 10 in round one. That is inherent to a conjunction — it is true of one feature combination in four — and it is why round two's grid is four per row rather than five: the split cannot land on a row boundary, and the amber border and the tag carry it instead.
+
+**The concept label changed with it**, from `למידה מפוקחת ולא מפוקחת` to `למידה מפוקחת`. Two supervised rounds do not touch the unsupervised half, so **unsupervised learning is now previewed nowhere in the evening.** Hadas's call, made deliberately rather than drifted into — the alternative was option A, clustering, which has no determinate answer unless the cards are built to an exacting standard and would have repeated station 6's problem.
+
+**The digit is still round one's count and nothing else**, so it stays 2, `3274227` is untouched and the facilitator sheet does not move. Round two is a second gate, not a second number.
+
+**Attempt policy: 4 submissions, per-ROUND feedback.** Up from 3 because the station roughly doubled. A rejected submit says which round is wrong — both, or one, and which — and never which truck. Ten binary answers with per-truck verdicts would let a group flip one card at a time and read the rule off the app instead of off the data; two rounds tell them only where to look again, which is the trade station 1 makes with its tables. A round's mark clears as soon as any truck in it moves, because the verdict was about an answer that no longer exists.
 
 ### Copy
 

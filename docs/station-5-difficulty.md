@@ -1,6 +1,6 @@
 # Station 5 is too easy — options for a second part
 
-_For the conversation with Lotem. Raised by Hadas 2026-09-09. **Nothing here is built.** Station 5 ships as it is until this is decided._
+_Raised by Hadas 2026-09-09. **Settled and built 2026-09-16: option B.** What follows is the reasoning as it stood; the outcome is at the bottom._
 
 ## The problem
 
@@ -35,7 +35,7 @@ Show 8–10 trucks with **no labels at all** and have the group sort each into p
 
 It only works if the card set is built so that **every truck in א is alike on every feature and differs from every truck in ב on every feature**, with nothing sitting between the two clusters. That is a real constraint on whoever writes the cards, and it can be checked mechanically before shipping.
 
-## Option B — a second labelled set with a two-feature rule ← Hadas leans here
+## Option B — a second labelled set with a two-feature rule ← CHOSEN, built 2026-09-16
 
 After the one-feature rule, a second batch of labelled trucks where the rule is a **conjunction** — antenna *and* closed box, for instance — then a fresh set of unlabelled ones to apply it to.
 
@@ -59,3 +59,36 @@ A card set. Specifically:
 - Both parts must be right to solve the station; there is no partial credit, consistent with the rest of the app.
 - The attempt policy is currently 3 submissions with no per-card feedback. If the station doubles in size, 3 may want to become 4 — worth revisiting at the same time.
 - Whatever the new cards are, the key gets verified mechanically before it ships, the way the antenna rule was: prove the intended rule works, and prove no *other* rule also works.
+
+
+---
+
+## What was built
+
+Option B, on 2026-09-16, with the card set written here rather than by the content author.
+
+**Round two's rule: `אנטנה יש AND ארגז סגור`.** Eight labelled trucks (W-01..W-08), four unlabelled (V-01..V-04), two of which carry.
+
+| | צבע | אנטנה | גלגלים | ארגז | |
+|---|---|---|---|---|---|
+| W-01 | לבן | יש | 6 | סגור | נושאת |
+| W-02 | חול | יש | 8 | סגור | נושאת |
+| W-03 | לבן | יש | 8 | פתוח | לא |
+| W-04 | חול | יש | 6 | פתוח | לא |
+| W-05 | לבן | אין | 6 | סגור | לא |
+| W-06 | חול | אין | 8 | סגור | לא |
+| W-07 | חול | אין | 6 | פתוח | לא |
+| W-08 | לבן | אין | 8 | פתוח | לא |
+
+W-03 and W-04 kill "antenna alone"; W-05 and W-06 kill "closed box alone". That is the whole design: the habit round one teaches fails immediately, twice, in opposite directions.
+
+To classify: V-01 (חול·יש·6·סגור, carries), V-02 (חול·יש·8·פתוח), V-03 (לבן·יש·8·סגור, carries), V-04 (לבן·אין·6·פתוח).
+
+**Verified, not asserted.** 144 rules a person might propose — every single feature, every AND / OR / XOR of two, every AND / OR of three — were swept over the eight labels and **exactly one fits**. No single feature fits. Round one was swept identically and is also unique at `אנטנה יש`, so neither round has a second answer hiding in it. No unlabelled truck repeats a labelled one.
+
+**Decisions taken with it:**
+
+- **Concept is now `למידה מפוקחת`.** Unsupervised learning is previewed nowhere in the evening. This was the known cost of option B and Hadas took it deliberately.
+- **4 attempts**, up from 3, and a rejected submit names **which round** is wrong — never which truck.
+- **One submit for both rounds**, like station 1. No phases; no other station has them.
+- **The digit is unchanged at 2** and still comes from round one alone.
