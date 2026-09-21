@@ -5,16 +5,17 @@
 //
 // Feedback is pass or fail and nothing else, per נראות התחנות: "רק בסוף יש
 // הערה אם ניתן לעבור לשלב הבא או שצריך לחזור לבחור שוב את הכל בלי לדעת
-// איפה הטעות". Submissions are therefore uncapped, which is safe because
-// nothing is revealed — six binary choices is 64 combinations and there is
-// nothing to hill-climb on. The roster entry carries the full note on why
-// that margin is thinner than it was at seven envelopes.
+// איפה הטעות". THIS IS THE ONLY STATION THAT REVEALS NOTHING AT ALL —
+// every other one marks the parts, and station 4 at least says how many each
+// chosen question filtered. That is why its cap is 3 rather than 2 even
+// though its answer space is the smallest; the roster entry has the
+// reasoning. It ran uncapped until 2026-09-21.
 //
 // Hints are per envelope rather than station-wide. The envelopes are six
 // independent puzzles, so a group stuck on ד׳ should not have to spend
 // three hints on א׳ to ג׳ to reach it.
 
-import { S, set, station, draftOf } from '../state.js';
+import { S, set, station, draftOf, attemptsLeft } from '../state.js';
 import { STATIONS } from '../data/stations.js';
 import { ENVELOPES, chartsOf, honestPosition } from '../data/station-2.js';
 import { renderChart } from '../lib/chart.js';
@@ -76,7 +77,7 @@ export function viewCharts() {
     <div class="ask">
       <p class="q">איזה גרף אומר את האמת?</p>
       <p class="sub">בכל מעטפה שני הגרפים מציגים בדיוק את אותם נתונים, ואחד מהם מסודר כך שיטעה אותך. בחרו את הגרף הישר בכל שש.</p>
-      <p class="cap"><b>הכל או כלום.</b> אם משהו לא נכון תצטרכו לבחור מחדש, ולא נאמר לכם באיזו מעטפה טעיתם.</p>
+      <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> הכל או כלום — לא נאמר לכם באיזו מעטפה טעיתם.</p>
     </div>
 
     ${ENVELOPES.map(envelopeBlock).join('')}
@@ -89,6 +90,7 @@ export function viewCharts() {
         : S.submitBlocked ? 'שנו בחירה כדי לנסות שוב'
         : 'שליחת פענוח'}</button>
       <span class="label">${done} מתוך ${N} מעטפות</span>
+      <span class="label">${attemptsLeft()} מתוך ${s.maxAttempts} ניסיונות נותרו</span>
     </div>
   </div>`;
 }
@@ -119,7 +121,9 @@ register('click', {
       // Nothing about which envelope is wrong, deliberately.
       S.lastResult = { message: 'לא. אחד הגרפים שבחרתם מסודר כך שיטעה. עברו שוב על השש ובדקו צירים, סדר ומה חסר.' };
       S.submitBlocked = true;
-      fx('reject', 'נדחה', 2100, 'בחרו מחדש');
+      if (attemptsLeft() <= 0) return closeStation('attempts');
+      const left = attemptsLeft();
+      fx('reject', 'נדחה', 2100, left === 1 ? 'נותר ניסיון אחד' : `נותרו ${left} ניסיונות`);
       shake();
       return set();
     }

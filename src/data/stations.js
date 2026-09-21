@@ -68,17 +68,24 @@ export const STATIONS = [
     kind: 'charts',
 
     // נראות התחנות: all or nothing, and the group is told nothing about
-    // WHICH envelope is wrong. Uncapped submissions stay safe because of
-    // that — with no partial feedback there is nothing to hill-climb on, so
-    // the only sweep available is blind resubmission.
+    // WHICH envelope is wrong.
     //
-    // THE MARGIN NARROWED WHEN THE REWRITE CUT SEVEN ENVELOPES TO SIX, and
-    // this is the one place that change was not free: seven binary choices
-    // is 128 blind guesses, six is 64. At a few seconds a submit that is
-    // several minutes of a seven-minute clock rather than more than all of
-    // it. Still uncapped, deliberately, because a group that guesses its way
-    // through learns nothing and spends the station doing it — but do not
-    // cut a fifth envelope without revisiting this. Five would be 32.
+    // THREE, capped 2026-09-21 at Hadas's call — it ran uncapped until then,
+    // which was defensible (nothing to hill-climb on, so the only sweep is
+    // blind resubmission) but meant a stuck group could burn the whole slot
+    // guessing. Six binary choices is 64 combinations, so three tries is a
+    // 4.7% guess and the cap costs a real group nothing.
+    //
+    // THREE RATHER THAN TWO, and this is the station where that matters
+    // most: it is the ONLY one that gives no partial feedback at all.
+    // Station 4 is also revealWhichWrong:false but still shows how many each
+    // chosen question filtered; 1, 3, 5, 6 and 7 all mark the parts. Here a
+    // rejection says "no" and stops. An attempt therefore buys less than an
+    // attempt anywhere else, and a submission is SIX independent judgements
+    // graded together — at 90% per envelope a clean sweep is 53%, which two
+    // tries take to ~78% and three to ~89%. Punishing one slip across twelve
+    // charts would punish exactly the care this station teaches.
+    maxAttempts: 3,
     revealWhichWrong: false,
 
     brief: 'שש נקודות תצפית שלחו דוחות גרפיים, וכל דוח הגיע בשני עותקים עם אותם נתונים בדיוק. באחד מכל זוג מישהו סידר את הגרף כך שיטעה את מי שמסתכל.',

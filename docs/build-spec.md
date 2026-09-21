@@ -211,11 +211,17 @@ An envelope also ships only if the question is one an analyst in מחלקת ני
 
 **ד׳'s `refLine` is on the honest chart only**, Hadas's call 2026-09-21. It is what tells the group that 5 is the average rather than an arbitrary number, and on the liar it would be redundant. That makes ד׳ the one envelope where the honest chart carries a mark the liar does not, so *"pick the one with the dashed line"* works there. It does not generalise — ו׳'s liar is the one with the extra mark, and in ב׳ and ה׳ the liar has less — but it is the most shortcut-prone envelope of the six.
 
-### Feedback, and why uncapped submissions are still safe
+### Feedback, and the attempt cap
 
-Pass or fail and nothing else, per `נראות התחנות`. Submissions are uncapped, which is safe because nothing is revealed — with no partial feedback there is nothing to hill-climb on, so the only sweep available is blind resubmission.
+Pass or fail and nothing else, per `נראות התחנות`. **`maxAttempts: 3`**, capped 2026-09-21 at Hadas's call; it ran uncapped until then, and the station module had no cap handling at all, so this was wiring as well as a number.
 
-**This is the one place cutting an envelope was not free.** Seven binary choices is 128 blind guesses; six is 64. At a few seconds a submit that is several minutes of a seven-minute clock rather than more than all of it. Still uncapped, deliberately, because a group that guesses its way through learns nothing and spends the station doing it — but **do not cut a fifth envelope without revisiting this.** Five would be 32. If the station ever is cut to five, ה׳ is the omission envelope that stays and ב׳ is the one that goes.
+**Three rather than two, and station 2 is where that distinction matters most: it is the only station that gives no partial feedback whatsoever.** Station 4 is also `revealWhichWrong: false` but still shows how many each chosen question filtered; 1, 3, 5, 6 and 7 all mark the parts right or wrong. Here a rejection says "no" and stops, so a second attempt is not informed by the first in any way — the group simply re-reads. An attempt therefore buys less here than anywhere else in the app.
+
+The other half of it is that **a submission is six independent judgements graded together.** At 90% confidence per envelope a clean sweep is 53%; two attempts take that to roughly 78% and three to roughly 89%. Ending the station that teaches careful reading on one slip across twelve charts is the wrong trade. Guessing is not the risk a cap defends against here — six binary choices is 64 combinations, so three tries is a 4.7% guess either way; the cap exists so a stuck group cannot burn the whole slot resubmitting.
+
+**Running out is not a dead end.** `closeStation('attempts')` hands over the digit so the physical box can still open, scores 0, and leaves the station struck through in the ribbon — the same treatment as running out of clock.
+
+**Do not cut a fifth envelope without revisiting this.** Five would be 32 combinations, and would also drop the sweep probability the cap is sized against. If the station ever is cut to five, ה׳ is the omission envelope that stays and ב׳ is the one that goes.
 
 **Hints are per envelope**, not station-wide: six independent puzzles, so a group stuck on ד׳ should not spend three hints reaching it.
 
