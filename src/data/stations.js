@@ -68,12 +68,20 @@ export const STATIONS = [
     kind: 'charts',
 
     // נראות התחנות: all or nothing, and the group is told nothing about
-    // WHICH envelope is wrong. Uncapped submissions are safe because of
-    // that: seven binary choices with no partial feedback gives nothing to
-    // hill-climb on, so a sweep costs more clicks than the clock allows.
+    // WHICH envelope is wrong. Uncapped submissions stay safe because of
+    // that — with no partial feedback there is nothing to hill-climb on, so
+    // the only sweep available is blind resubmission.
+    //
+    // THE MARGIN NARROWED WHEN THE REWRITE CUT SEVEN ENVELOPES TO SIX, and
+    // this is the one place that change was not free: seven binary choices
+    // is 128 blind guesses, six is 64. At a few seconds a submit that is
+    // several minutes of a seven-minute clock rather than more than all of
+    // it. Still uncapped, deliberately, because a group that guesses its way
+    // through learns nothing and spends the station doing it — but do not
+    // cut a fifth envelope without revisiting this. Five would be 32.
     revealWhichWrong: false,
 
-    brief: 'שבע נקודות תצפית שלחו דוחות גרפיים, וכל דוח הגיע בשני עותקים עם אותם נתונים בדיוק. באחד מכל זוג מישהו סידר את הגרף כך שיטעה את מי שמסתכל.',
+    brief: 'שש נקודות תצפית שלחו דוחות גרפיים, וכל דוח הגיע בשני עותקים עם אותם נתונים בדיוק. באחד מכל זוג מישהו סידר את הגרף כך שיטעה את מי שמסתכל.',
 
     answer: {
       parts: ENVELOPES.map(env => ({ kind: 'choice', value: honestPosition(env) })),

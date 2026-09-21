@@ -8,6 +8,11 @@
 //               inflates small differences into cliffs.
 //   highlight   an index drawn in the accent colour while the rest go
 //               muted, so the eye lands on it regardless of its size.
+//               UNUSED since 2026-09-21: emphasis steers a reader without
+//               making the chart state anything false, so the envelope
+//               built on it had no correct answer and was cut. Kept as a
+//               capability. `showValues` and `unit` are likewise unused by
+//               station 2 now; nothing else calls this renderer.
 //   order       'desc' sorts the bars largest-first, destroying the
 //               chronology while looking like a trend.
 //   pick        renders only these indices, evenly spaced, so unequal gaps

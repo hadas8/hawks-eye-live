@@ -170,56 +170,75 @@ Two deliberate exceptions to the rem rule:
 
 The ceiling matters: the event runs on laptops and tablets, so 20px is where it stops rather than growing without limit on a desktop review screen. At 1280 the rendered values are within 4px of what they were before this change, so the machines the event actually runs on look the same as they did.
 
-## Station 2 — built, with reconstructed data
+## Station 2 — rewritten, and the data is no longer the source's
 
-Source: `תחנה_2_גרפים_סופי.docx`. Seven envelopes, each holding two charts of identical data where one has been distorted. The group picks the honest chart in all seven. **Digit 2, stated outright by the source.**
+Six envelopes, each holding two charts of identical data where one has been arranged to mislead. The group picks the honest chart in all six. **Digit 2, `rule: 'literal'`, stated outright by the source and unmoved by the rewrite.** Password `אופק`. Full reasoning: [station-2-rewrite.md](station-2-rewrite.md); the history it replaces: [station-2-clarity.md](station-2-clarity.md).
 
-Feedback is pass or fail and nothing else, per `נראות התחנות`. **Submissions are uncapped**, which is safe precisely because nothing is revealed: seven binary choices is 128 combinations and with no partial feedback there is nothing to hill-climb on, so a sweep costs more clicks than seven minutes hold. **Hints are per envelope**, not station-wide — seven independent puzzles, so a group stuck on ד׳ should not have to spend three hints reaching it.
+**REWRITTEN 2026-09-21. The transcription rule is retired.** Every series used to be transcribed from Lotem's chart images and nothing was invented; Hadas walked all seven envelopes on 2026-09-10 (*"not too hard, just not clear. I think it needs a complete overhaul"*), and on 2026-09-17 she took the chart data as hers to change. The images stay in [`docs/source-charts/`](source-charts/) as the record of where this started, and three of the six still run Lotem's lesson — ב׳ omission, ג׳ reordering, ו׳ the arrow.
+
+### What was actually wrong
+
+Four findings. The first explains the confusion and the fourth decided the shape.
+
+1. **The question asked for a number and the scoring asked for a chart.** Every envelope was topped by something like `כמה אירועים תועדו מינואר עד אפריל?` while the task underneath was *which of these two charts answers it correctly*. Groups started adding, the sum was never checked, and the arithmetic led away from the thing being taught. This affected all seven. **Every question is now a yes/no judgement**, because a judgement is the only thing two drawings of one data set can disagree about.
+2. **Two envelopes had no correct answer at all.** ב׳ drew the same four bars at the same heights with the same printed values on both charts and coloured one bar amber — nothing on it was false. ז׳ asked for the five-month total, which is 25 on both charts, because the flat line is the mean of the same five numbers.
+3. **The hints handed over the answer.** `ציר שלא מתחיל באפס מגדיל הפרשים קטנים` names the mechanism and delivers the verdict in one sentence. The station rewarded clicking and punished thinking.
+4. **There are only five classes of lie, and there were seven envelopes.** So two were a repeat or a fake, and the old set was both: א׳ and ו׳ ran the same truncated axis twice, and ב׳ ran emphasis, which is not a lie.
+
+### The five classes, and the rule for adding an envelope
+
+| class | mechanism | renderer | envelope |
+|---|---|---|---|
+| broken encoding | bar length stops meaning value | `yFloor` | א׳ |
+| omission | data that exists is not drawn | `pick`, or a shorter series | ב׳, ה׳ |
+| reordering | the sequence is scrambled | `order: 'desc'` | ג׳ |
+| aggregation | real variation replaced by a summary | `flatten` | ד׳ |
+| false annotation | a mark on top asserts what the data denies | `arrow`, a false `refLine` | ו׳ |
+
+One class per envelope, with **omission deliberately doubled** to reach six: ב׳ hunts for gaps in the middle of a series, ה׳ checks where the axis stops, and the two feel different in the hand.
+
+**Emphasis is not a lie, and neither is chart type.** Recolouring the smallest bar steers a careless reader but every bar is still at its true height; a line over categorical labels implies an order that does not exist but every point is still at its true value. Both are bad practice, neither produces a false chart, and in a station scored true/false neither has a defensible answer. Three separate proposals died on this. **Before adding an envelope, name the false statement the lying chart makes. If you cannot, it is not an envelope.** What was cut and why is recorded in the rewrite doc so it is not re-proposed.
+
+An envelope also ships only if the question is one an analyst in מחלקת ניתוח 7 would ask, it cannot be answered without reading the charts, and **the hint names a place to look rather than what is wrong there** — every hint points at something both charts have, so a group has to compare rather than filter.
+
+### The one-difference rule
+
+**The two charts of a pair differ in exactly one way** — same kind, same labels, same values, one distortion parameter. Two exceptions, both deliberate: the omission envelopes, where the liar legitimately carries fewer categories, and ד׳'s `refLine`, which is an honest annotation rather than a second lie.
+
+**This is why ד׳ is drawn bars-against-bars and not bars-against-a-filled-line**, which is what the rewrite doc specified. That pairing differs in four ways at once — kind, `flatten`, `area` and `refLine` — and five equal bars say `קצב קבוע` at least as well as a flat line does. `area` loses its last user, which is a cheaper price than a broken invariant. In the old build ב׳ had the same problem: honest bars against a lying line, so the pair differed in chart type *and* category count and a group could not tell which difference was the lie.
+
+**ד׳'s `refLine` is on the honest chart only**, Hadas's call 2026-09-21. It is what tells the group that 5 is the average rather than an arbitrary number, and on the liar it would be redundant. That makes ד׳ the one envelope where the honest chart carries a mark the liar does not, so *"pick the one with the dashed line"* works there. It does not generalise — ו׳'s liar is the one with the extra mark, and in ב׳ and ה׳ the liar has less — but it is the most shortcut-prone envelope of the six.
+
+### Feedback, and why uncapped submissions are still safe
+
+Pass or fail and nothing else, per `נראות התחנות`. Submissions are uncapped, which is safe because nothing is revealed — with no partial feedback there is nothing to hill-climb on, so the only sweep available is blind resubmission.
+
+**This is the one place cutting an envelope was not free.** Seven binary choices is 128 blind guesses; six is 64. At a few seconds a submit that is several minutes of a seven-minute clock rather than more than all of it. Still uncapped, deliberately, because a group that guesses its way through learns nothing and spends the station doing it — but **do not cut a fifth envelope without revisiting this.** Five would be 32. If the station ever is cut to five, ה׳ is the omission envelope that stays and ב׳ is the one that goes.
+
+**Hints are per envelope**, not station-wide: six independent puzzles, so a group stuck on ד׳ should not spend three hints reaching it.
 
 ### The charts are drawn, not imported
 
-The source's charts are images inside the docx. They are re-drawn as inline SVG by `src/lib/chart.js`, which takes the distortions as parameters rather than treating them as faults to avoid: `yFloor` (where the value axis starts), `highlight` (one bar in the accent colour), `order: 'desc'` (largest first, destroying chronology), `pick` (render only these indices, evenly spaced, so unequal gaps vanish), `flatten` (replace every value with the mean), `area` (fill under a line so a shallow climb reads as a mass) and `arrow` (an asserted trend drawn over data that contradicts it). `refLine` is the one honest device: a labelled rule at a value.
+`src/lib/chart.js` renders inline SVG and takes the distortions as parameters rather than as faults to avoid — `yFloor`, `order`, `pick`, `flatten`, `area`, `arrow`, plus `refLine` as the one honest device. Drawing rather than importing keeps the distortions exact, keeps the repo free of an asset pipeline, and lets the charts theme to the dark palette and scale on a tablet.
 
-Drawing rather than importing keeps the distortions exact, keeps the repo free of an asset pipeline, and lets the charts theme to the dark palette and scale on a tablet.
+**`highlight`, `showValues`, `unit` and `area` are now unused.** The colour envelope was cut, ד׳ dropped its printed values, and nothing fills an area any more. They are general renderer capabilities and stay; removing them is a separate decision. `styles/station-charts.css` keeps `.cb.hot` for the same reason, with a comment saying so.
 
-### The data is transcribed, not reconstructed
+**Amber inside a chart is not a tell.** It carries ו׳'s false arrow and ד׳'s honest average rule — one lying chart and one truthful one. That property has to survive any future edit.
 
-**Lotem's original chart images are in [`docs/source-charts/`](source-charts/), supplied 2026-09-10, and every series is transcribed from them.**
+### The liar's position is not learnable
 
-An earlier version reconstructed the series from the docx's prose, because the images could not be read out of the file. **Five of the seven were wrong.** What the prose could not convey:
-
-| Envelope | Reconstructed | Actually |
-|---|---|---|
-| א׳ | `98,99,100,99,101,100`, axis 96–102 | `97..102` clean staircase, axis **96–104** vs **0–120** |
-| ב׳ | 38/31/23/8, other bars **dimmed** | 38/**35**/**27**/8, other bars left alone |
-| ג׳ | `1,1,1,0,2,3,4,5,4,6,7,8` | only Jan, Mar, Jul carry an incident; everything else zero |
-| ד׳ | 8 weeks | **6** weeks, `3,6,4,5,2,4` |
-| ה׳ | 16 weeks, monthly `4.5,4.5,6,7` | **12** weeks, monthly `5, 2.7, 5, 6.7` **plus a trend arrow** |
-| ו׳ | correct series | correct, plus an **area fill** under the line |
-| ז׳ | correct series | correct, plus an **average rule** on the honest chart |
-
-Two of those are not cosmetic. **ה׳'s deception is the arrow, not the averaging** — the monthly view shows month 2 dipping perfectly clearly, and it is the arrow drawn from month 1 to month 4 that papers over it. And **ב׳'s other bars are not dimmed**; dimming them, which the reconstruction did, turns misleading emphasis into a chart that merely looks broken.
-
-### The station reads as confusing, and that is unresolved
-
-Hadas walked all seven envelopes on `dev` on 2026-09-10 and came out with: *"not too hard, just not clear. I think it needs a complete overhaul."* The headline issue is that each envelope is topped by a question asking for **a number** while the task and the scoring are **a chart**, so groups do arithmetic that is never checked. Beyond that: ה׳ is the only pair drawn at two granularities and its question is phrased in the lying chart's units; ב׳'s deception is colour alone while the bar heights and printed values stay honest; and א׳ and ו׳ spend two of the seven envelopes on the same truncated-axis trick.
-
-This is **not** a transcription problem — every series matches Lotem's images. It is a design problem in content that belongs to the content author, so **station 2 ships exactly as transcribed until Lotem decides.** A one-line fix for ה׳'s question was written and deliberately reverted for that reason. The full write-up is in [station-2-clarity.md](station-2-clarity.md).
-
-### Two inconsistencies inside the source, for the content author
-
-- **ג׳: the chart and the text disagree.** The chart shows incidents only in January, March and July, so January to April totals **2**. The docx text says 3. The app follows the chart. If the intended answer is 3, the chart needs a fourth incident.
-Two rendering adjustments on top of the transcription, neither of which touches a figure: the truncated axis runs to **104** rather than 103, so its gridlines land on whole numbers instead of 97.8 / 99.5 / 101.3; and ז׳'s average label sits at the right-hand end of its rule, where a Hebrew reader starts and no bar reaches, because at the left end it landed on the מאי bar's own value label.
-
-- **ב׳: the percentages sum to 108%**, not 100 — 38 + 35 + 27 + 8. Transcribed as-is from the image. Either the categories overlap or one figure is off.
-
-### One departure from the source, agreed with Hadas
-
-The lying chart is GRAPH 1 in six of the source's seven envelopes, so "always pick graph 2" scored six of seven. The liar's position is redistributed — first in three envelopes, second in four — so there is no position to learn instead of reading the charts. Which chart of each pair is honest is unchanged; only where it appears. The key is 1, 2, 2, 1, 1, 2, 1.
+The lying chart was GRAPH 1 in six of the source's seven envelopes, so "always pick graph 2" scored six of seven. It is redistributed: **three of six, in the order F T F T T F**, nothing alternating and no run longer than two. **The key is 1, 2, 1, 2, 2, 1**, derived from `honestPosition` rather than written down anywhere.
 
 The source's numeric chain, `5+4+3+4+4+4+5 = 29 → 2`, is unused: it does not derive from its own answers, and `נראות התחנות` replaces the numeric task with click-the-honest-chart. The digit is simply 2.
 
 **A note on the source images themselves:** GRAPH 1 is titled in red and GRAPH 2 in blue, and red marks the liar in six of the seven. That is a facilitator aid, but if those images are ever put in front of participants the title colour gives the answer away. The app re-draws them, so it does not inherit the problem.
+
+### Verified on build, 2026-09-21
+
+Re-derived rather than trusted: each chart's drawn rows replayed through the renderer's own pipeline, and each pair confirmed to disagree in the one intended way. **א׳'s January bar is 81% of the plot honest and 13% lying**, which is the whole envelope. The zero months in ב׳ draw nothing rather than a 1px stub — a stub in a chart about gaps invents data. Checked on a 390px handset, which the old build never was: no horizontal scroll, and the twelve month labels clear each other by 2.9px at 11px type, so **ב׳'s sparse honest chart reads as sparse rather than as broken** and the known weakness the rewrite doc accepted does not need its lever pulled yet.
+
+Still open: **the Hebrew needs Hadas's ear** — six questions, six hints and six titles were written in Cowork, and Hebrew register is the weakest thing this workspace produces. **Lotem is told, not asked**, per Hadas's 2026-09-17 decision. And the station has not been **re-timed** at six envelopes against the old seven.
+
 
 ## Station 4 — built and verified
 
@@ -426,6 +445,8 @@ Three aphorisms stacked in six lines is itself the tell. The rewrite uses none o
 ## Blockers on stations 2 to 7
 
 Being worked one at a time with the content author. Recorded here so nothing is lost.
+
+1. ~~**Station 2 reads as confusing.**~~ **Closed 2026-09-21 by rewriting the envelopes**, not by asking the author: on 2026-09-17 Hadas took the chart data as hers to change. Seven envelopes became six, every question became a yes/no judgement, and the two envelopes that had no correct answer are gone. Reasoning in [station-2-rewrite.md](station-2-rewrite.md), history in [station-2-clarity.md](station-2-clarity.md), and the section above carries the rules that keep it that way.
 
 1. ~~**Station 2's digit has no source.**~~ **Resolved — the source states it outright.** `תחנה_2_גרפים_סופי.docx`: *עדכנו את ספרת תחנה 2 ל-2 (במקום 6). הקוד המעודכן: 3274227*. The digit is 2, awarded on a clean sweep, and the lock code is intact. Built 2026-09-09.
 2. ~~**Station 3's digit is 9, not 7.**~~ **Not a problem — closed 2026-09-10.** The digit is a token, so station 3 counts box ב׳, which is 7, and the lock code never moved. The card set and the sorting are untouched.

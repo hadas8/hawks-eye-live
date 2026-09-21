@@ -1,3 +1,5 @@
+> **SUPERSEDED 2026-09-21 by [station-2-rewrite.md](station-2-rewrite.md), which closes this.** Every problem catalogued below was fixed by replacing the envelope set rather than by asking the content author to decide — Hadas took the chart data as hers on 2026-09-17. Kept because the envelope-by-envelope diagnosis is the reason the rewrite can be trusted, and because it records which complaints turned out to be about the QUESTION rather than the chart.
+
 # Station 2 reads as confusing — the problems, envelope by envelope
 
 _For the conversation with Lotem. Raised by Hadas 2026-09-10, after walking the station envelope by envelope on `dev`. **Nothing here is built.** Station 2 ships exactly as transcribed until Lotem decides, because the data is hers._

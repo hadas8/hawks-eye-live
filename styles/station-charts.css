@@ -44,12 +44,16 @@
 .chart .cl{fill:none;stroke:var(--sc,var(--ink-dim));stroke-width:2;stroke-linejoin:round}
 .chart .cd{fill:var(--sc,var(--ink-dim))}
 
-/* The deception in envelope ב׳: one bar in amber while the rest keep the
-   series colour, so the eye lands on the smallest. Amber is the only hue
-   not used by any series, which is what makes it read as emphasis rather
-   than as another category. The source does this with orange against grey.
-   It is not a tell: amber also carries ה׳'s false arrow and ז׳'s honest
-   average rule, so it appears on two lying charts and one truthful one. */
+/* UNUSED since the 2026-09-21 rewrite. It drew one bar in amber while the
+   rest kept the series colour, so the eye landed on the smallest — but
+   emphasis is not a lie, every bar was still at its true height, and the
+   envelope had no defensible answer. It was cut. The rule stays because
+   `highlight` is a general renderer capability; see the header of
+   src/data/station-2.js before reaching for it again.
+
+   Amber still appears inside charts, on ו׳'s false arrow and ד׳'s honest
+   average rule — one lying chart and one truthful one, so it is not a tell
+   for which chart of a pair is honest. That is the property to preserve. */
 .chart .cb.hot{fill:var(--amber)}
 
 /* filled area under a line — makes a shallow climb read as a mass */

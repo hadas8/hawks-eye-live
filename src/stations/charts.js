@@ -1,16 +1,16 @@
 // The "charts" station kind — station 2, הגרפים המשקרים.
 //
-// Seven envelopes, each holding two charts of identical data where one has
+// Six envelopes, each holding two charts of identical data where one has
 // been distorted. The group picks the honest chart in every envelope.
 //
 // Feedback is pass or fail and nothing else, per נראות התחנות: "רק בסוף יש
 // הערה אם ניתן לעבור לשלב הבא או שצריך לחזור לבחור שוב את הכל בלי לדעת
-// איפה הטעות". Submissions are therefore uncapped, which is safe precisely
-// because nothing is revealed: seven binary choices is 128 combinations,
-// and with no partial feedback there is nothing to hill-climb on, so a
-// sweep costs more clicks than the seven minutes hold.
+// איפה הטעות". Submissions are therefore uncapped, which is safe because
+// nothing is revealed — six binary choices is 64 combinations and there is
+// nothing to hill-climb on. The roster entry carries the full note on why
+// that margin is thinner than it was at seven envelopes.
 //
-// Hints are per envelope rather than station-wide. The envelopes are seven
+// Hints are per envelope rather than station-wide. The envelopes are six
 // independent puzzles, so a group stuck on ד׳ should not have to spend
 // three hints on א׳ to ג׳ to reach it.
 
@@ -75,7 +75,7 @@ export function viewCharts() {
 
     <div class="ask">
       <p class="q">איזה גרף אומר את האמת?</p>
-      <p class="sub">בכל מעטפה שני הגרפים מציגים בדיוק את אותם נתונים, ואחד מהם מסודר כך שיטעה אותך. בחרו את הגרף הישר בכל שבע.</p>
+      <p class="sub">בכל מעטפה שני הגרפים מציגים בדיוק את אותם נתונים, ואחד מהם מסודר כך שיטעה אותך. בחרו את הגרף הישר בכל שש.</p>
       <p class="cap"><b>הכל או כלום.</b> אם משהו לא נכון תצטרכו לבחור מחדש, ולא נאמר לכם באיזו מעטפה טעיתם.</p>
     </div>
 
@@ -117,7 +117,7 @@ register('click', {
 
     if (!result.allCorrect) {
       // Nothing about which envelope is wrong, deliberately.
-      S.lastResult = { message: 'לא. אחד הגרפים שבחרתם מסודר כך שיטעה. עברו שוב על השבע ובדקו צירים, סדר וצבע.' };
+      S.lastResult = { message: 'לא. אחד הגרפים שבחרתם מסודר כך שיטעה. עברו שוב על השש ובדקו צירים, סדר ומה חסר.' };
       S.submitBlocked = true;
       fx('reject', 'נדחה', 2100, 'בחרו מחדש');
       shake();
