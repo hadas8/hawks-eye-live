@@ -13,7 +13,7 @@ const LINES = [
   'השעה 02:17.',
   'קלטנו תנועה חריגה על ציר ההברחה.',
   'יחידה 4400 של חיזבאללה מעבירה מטען אסטרטגי מסוריה ללבנון.',
-  "<span class='hi'>שבע תחנות. שבע ספרות. מטען אחד.</span>",
+  "<span class='hi'>שש תחנות. שש ספרות. מטען אחד.</span>",
   '',
   // The terminal asks for the name and the field answers it directly below.
   // "ממתין לזיהוי צוות" alone left a group unsure that anything was being

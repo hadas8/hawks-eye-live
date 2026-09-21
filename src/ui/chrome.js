@@ -1,4 +1,6 @@
-// Persistent chrome: the group chip and the 7-slot code ribbon.
+// Persistent chrome: the group chip and the code ribbon, one slot per
+// station. Six since station 6 was removed on 2026-09-21; the slots are
+// mapped from STATIONS, so the count follows the roster on its own.
 // The ribbon renders only digits the group already holds. An unearned slot
 // is a dot — never the real digit in a hidden attribute or a title.
 import { S } from '../state.js';

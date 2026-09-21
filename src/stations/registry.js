@@ -1,12 +1,14 @@
 // Station kind -> the view that renders its interaction.
 // A station with no kind, or a kind with no renderer, falls back to the
-// "not built yet" panel. Stations 2 to 7 are deliberately in that state.
+// "not built yet" panel. Nothing is in that state: all six are built.
+//
+// `neighbours` (station 6, ארבעה כוכבים, KNN) was removed with its
+// station on 2026-09-21. See docs/station-6-neighbours.md.
 import { viewTables } from './tables.js';
 import { viewCards } from './cards.js';
 import { viewQuestions } from './questions.js';
 import { viewCharts } from './charts.js';
 import { viewBoxes } from './boxes.js';
-import { viewNeighbours } from './neighbours.js';
 import { viewForest } from './forest.js';
 
 export const RENDERERS = {
@@ -15,7 +17,6 @@ export const RENDERERS = {
   questions: viewQuestions,
   charts: viewCharts,
   boxes: viewBoxes,
-  neighbours: viewNeighbours,
   forest: viewForest
 };
 

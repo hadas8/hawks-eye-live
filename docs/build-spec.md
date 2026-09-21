@@ -48,11 +48,11 @@ One SPA, one URL, no router, a single state machine.
 
 **Rendering replaces the whole stage, so anything scrolling inside it loses its position.** A pane that should survive a re-render carries `data-keep-scroll` with a stable name and `ui/render.js` restores it. Station 4 needed this: its question list is 1400px inside a 700px pane, so previewing question 14 sent the list back to question 1 and the group lost sight of what they had just tapped. The same applies to any future station with a scrolling pane.
 
-Persistent chrome: the station clock and score in the top bar, and a 7-slot code ribbon at the bottom with three slot states (empty, earned, given).
+Persistent chrome: the station clock and score in the top bar, and a code ribbon at the bottom, one slot per station (six) with three slot states (empty, earned, given).
 
-**The code ribbon is the one part of the UI that runs left to right.** Station 1 is the leftmost slot, station 7 the rightmost, so reading the digits off the screen gives the code in the order it is entered into the physical lock. Laid out RTL like everything else it reads back-to-front, which is a real risk at the box with a room full of teenagers. The ribbon's Hebrew label stays in the RTL flow, to the right of the slots; only the slot group is LTR. The vault input is `dir="ltr"` for the same reason. Everything else in the app remains RTL.
+**The code ribbon is the one part of the UI that runs left to right.** Station 1 is the leftmost slot, station 6 the rightmost, so reading the digits off the screen gives the code in the order it is entered into the physical lock. Laid out RTL like everything else it reads back-to-front, which is a real risk at the box with a room full of teenagers. The ribbon's Hebrew label stays in the RTL flow, to the right of the slots; only the slot group is LTR. The vault input is `dir="ltr"` for the same reason. Everything else in the app remains RTL.
 
-- **The lock code is `3274227` and it does not move.** Which digit a station awards is arbitrary. A group solves the station, takes the number, and goes — nobody asks why station 3's digit is 7, the derivation is never on screen, and no participant can tell whether it came from their own arithmetic or from a table. Two stations award a digit their own data does not produce (3 counts box ב׳ rather than א׳; 6 is awarded outright) and it is invisible to everyone playing. **A station's digit disagreeing with the roster is not a defect and is not a question for the content author.** Set `station.digit`, move on. The physical lock in the room is set once.
+- **The lock code is `327427`.** It moved exactly once, on 2026-09-21, when station 6 was removed and its digit came out with it; six stations means six digits. Which digit a station awards is arbitrary. A group solves the station, takes the number, and goes — nobody asks why station 3's digit is 7, the derivation is never on screen, and no participant can tell whether it came from their own arithmetic or from a table. Two stations award a digit their own data does not produce (3 counts box ב׳ rather than א׳; 6 is awarded outright) and it is invisible to everyone playing. **A station's digit disagreeing with the roster is not a defect and is not a question for the content author.** Set `station.digit`, move on. The physical lock in the room is set once.
 
 - **Answer boxes are `type="text"`, never `type="number"`.** Fixed 2026-09-16 after Hadas reported Mac users' answers changing by themselves. A focused number input steps on a wheel or trackpad scroll and on arrow keys, so scrolling the page over a typed answer silently edited it — reproduced at 5 → 8 in three notches in station 1 and 7 → 10 in station 4. Both now use `type="text" inputmode="numeric" pattern="[0-9]*"` with the handler stripping non-digits, which keeps the tablet keypad and the digits-only guard that `type="number"` was providing. `wheelbug.mjs` dispatches a real CDP wheel event over each box — a synthetic `WheelEvent` from page JS is untrusted and will not step the value, so a JS-only test reports no bug and is wrong.
 
@@ -60,7 +60,7 @@ Persistent chrome: the station clock and score in the top bar, and a 7-slot code
 
 Declarative per station, with a `custom` escape hatch:
 
-- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice` (stations 2, 3, 5 and 7), `pickN` (stations 4 and 6), `multiChoice`, `rows`, `pairPick`
+- Sub-answer kinds needed across the seven: `number` (with tolerance), `choice` (stations 2, 3, 5 and 6), `pickN` (stations 4 and 6), `multiChoice`, `rows`, `pairPick`
 - Combine rules: `digitalRoot`, `count`, `literal`, `custom`
 - **Attempt policy comes from the station config, not a global rule.** Station 1 allows 3 submissions; station 2 is all-or-nothing with unlimited redos; station 3 allows 3 attempts; station 4 allows one retry. Running out closes the station immediately rather than leaving a group idle at a dead button.
 - No lockout timer. After a failed submit, disable submit until an input actually changes.
@@ -79,10 +79,13 @@ Names taken from the draft, which are the real ones. **Passwords are final too**
 | 3 | הכלל הנסתר | סיווג מול חיזוי | 7 |
 | 4 | השאלה ששווה לשאול | עצי החלטה | 4 | **built** |
 | 5 | מי קיבל תשובות ומי לא | למידה מפוקחת ולא מפוקחת | 2 | **built** |
-| 6 | ארבעה כוכבים | KNN | 2 |
-| 7 | שמונה אנליסטים | Random Forest | 7 |
+| 6 | שמונה אנליסטים | Random Forest | 7 | **built** |
 
-Lock code `3274227`.
+Lock code `327427`.
+
+**ארבעה כוכבים (KNN) was station 6 and was removed on 2026-09-21**, at Hadas's call. It was the only station that **handed the group its rule** — the xlsx prints its five-step priority list in its own header — so it was execution rather than insight, and that is why none of the volume fixes landed: cutting 48 comparisons to 36 makes a chore shorter without making it a puzzle. Every other station asks a group to work out what is going on. `docs/station-6-neighbours.md` keeps the full analysis.
+
+**The code lost that station's digit and nothing else moved:** `3274227` → `327427`. Old station 7 became station 6, keeping its password `חורש` and its digit 7; `גדר` retired and is not reused. Maximum technical score is now 120 rather than 140, derived from `STATIONS.length × pointsPerStation`. **Never add or remove a station without moving `CFG.lockCode` with it** — `npm run check` fails if the sheet and the build disagree, and it is the only thing that catches this.
 
 ## Station 1 — built and verified
 
@@ -145,7 +148,7 @@ Rules that came out of it, for future copy:
 
 Deliberately left alone, so they do not get "fixed" later:
 
-- **שבע תחנות. שבע ספרות. מטען אחד.** A rhetorical triad; the full stops are the rhythm and stay. The draft's third beat was קופסה אחת; changed to מטען אחד on Hadas's call 2026-09-09, so the opening names the thing they are actually hunting and pays off against המשלוח נעצר on the closing screen. A box is what the answer arrives in; the cargo is the point.
+- **שש תחנות. שש ספרות. מטען אחד.** שבע until 2026-09-21. A rhetorical triad; the full stops are the rhythm and stay. The draft's third beat was קופסה אחת; changed to מטען אחד on Hadas's call 2026-09-09, so the opening names the thing they are actually hunting and pays off against המשלוח נעצר on the closing screen. A box is what the answer arrives in; the cargo is the point.
 - **נגמרו השליחות, נגמרה התחנה.** Parallel construction, already comma-joined.
 - **The station 1 rule bullets.** They are scanned under a 7-minute clock, not read; full stops separate rules faster than connectors would.
 - Terse UI labels and result strings (נדחה, מסומן, ידני, X מתוך Y נכונים).
@@ -219,7 +222,7 @@ Pass or fail and nothing else, per `נראות התחנות`. **`maxAttempts: 3`
 
 The other half of it is that **a submission is six independent judgements graded together.** At 90% confidence per envelope a clean sweep is 53%; two attempts take that to roughly 78% and three to roughly 89%. Ending the station that teaches careful reading on one slip across twelve charts is the wrong trade. Guessing is not the risk a cap defends against here — six binary choices is 64 combinations, so three tries is a 4.7% guess either way; the cap exists so a stuck group cannot burn the whole slot resubmitting.
 
-**Running out is not a dead end.** `closeStation('attempts')` hands over the digit so the physical box can still open, scores 0, and leaves the station struck through in the ribbon — the same treatment as running out of clock.
+**Running out is not a dead end.** `closeStation('attempts')` hands over the digit so the code still completes, scores 0, and leaves the station struck through in the ribbon — the same treatment as running out of clock.
 
 **Do not cut a fifth envelope without revisiting this.** Five would be 32 combinations, and would also drop the sweep probability the cap is sized against. If the station ever is cut to five, ה׳ is the omission envelope that stays and ב׳ is the one that goes.
 
@@ -391,17 +394,21 @@ Dramatic moments in the prototype, to be pushed further here:
 - Correct submit: amber shockwave expanding from centre, the digit slamming in at scale with bloom, the ribbon slot igniting
 - Under 60 seconds: clock goes red and pulses, a red vignette breathes at the screen edges
 - Station closes unsolved: cold black flood, נגמר הזמן or נגמרו הניסיונות, shake, digit arrives muted. **The digit must arrive out of the black, not be waiting behind it.** `coldIn` peaks at 86% black at 30% of its 1.4s run, so the expired screen renders at 420ms. Rendering it on close showed the struck-through digit first and flooded over it afterwards, so the screen spoiled its own reveal.
-- **The vault opening, the loudest moment in the app:** the seven ribbon slots verify left to right at 95ms intervals, in the order the digits go into the physical lock; then a white-hot core flash, two amber shockwave rings, a shake, and הקוד אומת / המנעול נפתח stamping in. The reveal assembles block by block while the afterglow is still fading, so the two read as one movement. ~1.9s to the reveal, ~2.8s to rest. This is the only moment that earns a white flash — everything else stays amber.
+- **The vault opening, the loudest moment in the app:** the ribbon slots verify left to right at 95ms intervals, in the order the digits go into the physical lock; then a white-hot core flash, two amber shockwave rings, a shake, and הקוד אומת / המנעול נפתח stamping in. The reveal assembles block by block while the afterglow is still fading, so the two read as one movement. ~1.9s to the reveal, ~2.8s to rest. This is the only moment that earns a white flash — everything else stays amber.
 
 Hadas has assets to bring in. The Cowork artifact is a look-and-feel reference; do not port it wholesale. What carries over is the token values, the state machine, the answer-engine shape, the Hebrew normalization, and station 1's data, rules and interaction.
 
 ## What the box is, and the closing reveal
 
-**Status: proposed by Claude Code 2026-09-08, not yet approved by the content author.** The draft never said what the box is — it gives only `שבע תחנות. שבע ספרות. קופסה אחת.` and the lock code, and `נראות התחנות` stops at station 6. Everything below fills that gap and needs Lotem's sign-off before the event.
+**THERE IS NO PHYSICAL BOX.** Confirmed by Hadas 2026-09-21: nothing is locked in the room and nothing is opened by hand. The crate is fiction, the lock is the vault screen's own, and **typing the six digits into the app is the ending** rather than a cue to go and open something. This was worth writing down because the box had been treated as real for two weeks — the facilitator sheet told someone to set a physical lock to 3274227 and to stock the crate with a prize, and the vault screen said the cargo `נמצא בחדר`, which would have sent a room of teenagers looking for it. All three are fixed.
 
-### The box
+The rest of this section is the fiction the screens carry, which still matters: it is what the reveal pays off.
 
-**The seized crate, not the enemy's.** The convoy was stopped because of the group's analysis; the crate came back and sits in the room, and it opens to the code their seven answers produced because that is the analysing desk's authorization. This matters: if the box were Hezbollah's, the lock would open to the enemy's own combination, and a sharp participant would ask why their crate opens to our conclusion. Framing it as the seized item removes that hole. The vault screen states it explicitly before they type anything.
+**Status: proposed by Claude Code 2026-09-08, never approved by the content author.** The draft gave only `שבע תחנות. שבע ספרות. קופסה אחת.` and the lock code, and `נראות התחנות` stopped at station 6.
+
+### What the cargo is, in the fiction
+
+**The seized crate, not the enemy's.** The convoy was stopped because of the group's analysis, so the crate is ours and it opens to the code their answers produced, because that is the analysing desk's authorization. If it were Hezbollah's, the lock would open to the enemy's own combination and a sharp participant would ask why. The vault screen states it before they type anything.
 
 ### What the מטען אסטרטגי is
 
@@ -421,7 +428,7 @@ Rewritten with Hadas 2026-09-09. It is a closing frame, not another page: full s
 [lead]     המשלוח נעצר, והרקטות שלהם ימשיכו לפספס.
 [punch]    מצאתם אותו בתוך טבלה.            (amber)
 
-           ── 140 ──                       (amber rules, no box)
+           ── 120 ──                       (amber rules, no box)
 
 [finale]   לזה קוראים למידת מכונה            (amber, inside a faint ring)
 [sub]      כל תחנה כאן היא שיטה שמנתחי מודיעין עובדים איתה באמת.
@@ -445,12 +452,12 @@ Three aphorisms stacked in six lines is itself the tell. The rewrite uses none o
 
 ### Dependencies and open points
 
-- The reveal names **מעבר ג'נתא** (station 7's answer) and **רכב 4 מתוך 16** (station 4's). Both are solid in the draft's own working, and ג'נתא is load-bearing for digit 7. If either station's answer changes, this copy changes with it.
+- The reveal names **מעבר ג'נתא** (the forest station's answer, now station 6) and **רכב 4 מתוך 16** (station 4's). Both are solid in the draft's own working, and ג'נתא is load-bearing for digit 7. If either station's answer changes, this copy changes with it.
 - **מטען is now the only word for it, on every screen.** קופסה is gone from the app: the opening triad, the briefing (`שבע הספרות פותחות את המטען`), the last station's button (`לפתיחת המטען`) and the vault all say מטען. The noun changed gender from feminine to masculine, so the agreements moved with it — שנתפסה→שנתפס, נמצאת→נמצא, סגורה→סגור, היא נפתחת→הוא נפתח, אותה→אותו. A mechanical find-and-replace here would have produced broken Hebrew on the screen immediately before the finale.
 - The vault eyebrow was `שחרור התפוסה`, which is not really a Hebrew noun for a seized item; it is now `שחרור המטען`.
-- **The briefing promises the mission, not the mechanic:** `שבע הספרות עוצרות את המשלוח`, which the reveal pays off word for word with `המשלוח נעצר`. **מנטרלות was considered and rejected:** `לנטרל מטען` is the standard Hebrew collocation for defusing an explosive charge, so it drags back the מטען חבלה reading this frame deliberately rejected — you seize guidance kits, you do not neutralise them — and it promises an action the app never performs. פתיחה language is kept only where they physically open the thing: the last station's button and the vault.
+- **The briefing promises the mission, not the mechanic:** `שש הספרות עוצרות את המשלוח`, which the reveal pays off word for word with `המשלוח נעצר`. **מנטרלות was considered and rejected:** `לנטרל מטען` is the standard Hebrew collocation for defusing an explosive charge, so it drags back the מטען חבלה reading this frame deliberately rejected — you seize guidance kits, you do not neutralise them — and it promises an action the app never performs. פתיחה language is kept only where they physically open the thing: the last station's button and the vault.
 - מנעול stays the word for the lock itself (`קוד המנעול` in the ribbon, `המנעול נפתח` on the unlock). Lock and cargo are different objects and keep different words.
-- **What physically goes in the box is still undecided.** It should read as the seized guidance kit — a component in foam, a drive, something that looks like a part rather than a prize — plus a card carrying `נתונים זה הזהב החדש`.
+- ~~**What physically goes in the box is still undecided.**~~ **Moot — there is no box.** It should read as the seized guidance kit — a component in foam, a drive, something that looks like a part rather than a prize — plus a card carrying `נתונים זה הזהב החדש`.
 - One box for the room or one per group is still unanswered.
 - Unused draft material a real closing screen could still draw on: the `לדיון אחרי הפתרון` cards on stations 5 and 7, and station 7's line *שמונה בינוניים שרואים דברים שונים מנצחים שני מומחים טובים שרואים אותו דבר.*
 
@@ -479,7 +486,9 @@ Being worked one at a time with the content author. Recorded here so nothing is 
    - **2,739 other four-question sets also reach vehicle 4**, by including a giveaway: question 5 or 8 filters 15 on its own, so {5, anything, anything, anything} lands on vehicle 4 while demonstrating the opposite of the lesson. Grading on "did you narrow it to one" alone would accept these.
    - **Order is irrelevant.** Filtering is commutative, so a set of four questions gives the same survivor in any order. Grade as a set. `נראות התחנות` mentions "בסדר הנכון", but there is no order to get right.
    - The digit is the surviving vehicle number, **4**, matching the roster.
-5. ~~**Station 6 has no distance metric.**~~ **It does — `תחנה_6_מעברים.xlsx` states one the draft never had**, checked 2026-09-09: *מתחילים בשעת פעילות, ממשיכים לסוג כביש, כיסוי עצים, גובה, רכבים ביום — שני מעברים דומים = חולקים כמה שיותר תכונות מהתחלת הרשימה*. That is a lexicographic match, and it is checkable.
+5. ~~**Station 6 has no distance metric.**~~ **MOOT — THE STATION WAS REMOVED 2026-09-21.** Everything below is kept as the record of why. The short version: the metric existed, the arithmetic never produced the roster's digit, three separate difficulty fixes were applied, and none of it addressed the real problem — it was the one station that handed over its rule, so it asked for execution rather than insight. Original entry follows.
+
+   ~~**Station 6 has no distance metric.**~~ **It does — `תחנה_6_מעברים.xlsx` states one the draft never had**, checked 2026-09-09: *מתחילים בשעת פעילות, ממשיכים לסוג כביש, כיסוי עצים, גובה, רכבים ביום — שני מעברים דומים = חולקים כמה שיותר תכונות מהתחלת הרשימה*. That is a lexicographic match, and it is checkable.
 
    **Its own arithmetic does not give the roster's 2 — and that turned out not to matter. Built 2026-09-10.** Over the three crossings it gives 7, and over the original four it gave 1. Station 6 simply awards **2**: nothing on screen shows a sum, so nothing contradicts it, and the lock code never moved. The neighbour key in `src/data/station-6.js` is still *computed* from the stated rule rather than typed, so the puzzle itself cannot drift.
 
@@ -509,6 +518,6 @@ Being worked one at a time with the content author. Recorded here so nothing is 
 - Station 1 is now materially more forgiving than station 2 as `נראות התחנות` specifies it. Confirm with the content author whether that difference is intentional.
 - Whether 3 submissions is right, or 4. A group that burns one by accident early has little room.
 - Whether the solved screen should name the concept immediately, as it currently does, or hold it for the closing reveal. Naming it per station is friendlier but spends the reveal's punch seven times.
-- Which parts stay physical props; the final locked box is presumably real.
+- ~~Which parts stay physical props; the final locked box is presumably real.~~ **Answered 2026-09-21: none, and it is not.**
 - Repo name, GitHub account/org, Pages URL.
 - Local folder path, to fill into the Cowork project's device-bridge instruction line.

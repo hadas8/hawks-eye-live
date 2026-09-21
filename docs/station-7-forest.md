@@ -1,3 +1,5 @@
+> **THIS STATION IS NOW NUMBER 6.** שמונה אנליסטים was the seventh station until 2026-09-21, when ארבעה כוכבים (KNN) was removed and it moved up one. Its content, its password `חורש` and its digit 7 are all unchanged — only the number. "Station 7" throughout this document means this station.
+
 # Station 7 is salvageable, and its content is sound
 
 _Written 2026-09-10, from `חדר בריחה 7 תחנות - מבצע עין הנץ.docx` — the original draft. Lotem never wrote a standalone doc for this station. **Built the same day; what was decided is at the bottom.**_

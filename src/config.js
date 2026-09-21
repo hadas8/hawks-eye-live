@@ -4,14 +4,20 @@ export const CFG = {
   stationSeconds: 7 * 60,
   pointsPerStation: 20,
   bonusQuestPoints: 5,      // facilitators count these on paper; the app never sees them
-  // 3274227 — the code on the printed decode card, and the code the
-  // physical lock in the room is set to. It has not moved and it should not:
-  // which digit a station awards is arbitrary, the group never sees how it
-  // was derived, and nothing is gained by making a real lock follow our
-  // arithmetic. Two stations award a digit their own data does not produce
-  // (3 counts box ב rather than א; 6 is awarded outright) and neither is
-  // visible to anyone playing.
-  lockCode: '3274227'
+  // ONE DIGIT PER STATION, IN STATION ORDER. There is no physical lock and
+  // no box in the room — the vault screen is the whole ending — so this
+  // exists only to be typed back in at the end.
+  //
+  // It was `3274227` until 2026-09-21, when station 6 (KNN) was removed and
+  // its digit came out with it. Nothing else moved: every remaining station
+  // kept the digit it already had.
+  //
+  // MUST STAY EXACTLY AS LONG AS `STATIONS`, and the vault input's
+  // `maxlength` with it. Which digit a station awards is arbitrary — the
+  // derivation is never on screen and station 3 awards its outright — but
+  // the COUNT is not arbitrary, and `npm run check` is the only thing that
+  // catches a mismatch.
+  lockCode: '327427'
 };
 
 // ?dev exposes the test strip. It must be removed before the event.

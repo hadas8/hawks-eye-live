@@ -26,7 +26,7 @@ export function viewOutcome(expired) {
       ? 'הקוד לא ייתקע בגללכם, והספרה מסומנת כדי שתדעו איפה נשארה עבודה.'
       : 'האלגוריתם שהרגע הפעלתם נקרא ' + esc(s.concept) + '.'}</p>
     <p class="next">${last
-      ? 'שבע התחנות מאחוריכם.'
+      ? 'שש התחנות מאחוריכם.'
       : `פנו למדריך למשימה חברתית ועוד ${CFG.bonusQuestPoints} נקודות, עד שהטיימר מתאפס.`}</p>
     <button class="btn" data-act="next">${last ? 'לפתיחת המטען' : 'לתחנה הבאה'}</button>
   </div>`;

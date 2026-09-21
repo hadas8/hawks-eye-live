@@ -1,19 +1,29 @@
 // The station roster. Names are the real ones, from the draft.
 //
-// ALL SEVEN ARE BUILT. Stations 1, 4, 5 and 7 are verified against their
-// sources and closed; 3 was closed by rewriting its cards. Two carry open
-// questions for the content author, both about whether the station plays
-// fairly rather than about its digit — see the blockers at the end of
-// docs/build-spec.md. Do not invent content to close them.
+// SIX STATIONS, ALL BUILT. It was seven until 2026-09-21, when Hadas
+// removed ארבעה כוכבים (KNN) — the only station that HANDED THE GROUP ITS
+// RULE instead of making them find it, which made it execution rather than
+// insight and is why no amount of trimming fixed it. Old station 7 is now
+// station 6. docs/station-6-neighbours.md keeps the analysis.
+//
+// Stations 1, 4, 5 and 6 are verified against their sources and closed; 2
+// and 3 were closed by rewriting their content here. Nothing is open.
 //
 // A station's digit does not have to be derivable from its own data. The
 // derivation is never on screen and no participant can tell, so a digit is
-// a token that keeps CFG.lockCode where it is. Stations 3 and 6 award
-// theirs outright for that reason.
+// a token that keeps CFG.lockCode where it is. Station 3 awards its
+// outright for that reason. THE CODE IS NOW SIX DIGITS — `327427`, which is
+// the old `3274227` with the removed station's 2 taken out. Nothing else
+// moved, so every remaining station keeps the digit it already had.
 //
-// THE PASSWORDS ARE FINAL. All seven were chosen here rather than supplied
+// There is no physical box or lock; the vault screen is the whole ending.
+// If a station is ever added or removed again, CFG.lockCode has to move
+// with it, and `npm run check` is what catches it if you forget.
+//
+// THE PASSWORDS ARE FINAL. They were chosen here rather than supplied
 // by the source, and Hadas adopted them as the real ones on 2026-09-16 —
-// נוצה, אופק, מדף, ענף, מצפן, גדר, חורש. Changing one now means reprinting
+// נוצה, אופק, מדף, ענף, מצפן, חורש. גדר retired with station 6 on
+// 2026-09-21 and is not reused. Changing one now means reprinting
 // the facilitators' sheet, so do not touch them casually.
 //
 // `maxAttempts` is per station, deliberately, and is COUPLED to
@@ -29,7 +39,6 @@ import { ENVELOPES, honestPosition } from './station-2.js';
 import { PICK, isProperSet, survivors } from './station-4.js';
 import { UNLABELLED, UNLABELLED_2 } from './station-5.js';
 import { CARDS } from './station-3.js';
-import { NEW, isCorrectFor, K as KNN } from './station-6.js';
 import { ANALYSTS, tally, winnerOf, codeOf } from './station-7.js';
 
 export const STATIONS = [
@@ -238,41 +247,6 @@ export const STATIONS = [
 
   {
     n: 6,
-    name: 'ארבעה כוכבים',
-    concept: 'KNN — שכנים קרובים',
-    password: ['גדר'],
-    // 2, from the roster and the physical lock. The xlsx's own arithmetic
-    // gives 7 over the three remaining crossings, and 1 over the original
-    // four — but the digit is a token a group carries to the box, not a
-    // result they read off their own work. Nothing on screen shows a sum,
-    // so nothing contradicts it. See docs/station-6-neighbours.md.
-    digit: 2,
-    kind: 'neighbours',
-
-    // Three sets of three from twelve is 220^3, so there is nothing to
-    // brute-force, and naming WHICH crossing is wrong says nothing about
-    // what is wrong inside it — the same trade station 1 makes.
-    maxAttempts: 3,
-    revealWhichWrong: true,
-
-    brief: 'שנים‑עשר מעברים כבר נבדקו ויש לנו עליהם ציון סיכון, ושלושה חדשים נפתחו הלילה בלי שום היסטוריה. מעבר שמושך למעברים שאנחנו מכירים מתנהג כמותם.',
-
-    answer: {
-      // One set of three per new crossing, graded whole: which three, not
-      // in what order.
-      parts: NEW.map(n => ({
-        kind: 'pickN', count: KNN, valid: ids => isCorrectFor(n.id, ids)
-      })),
-      rule: 'literal'
-    },
-
-    hints: [
-      'התחילו משעת הפעילות ופסלו את כל מי שלא מתאים. רק מהנותרים עוברים לתכונה הבאה.',
-      'אם נשארו פחות משלושה שחולקים את שתי התכונות הראשונות, השלישי מגיע מהקרוב ביותר שנותר — לא ממי שדומה לכם במבט ראשון.'
-    ]
-  },
-  {
-    n: 7,
     name: 'שמונה אנליסטים',
     concept: 'Random Forest — יער אקראי',
     password: ['חורש'],

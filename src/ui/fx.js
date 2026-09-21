@@ -17,9 +17,11 @@ export function fx(kind, text, ms, sub) {
   timer = setTimeout(() => { el.className = ''; }, ms);
 }
 
-// The vault opening, the one moment the whole hour builds to. The seven
-// ribbon slots verify left to right in the order the digits go into the
-// physical lock, then the lock blows and the reveal assembles behind it.
+// The vault opening, the one moment the whole hour builds to. The
+// ribbon slots verify left to right, station 1 first, then the lock blows
+// and the reveal assembles behind it. The lock is the screen's own — there
+// is no physical box in the room, so this IS the ending rather than a cue
+// to go and open something.
 //
 // `done` switches the screen. It must run whatever happens — under reduced
 // motion, immediately — so a group can never be stranded on the vault by a

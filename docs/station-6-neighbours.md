@@ -1,3 +1,11 @@
+> **THE STATION WAS REMOVED ON 2026-09-21, at Hadas's call.** ארבעה כוכבים is gone, the roster is six stations, and the lock code lost its digit: `3274227` → `327427`. `src/data/station-6.js`, `src/stations/neighbours.js` and `styles/station-neighbours.css` were deleted; old station 7 became station 6.
+>
+> **Kept, because the diagnosis below is the reason the decision was right**, and because it is the record of a station that was built, measured, trimmed three times and still did not work.
+>
+> The reason it did not work is not in this document, and that is the lesson worth carrying: everything below treats the problem as **volume**, and the fixes reduced volume. But this was the only station in the evening that **handed the group its rule** — the xlsx prints its five-step priority list in its own header — so the exercise was executing a procedure, not finding one. Cutting 48 comparisons to 36 makes a chore shorter; it does not make it a puzzle. Every other station asks what is going on here. **The line below that should have been the alarm is the one recording that a group skipping two of the five features still gets every answer right: the shape was never the difficulty, so trimming the amount was never going to fix it.**
+>
+> If a KNN station is ever wanted again, it has to start from a rule the group discovers.
+
 # Station 6: too hard as written, cut down 2026-09-10
 
 _For the conversation with Lotem. Written 2026-09-10 alongside building the station, then revised twice the same day: once after Hadas played it and found it far too hard, and again after she decided what to do about it. **Station 6 is built and playable on `dev`.**_

@@ -35,7 +35,7 @@ const answers = () => ENVELOPES.map((_, i) => pickOf(i) ?? null);
 const answered = () => answers().filter(v => v !== null).length;
 
 /* ── view ─────────────────────────────────── */
-// Three hues cycle down the seven envelopes, and BOTH charts in an
+// Three hues cycle down the six envelopes, and BOTH charts in an
 // envelope get the same one. Colouring by position instead would be a
 // tell, and colouring honest against lying would hand over the answer.
 const hueOf = envIndex => `h${(envIndex % 3) + 1}`;

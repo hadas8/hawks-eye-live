@@ -1,10 +1,9 @@
 // The closing reveal. Deliberately short: one dramatic consequence, the
 // score, and the name of the thing they just did.
 //
-// It does not recap the seven algorithms. Each station already names its own
-// concept on its solved screen, and the ribbon already shows all seven
-// digits, so a summary list said both things a second time and blunted the
-// ending. Shows only this group's technical score; facilitators add the
+// It does not recap the algorithms. Each station already names its own
+// concept on its solved screen, and the ribbon already shows every digit,
+// so a summary list said both things a second time and blunted the ending. Shows only this group's technical score; facilitators add the
 // social bonus points on paper. No cross-group comparison, by design.
 import { CFG } from '../config.js';
 import { S, reset } from '../state.js';

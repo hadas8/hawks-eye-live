@@ -20,10 +20,25 @@ const { CFG } = await import('../src/config.js');
 const sheet = readFileSync(new URL('../docs/facilitator-sheet.md', import.meta.url), 'utf8');
 const problems = [];
 
-// The lock code, printed spaced out as "3 2 7 4 2 2 7".
+// The lock code, printed spaced out as "3 2 7 4 2 7".
 const spaced = CFG.lockCode.split('').join(' ');
 if (!sheet.includes(spaced)) {
   problems.push(`the sheet does not print the lock code as "${spaced}"`);
+}
+
+// One digit per station, so the code is exactly as long as the roster. This
+// is the check that catches adding or removing a station and forgetting the
+// code — which is most of what went wrong when station 6 was removed on
+// 2026-09-21, because nothing else in the app knows how long the code is.
+// The vault input's maxlength is the other half and is asserted from here
+// too, since it silently accepts or invites a digit that cannot exist.
+if (CFG.lockCode.length !== STATIONS.length) {
+  problems.push(`${STATIONS.length} stations but the lock code has ${CFG.lockCode.length} digits — one per station`);
+}
+const vault = readFileSync(new URL('../src/screens/vault.js', import.meta.url), 'utf8');
+const maxlen = vault.match(/maxlength="(\d+)"/)?.[1];
+if (maxlen !== String(CFG.lockCode.length)) {
+  problems.push(`the vault input accepts ${maxlen} digits, but the lock code has ${CFG.lockCode.length}`);
 }
 
 // One row per station: | n | name | **password** | digit |
@@ -45,7 +60,7 @@ for (const s of STATIONS) {
 // The digits in the sheet, read in order, must BE the lock code.
 const fromStations = STATIONS.map(s => s.digit).join('');
 if (fromStations !== CFG.lockCode) {
-  problems.push(`the seven station digits spell ${fromStations}, but CFG.lockCode is ${CFG.lockCode}`);
+  problems.push(`the ${STATIONS.length} station digits spell ${fromStations}, but CFG.lockCode is ${CFG.lockCode}`);
 }
 
 // Scoring, which the sheet states in words.
