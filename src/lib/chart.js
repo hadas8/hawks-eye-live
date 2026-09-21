@@ -82,9 +82,14 @@ export function renderChart(spec, hue = '') {
     const bw = Math.min(band * 0.62, 30);
     marks = rows.map((r, i) => {
       // A 1px floor keeps a very small value visible, but it must not
-      // invent one: envelope ג׳ asks a group to COUNT incidents across
-      // twelve months, nine of which are zero, and a stub on each of those
-      // is nine incidents that did not happen. Zero draws nothing.
+      // invent one: a stub on a zero month is an incident that did not
+      // happen. Zero draws nothing.
+      //
+      // NO STATION CARRIES A ZERO SINCE 2026-09-21 — ב׳'s quiet months went
+      // from 0 to 1 or 2 so its honest chart would stop reading as a broken
+      // render. The rule stays because the next envelope to need a zero will
+      // need it, and the scratchpad suite covers it against the renderer
+      // directly rather than through the DOM.
       const y = yOf(r.value), raw = Y1 - y, h = raw < 0.5 ? 0 : Math.max(1, raw);
       // Only the highlighted bar changes. Dimming the others turns a chart
       // with misleading emphasis into one that looks broken, which is a

@@ -304,6 +304,22 @@ Three departures from the spec above, applied 2026-09-21. Recorded here so the d
 
 ### Verification step 9, answered
 
-The doc flags that ב׳ and ו׳ put twelve categories into a 340-wide viewBox and that this had never been checked on a handset. Checked at 390×844: no horizontal page scroll, the chart cards stack rather than sit side by side, the twelve month labels clear each other by **2.9px** at 11px type, and the tap targets stay finger-sized.
+The doc flags that ב׳ and ו׳ put twelve categories into a 340-wide viewBox and that this had never been checked on a handset. Checked at 390×844: no horizontal page scroll, the chart cards stack rather than sit side by side, the twelve month labels clear each other by **2.9px** at 11px type, and the tap targets stay finger-sized. So the crowding worry does not bite — which is separate from ב׳'s emptiness, addressed below.
 
-**So ב׳'s "known weakness, accepted" does not need its lever pulled.** The honest chart reads as sparse rather than as broken at both desktop and phone width — the four bars and the eight empty months are legible as a deliberate pattern, and the liar's four evenly-spaced bars are convincingly continuous beside it. The lever stays documented in the data file in case play-testing disagrees, but nothing was changed.
+### ב׳'s accepted weakness was fixed after all, a different way
+
+The doc accepts eight-of-twelve empty months and names the lever as *fewer empty months*, which costs `לאורך השנה`. Raised with Cowork and Hadas on 2026-09-21, and **there was a third option neither the doc nor the build had considered: the gaps do not have to be zero.**
+
+`values: [6,1,5,1,2,1,7,2,1,1,6,2]`, `yCeil` 8, `pick` unchanged at `[0,2,6,10]`. All twelve months stay, so `לאורך כל השנה` is still true; no bar is empty, so the honest chart reads as a year of surveillance instead of a broken render; and **the lying chart is untouched**, still four adjacent bars at 6, 5, 7, 6.
+
+**What moves is the false claim, so the question moves with it.** It was continuity — which stops being false the moment activity never actually stops — and it is now level:
+
+> `האם רמת הפעילות נשמרה גבוהה לאורך כל השנה?`
+
+The liar shows four months running 5 to 7 and says the year held up. Those four spikes really sit in eight months of 1s and 2s. Same omission class — arguably its sharper form, since showing only the peaks is what people actually do with data — and the hint does not change, because it still points at the month labels, which both charts have.
+
+The eight-month variant that keeps the zeros was considered and rejected: half the chart is still blank instead of two thirds, so it trades the `לאורך השנה` wording for a marginal gain.
+
+**On the record:** eight months of literally nothing was a bigger thing to conceal than eight months of near-nothing, so the lie is a notch less theatrical. An honest chart that reads as broken is the worse problem.
+
+**One consequence to know about.** ב׳ was the only envelope carrying a zero, and the renderer's zero-height rule — a 1px stub on a zero month is an incident that did not happen — was added for it. Nothing in the app exercises that rule now. It stays, `src/lib/chart.js` says why, and the suite asserts it against `renderChart` directly rather than through the DOM.

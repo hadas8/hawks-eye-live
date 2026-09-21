@@ -86,30 +86,40 @@ export const ENVELOPES = [
     lying:  { kind: 'bars', labels: MONTHS_6, values: [97, 98, 99, 100, 101, 102], yFloor: 96, yCeil: 104 }
   },
   {
-    // OMISSION, interior gaps. Lotem's lesson, her data replaced: the source
-    // ran counts of 0 or 1 on a 0-to-2 axis, which draws as nine bars showing
-    // nothing and three one-unit stubs. Real counts fix it without touching
-    // the idea.
+    // OMISSION, by cherry-picking. Lotem's lesson, her data replaced: the
+    // source ran counts of 0 or 1 on a 0-to-2 axis, which draws as nine bars
+    // showing nothing and three one-unit stubs.
     //
     // Both charts are bars. In the old build the honest one was bars and the
     // liar was a line, so the pair differed in chart type AND category count
     // and a group could not tell which difference was the lie.
     //
-    // KNOWN WEAKNESS, ACCEPTED: eight of twelve months are zero, so two
-    // thirds of the honest chart is blank. It stays because the liar is
-    // genuinely convincing — four solid bars reading as steady year-round
-    // activity — and because ה׳ carries the readable version of omission. If
-    // the honest chart reads as broken rather than sparse in play-testing,
-    // the lever is FEWER EMPTY MONTHS, not higher counts, and the question's
-    // לאורך השנה has to change with them. Open with Hadas, 2026-09-21.
+    // THE QUIET MONTHS CARRY 1 OR 2, NOT 0 — Cowork and Hadas, 2026-09-21,
+    // replacing a version where eight of the twelve were zero. Two thirds of
+    // the honest chart was blank and it read as a broken render rather than
+    // as a year of surveillance. Dropping months instead would have deleted
+    // the lie along with them, so the fix had to come from the values.
+    //
+    // WHAT MOVED WITH THEM IS THE FALSE CLAIM, and the question had to move
+    // too. It was CONTINUITY — האם הפעילות נמשכה ברציפות — which stops
+    // being false once activity never actually stops. It is now LEVEL: the
+    // liar shows four months running 5 to 7 and says the year held up, while
+    // those four spikes really sit in eight months of 1s and 2s. Still
+    // omission, still one class, and arguably the sharper version of it,
+    // because showing only the peaks is what people actually do with data.
+    //
+    // The price, on the record: eight months of literally nothing was a
+    // bigger thing to conceal than eight months of near-nothing, so the lie
+    // is a notch less theatrical. An honest chart that reads as broken is
+    // the worse problem.
     id: 'ב׳',
     title: 'אירועי חצייה לפי חודש',
-    question: 'האם הפעילות נמשכה ברציפות לאורך השנה?',
+    question: 'האם רמת הפעילות נשמרה גבוהה לאורך כל השנה?',
     hint: 'אילו חודשים מופיעים מתחת לעמודות בכל גרף?',
-    trick: 'הציר מציג רק ינו, מרץ, יול ונוב צמודים זה לזה — שמונה חודשים ריקים נעלמו',
+    trick: 'הציר מציג רק ינו, מרץ, יול ונוב צמודים זה לזה — ארבעת השיאים בלבד, ושמונה חודשי השפל שביניהם נעלמו',
     lyingFirst: true,
-    honest: { kind: 'bars', labels: MONTHS_12, values: [6, 0, 5, 0, 0, 0, 7, 0, 0, 0, 6, 0], yFloor: 0, yCeil: 8 },
-    lying:  { kind: 'bars', labels: MONTHS_12, values: [6, 0, 5, 0, 0, 0, 7, 0, 0, 0, 6, 0], yFloor: 0, yCeil: 8,
+    honest: { kind: 'bars', labels: MONTHS_12, values: [6, 1, 5, 1, 2, 1, 7, 2, 1, 1, 6, 2], yFloor: 0, yCeil: 8 },
+    lying:  { kind: 'bars', labels: MONTHS_12, values: [6, 1, 5, 1, 2, 1, 7, 2, 1, 1, 6, 2], yFloor: 0, yCeil: 8,
               pick: [0, 2, 6, 10] }
   },
   {

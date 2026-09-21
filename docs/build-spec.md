@@ -195,7 +195,9 @@ Four findings. The first explains the confusion and the fourth decided the shape
 | aggregation | real variation replaced by a summary | `flatten` | ד׳ |
 | false annotation | a mark on top asserts what the data denies | `arrow`, a false `refLine` | ו׳ |
 
-One class per envelope, with **omission deliberately doubled** to reach six: ב׳ hunts for gaps in the middle of a series, ה׳ checks where the axis stops, and the two feel different in the hand.
+One class per envelope, with **omission deliberately doubled** to reach six: ב׳ keeps only the peaks of a series, ה׳ stops the series before it turns, and the two feel different in the hand.
+
+**ב׳'s quiet months carry 1 or 2, not 0** — Cowork and Hadas, 2026-09-21, replacing a build-day version where eight of the twelve were zero. Two thirds of the honest chart was blank and read as a broken render rather than as a year of surveillance. Dropping months instead would have deleted the lie along with them, so the fix had to come from the values. **The false claim moved with them, and the question had to move too:** it was continuity (`האם הפעילות נמשכה ברציפות`), which stops being false once activity never stops; it is now level (`האם רמת הפעילות נשמרה גבוהה לאורך כל השנה?`). The liar shows four months running 5 to 7 and says the year held up; those four spikes really sit in eight months of 1s and 2s. Still omission, and arguably the sharper version of it, because showing only the peaks is what people actually do with data. On the record: eight months of literally nothing was a bigger thing to conceal, so the lie is a notch less theatrical — an honest chart that reads as broken is the worse problem.
 
 **Emphasis is not a lie, and neither is chart type.** Recolouring the smallest bar steers a careless reader but every bar is still at its true height; a line over categorical labels implies an order that does not exist but every point is still at its true value. Both are bad practice, neither produces a false chart, and in a station scored true/false neither has a defensible answer. Three separate proposals died on this. **Before adding an envelope, name the false statement the lying chart makes. If you cannot, it is not an envelope.** What was cut and why is recorded in the rewrite doc so it is not re-proposed.
 
@@ -235,7 +237,11 @@ The source's numeric chain, `5+4+3+4+4+4+5 = 29 → 2`, is unused: it does not d
 
 ### Verified on build, 2026-09-21
 
-Re-derived rather than trusted: each chart's drawn rows replayed through the renderer's own pipeline, and each pair confirmed to disagree in the one intended way. **א׳'s January bar is 81% of the plot honest and 13% lying**, which is the whole envelope. The zero months in ב׳ draw nothing rather than a 1px stub — a stub in a chart about gaps invents data. Checked on a 390px handset, which the old build never was: no horizontal scroll, and the twelve month labels clear each other by 2.9px at 11px type, so **ב׳'s sparse honest chart reads as sparse rather than as broken** and the known weakness the rewrite doc accepted does not need its lever pulled yet.
+Re-derived rather than trusted: each chart's drawn rows replayed through the renderer's own pipeline, and each pair confirmed to disagree in the one intended way. **א׳'s January bar is 81% of the plot honest and 13% lying**, which is the whole envelope. **ו׳'s arrow runs lower-right to upper-left**, which in RTL is the assertion of a rise, and sits on the chart that must be rejected. **ב׳'s liar keeps exactly the four peaks**, and the months it keeps are spread across the year rather than adjacent — the labels are the tell.
+
+Checked on a 390px handset, which the old build never was: no horizontal scroll, the pair stacks rather than sitting side by side, and the twelve month labels clear each other by 2.9px at 11px type.
+
+**No station carries a zero value any more.** The renderer's zero-height rule — a 1px stub on a zero month is an incident that did not happen — was added for ב׳ and is now unexercised by any station. It stays, and the scratchpad suite asserts it against `renderChart` directly rather than through the DOM, so it does not quietly rot.
 
 Still open: **the Hebrew needs Hadas's ear** — six questions, six hints and six titles were written in Cowork, and Hebrew register is the weakest thing this workspace produces. **Lotem is told, not asked**, per Hadas's 2026-09-17 decision. And the station has not been **re-timed** at six envelopes against the old seven.
 
