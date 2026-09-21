@@ -68,9 +68,6 @@
 .dev .devrow button.here{background:var(--bad);color:#fff}
 .dev .devrow button.unbuilt{opacity:.45}
 .dev .label{color:var(--bad)}
-.proto{font-size:0.5625rem;letter-spacing:var(--ls);text-transform:uppercase;color:var(--muted);
-  border:1px dashed var(--hair);padding:0.25rem 0.5625rem}
-
 @media (max-width:620px){
   .bar{gap:0.75rem;padding:0.5625rem 0.875rem}
   .bar-mid{gap:0.8125rem}

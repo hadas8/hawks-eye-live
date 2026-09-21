@@ -67,7 +67,6 @@ export const viewBoot = () => `<div class="stack">
   </div>
   <div class="row">
     <button class="btn" data-act="enter">כניסה למבצע</button>
-    <span class="proto">אבטיפוס — תוכן תחנות 2, 3 ו-6 עדיין בבדיקה</span>
   </div>
 </div>`;
 
