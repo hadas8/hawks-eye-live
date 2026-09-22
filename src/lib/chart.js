@@ -43,6 +43,59 @@ function ticks(floor, ceil) {
   return [0, 1, 2, 3, 4].map(i => floor + step * i);
 }
 
+// A pie, for the one envelope whose lie IS the chart form.
+//
+// THE SLICES ARE NORMALISED, so the circle always closes. That is the whole
+// point: a pie asserts that its parts are exclusive shares of one whole, and
+// it makes that assertion whether or not the numbers support it. Drawing the
+// slices at their literal angles instead would make a 108% total overflow the
+// circle visibly, which reads as a broken render rather than as a claim — and
+// a real charting tool normalises too, which is exactly how this deception
+// reaches people in the wild.
+//
+// So the printed figures are the evidence and the circle is the claim. The
+// group has to notice they disagree.
+//
+// One shade per slice, stepped down the envelope's own hue rather than pulled
+// from new colours: four flat slices in one colour are unreadable, and a
+// second hue inside one chart would break station 2's pair-reads-as-a-pair
+// rule. The bars of the honest twin carry the same ramp in the same order, so
+// a category is the same shade in both drawings.
+const SHADE = [1, 0.74, 0.5, 0.3, 0.18];
+
+function renderPie(rows, hue, unit) {
+  const total = rows.reduce((s, r) => s + r.value, 0) || 1;
+  const cx = 112, cy = H / 2, r = 74;
+  const pt = (a, rad = r) => [(cx + rad * Math.cos(a)).toFixed(1), (cy + rad * Math.sin(a)).toFixed(1)];
+
+  let a = -Math.PI / 2;                      // start at twelve o'clock
+  const slices = rows.map((row, i) => {
+    const sweep = (row.value / total) * Math.PI * 2;
+    const [x0, y0] = pt(a), [x1, y1] = pt(a + sweep);
+    const large = sweep > Math.PI ? 1 : 0;
+    a += sweep;
+    return `<path d="M ${cx} ${cy} L ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1} Z"
+      class="cp" style="opacity:${SHADE[i % SHADE.length]}"/>`;
+  }).join('');
+
+  // Legend down the right, where a Hebrew reader starts: swatch outermost,
+  // then the name and the figure. Reading it is how the group meets the
+  // numbers at all, since nothing is written on the slices.
+  const top = cy - (rows.length - 1) * 11;
+  const legend = rows.map((row, i) => {
+    const y = top + i * 22;
+    return `<rect x="${W - 22}" y="${(y - 8).toFixed(1)}" width="10" height="10" rx="2"
+        class="cp" style="opacity:${SHADE[i % SHADE.length]}"/>
+      <text x="${W - 28}" y="${y.toFixed(1)}" class="cpl">${esc(row.label)} ${esc(nice(row.value))}${esc(unit)}</text>`;
+  }).join('');
+
+  return `<svg class="chart ${hue}" viewBox="0 0 ${W} ${H}" role="img" aria-hidden="true"
+    preserveAspectRatio="xMidYMid meet" style="direction:ltr">
+    ${slices}
+    ${legend}
+  </svg>`;
+}
+
 // `hue` is a class, h1..h3, set by the envelope rather than by the chart:
 // both drawings of one data set share it, so a pair reads as a pair. It
 // must never track which of the two is honest.
@@ -61,6 +114,9 @@ export function renderChart(spec, hue = '') {
     const mean = rows.reduce((s, r) => s + r.value, 0) / rows.length;
     rows = rows.map(r => ({ ...r, value: mean }));
   }
+
+  // A pie has no axes, so it leaves before any of the axis maths below.
+  if (kind === 'pie') return renderPie(rows, hue, unit);
 
   const top = yCeil ?? Math.max(...rows.map(r => r.value)) * 1.15;
   const floor = Math.min(yFloor, ...rows.map(r => r.value));
@@ -95,8 +151,13 @@ export function renderChart(spec, hue = '') {
       // with misleading emphasis into one that looks broken, which is a
       // different and much cruder trick than the source's.
       const cls = i === highlight ? 'cb hot' : 'cb';
+      // `shade` steps each bar down the same ramp the pie gives its slices,
+      // so a category is the same shade in both drawings of a pair. Only the
+      // pie envelope uses it: elsewhere the bars are one series and shading
+      // them would imply a grouping that is not in the data.
+      const op = spec.shade ? ` style="opacity:${SHADE[i % SHADE.length]}"` : '';
       return `<rect x="${(xOf(i) - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}"
-        height="${h.toFixed(1)}" class="${cls}"/>` +
+        height="${h.toFixed(1)}" class="${cls}"${op}/>` +
         (showValues ? `<text x="${xOf(i).toFixed(1)}" y="${(y - 5).toFixed(1)}" class="cv">${esc(nice(r.value))}${esc(unit)}</text>` : '');
     }).join('');
   } else {

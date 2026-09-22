@@ -82,8 +82,8 @@ export const STATIONS = [
     // THREE, capped 2026-09-21 at Hadas's call — it ran uncapped until then,
     // which was defensible (nothing to hill-climb on, so the only sweep is
     // blind resubmission) but meant a stuck group could burn the whole slot
-    // guessing. Six binary choices is 64 combinations, so three tries is a
-    // 4.7% guess and the cap costs a real group nothing.
+    // guessing. Seven binary choices is 128 combinations, so three tries is a
+    // 2.3% guess and the cap costs a real group nothing.
     //
     // THREE RATHER THAN TWO, and this is the station where that matters
     // most: it is the ONLY one that gives no partial feedback at all.
@@ -97,7 +97,7 @@ export const STATIONS = [
     maxAttempts: 3,
     revealWhichWrong: false,
 
-    brief: 'שש נקודות תצפית שלחו דוחות גרפיים, וכל דוח הגיע בשני עותקים עם אותם נתונים בדיוק. באחד מכל זוג מישהו סידר את הגרף כך שיטעה את מי שמסתכל.',
+    brief: 'שבע נקודות תצפית שלחו דוחות גרפיים, וכל דוח הגיע בשני עותקים עם אותם נתונים בדיוק. באחד מכל זוג מישהו סידר את הגרף כך שיטעה את מי שמסתכל.',
 
     answer: {
       parts: ENVELOPES.map(env => ({ kind: 'choice', value: honestPosition(env) })),

@@ -20,9 +20,19 @@
 //   reordering         the sequence is scrambled             order: 'desc'
 //   aggregation        real variation replaced by a summary  flatten
 //   false annotation   a mark on top asserts what data denies  arrow, false refLine
+//   FALSE FRAMING      the chart FORM claims a relationship   kind: 'pie'
+//                      the data does not have
 //
 // One envelope per class, and OMISSION IS DELIBERATELY DOUBLED to reach six
 // (ב׳ hunts for gaps in the middle, ה׳ checks where the axis stops).
+//
+// False framing is the sixth class, added 2026-09-22 from Lotem's suggestion,
+// and it is the ONE case where chart type is a lie rather than an implication.
+// The line-over-categories proposal was rejected because it only implies an
+// order; a pie does not imply, it ASSERTS — a closed circle states that its
+// parts are exclusive shares of one whole. When they are not, the chart says
+// something false while every number on it stays true. That is the test any
+// future chart-type envelope has to pass.
 //
 // EMPHASIS IS NOT A LIE, AND NEITHER IS CHART TYPE. Colouring the smallest
 // bar steers a careless eye but every bar is still at its true height; a line
@@ -49,8 +59,8 @@
 // second difference.
 //
 // `lyingFirst` is redistributed so the liar's position is not learnable:
-// three of six, in the order F T F T T F. In the source it was graph 1 in six
-// of seven, so "always pick graph 2" scored six of seven.
+// three of seven, in the order F T F T T F F. In the source it was graph 1 in
+// six of seven, so "always pick graph 2" scored six of seven.
 //
 // `highlight`, `showValues` and `unit` are now UNUSED by this station — the
 // colour envelope was cut and ד׳ dropped its printed values. They are general
@@ -60,6 +70,12 @@ const MONTHS_5 = ['ינו', 'פבר', 'מרץ', 'אפר', 'מאי'];
 const MONTHS_6 = ['ינו', 'פבר', 'מרץ', 'אפר', 'מאי', 'יונ'];
 const MONTHS_12 = ['ינו', 'פבר', 'מרץ', 'אפר', 'מאי', 'יונ', 'יול', 'אוג', 'ספט', 'אוק', 'נוב', 'דצמ'];
 const weeks = n => Array.from({ length: n }, (_, i) => 'ש' + (i + 1));
+
+// ז׳'s four crossings and their shares of the traffic, transcribed from the
+// source image behind the old ב׳. They sum to 108, not 100, and that is the
+// envelope rather than a transcription error — see the note on ז׳ below.
+const CROSSINGS = ["ג'נתא", 'קוסייא', 'אסאל אל-וורד', 'ציר צפוני'];
+const SHARES = [38, 35, 27, 8];
 
 export const ENVELOPES = [
   {
@@ -243,6 +259,45 @@ export const ENVELOPES = [
     honest: { kind: 'line', labels: weeks(12), values: [4, 5, 6, 3, 2, 3, 4, 5, 6, 7, 6, 7], yFloor: 0, yCeil: 10 },
     lying:  { kind: 'line', labels: weeks(12), values: [4, 5, 6, 3, 2, 3, 4, 5, 6, 7, 6, 7], yFloor: 0, yCeil: 10,
               arrow: { from: 0, to: 11 } }
+  },
+  {
+    // FALSE FRAMING. Lotem's suggestion, 2026-09-22: "לשים גרף עוגה שהסכום
+    // הוא 105% ולא 100% והשני תקין". Built with one change to her framing:
+    // BOTH CHARTS CARRY THE SAME TRUE FIGURES, and the pie is the lie. Two
+    // pies with different percentages would be two different data sets, which
+    // is the fault ד׳ was just repaired for.
+    //
+    // THE NUMBERS ARE LOTEM'S OWN, from the source image behind the old ב׳:
+    // 38 / 35 / 27 / 8. docs/build-spec.md recorded that they sum to 108 and
+    // not 100 and listed it as a question for her — "either the categories
+    // overlap or one figure is off". The categories overlap: a convoy that
+    // splits uses more than one crossing and is counted at each. So the
+    // inconsistency in her own spreadsheet IS the envelope, and the open
+    // question closes by being taught rather than corrected.
+    //
+    // The bars claim nothing. They are four independent measurements and
+    // adding them is the reader's business. The pie claims the four ARE the
+    // whole, and a closed circle cannot be argued with. Every figure printed
+    // on it is true; the shape around them is false.
+    //
+    // Conveniently for a group under a clock, 38 + 35 + 27 already makes
+    // exactly 100, so the fourth crossing is visibly surplus rather than
+    // needing four numbers held at once.
+    //
+    // WEAKEST POINT, AND IT IS REAL: this is the only envelope in the set
+    // whose tell is arithmetic rather than something you see. Normalising the
+    // slices is deliberate — see renderPie — so the circle always closes and
+    // nothing looks broken. If it plays too subtle, the lever is a larger
+    // overshoot, not a redrawn pie.
+    id: 'ז׳',
+    title: 'נתח התנועה לפי מעבר',
+    question: 'האם כל שיירה נספרה במעבר אחד בלבד?',
+    hint: 'חברו את ארבעת המספרים בכל גרף. מה אמור לצאת?',
+    trick: 'עוגה מציגה את ארבעת המעברים כחלוקה של שלם אחד, אבל הנתונים מסתכמים ב-108% — שיירה שהתפצלה נספרה בשני מעברים',
+    lyingFirst: false,
+    honest: { kind: 'bars', labels: CROSSINGS, values: SHARES, yFloor: 0, yCeil: 40,
+              showValues: true, unit: '%', shade: true },
+    lying:  { kind: 'pie',  labels: CROSSINGS, values: SHARES, unit: '%' }
   }
 ];
 

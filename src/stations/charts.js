@@ -1,17 +1,16 @@
 // The "charts" station kind — station 2, הגרפים המשקרים.
 //
-// Six envelopes, each holding two charts of identical data where one has
+// Seven envelopes, each holding two charts of identical data where one has
 // been distorted. The group picks the honest chart in every envelope.
 //
 // Feedback is pass or fail and nothing else, per נראות התחנות: "רק בסוף יש
 // הערה אם ניתן לעבור לשלב הבא או שצריך לחזור לבחור שוב את הכל בלי לדעת
 // איפה הטעות". THIS IS THE ONLY STATION THAT REVEALS NOTHING AT ALL —
 // every other one marks the parts, and station 4 at least says how many each
-// chosen question filtered. That is why its cap is 3 rather than 2 even
-// though its answer space is the smallest; the roster entry has the
-// reasoning. It ran uncapped until 2026-09-21.
+// chosen question filtered. That is why its cap is 3 rather than 2; the
+// roster entry has the reasoning. It ran uncapped until 2026-09-21.
 //
-// Hints are per envelope rather than station-wide. The envelopes are six
+// Hints are per envelope rather than station-wide. The envelopes are seven
 // independent puzzles, so a group stuck on ד׳ should not have to spend
 // three hints on א׳ to ג׳ to reach it.
 
@@ -35,7 +34,7 @@ const answers = () => ENVELOPES.map((_, i) => pickOf(i) ?? null);
 const answered = () => answers().filter(v => v !== null).length;
 
 /* ── view ─────────────────────────────────── */
-// Three hues cycle down the six envelopes, and BOTH charts in an
+// Three hues cycle down the seven envelopes, and BOTH charts in an
 // envelope get the same one. Colouring by position instead would be a
 // tell, and colouring honest against lying would hand over the answer.
 const hueOf = envIndex => `h${(envIndex % 3) + 1}`;
@@ -76,7 +75,7 @@ export function viewCharts() {
 
     <div class="ask">
       <p class="q">איזה גרף אומר את האמת?</p>
-      <p class="sub">בכל מעטפה שני הגרפים מציגים בדיוק את אותם נתונים, ואחד מהם מסודר כך שיטעה אותך. בחרו את הגרף הישר בכל שש.</p>
+      <p class="sub">בכל מעטפה שני הגרפים מציגים בדיוק את אותם נתונים, ואחד מהם מסודר כך שיטעה אותך. בחרו את הגרף הישר בכל שבע.</p>
       <p class="cap"><b>${s.maxAttempts} ניסיונות בלבד.</b> הכל או כלום — לא נאמר לכם באיזו מעטפה טעיתם.</p>
     </div>
 
@@ -119,7 +118,7 @@ register('click', {
 
     if (!result.allCorrect) {
       // Nothing about which envelope is wrong, deliberately.
-      S.lastResult = { message: 'לא. אחד הגרפים שבחרתם מסודר כך שיטעה. עברו שוב על השש ובדקו צירים, סדר ומה חסר.' };
+      S.lastResult = { message: 'לא. אחד הגרפים שבחרתם מסודר כך שיטעה. עברו שוב על השבע ובדקו צירים, סדר, מה חסר ומה הגרף טוען.' };
       S.submitBlocked = true;
       if (attemptsLeft() <= 0) return closeStation('attempts');
       const left = attemptsLeft();

@@ -62,6 +62,14 @@
 .chart .cr{stroke:var(--amber);stroke-width:2}
 .chart .crh{fill:var(--amber)}
 /* the one honest annotation here: a labelled rule at a value */
+/* Pie slices and their legend. One hue, stepped by opacity, because four
+   flat slices in a single colour are unreadable and a second hue inside one
+   chart would break the rule that a PAIR shares a colour. The honest bars of
+   the same envelope carry the identical ramp, so a category is the same
+   shade in both drawings. */
+.chart .cp{fill:var(--sc,var(--ink-dim));stroke:var(--bg);stroke-width:1}
+.chart .cpl{fill:var(--ink-dim);font-family:var(--body);font-size:11px;text-anchor:end}
+
 .chart .cref{stroke:var(--amber);stroke-width:1.5;stroke-dasharray:5 4}
 /* its label sits at the right end of the rule, where a Hebrew reader starts
    and where no bar reaches, so it never lands on a value label */
