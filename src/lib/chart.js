@@ -59,8 +59,8 @@ function ticks(floor, ceil) {
 // One shade per slice, stepped down the envelope's own hue rather than pulled
 // from new colours: four flat slices in one colour are unreadable, and a
 // second hue inside one chart would break station 2's pair-reads-as-a-pair
-// rule. The bars of the honest twin carry the same ramp in the same order, so
-// a category is the same shade in both drawings.
+// rule. Both pies of the envelope use the same ramp in the same order, so a
+// crossing is the same shade in both.
 const SHADE = [1, 0.74, 0.5, 0.3, 0.18];
 
 function renderPie(rows, hue, unit) {
@@ -151,13 +151,8 @@ export function renderChart(spec, hue = '') {
       // with misleading emphasis into one that looks broken, which is a
       // different and much cruder trick than the source's.
       const cls = i === highlight ? 'cb hot' : 'cb';
-      // `shade` steps each bar down the same ramp the pie gives its slices,
-      // so a category is the same shade in both drawings of a pair. Only the
-      // pie envelope uses it: elsewhere the bars are one series and shading
-      // them would imply a grouping that is not in the data.
-      const op = spec.shade ? ` style="opacity:${SHADE[i % SHADE.length]}"` : '';
       return `<rect x="${(xOf(i) - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}"
-        height="${h.toFixed(1)}" class="${cls}"${op}/>` +
+        height="${h.toFixed(1)}" class="${cls}"/>` +
         (showValues ? `<text x="${xOf(i).toFixed(1)}" y="${(y - 5).toFixed(1)}" class="cv">${esc(nice(r.value))}${esc(unit)}</text>` : '');
     }).join('');
   } else {

@@ -20,19 +20,15 @@
 //   reordering         the sequence is scrambled             order: 'desc'
 //   aggregation        real variation replaced by a summary  flatten
 //   false annotation   a mark on top asserts what data denies  arrow, false refLine
-//   FALSE FRAMING      the chart FORM claims a relationship   kind: 'pie'
-//                      the data does not have
+//   IMPOSSIBLE DATA    the parts do not make the whole       kind: 'pie'
 //
 // One envelope per class, and OMISSION IS DELIBERATELY DOUBLED to reach six
 // (ב׳ hunts for gaps in the middle, ה׳ checks where the axis stops).
 //
-// False framing is the sixth class, added 2026-09-22 from Lotem's suggestion,
-// and it is the ONE case where chart type is a lie rather than an implication.
-// The line-over-categories proposal was rejected because it only implies an
-// order; a pie does not imply, it ASSERTS — a closed circle states that its
-// parts are exclusive shares of one whole. When they are not, the chart says
-// something false while every number on it stays true. That is the test any
-// future chart-type envelope has to pass.
+// The sixth class is Lotem's, added 2026-09-22, and it is the only one where
+// the LIE IS IN A FIGURE rather than in the drawing. A pie is a whole cut
+// into parts; parts totalling 105% describe nothing, so that chart is
+// impossible rather than merely misleading.
 //
 // EMPHASIS IS NOT A LIE, AND NEITHER IS CHART TYPE. Colouring the smallest
 // bar steers a careless eye but every bar is still at its true height; a line
@@ -53,13 +49,15 @@
 //      the rule. Every hint below points at something BOTH charts have.
 //
 // THE TWO CHARTS OF A PAIR DIFFER IN EXACTLY ONE WAY — same kind, same
-// labels, same values, one distortion parameter. The only exceptions are the
-// two omission envelopes, where the liar legitimately carries fewer
-// categories, and ד׳'s refLine, which is an honest annotation rather than a
-// second difference.
+// labels, one distortion parameter. Three exceptions, all deliberate: the two
+// omission envelopes, where the liar legitimately carries fewer categories;
+// ד׳'s refLine, an honest annotation rather than a second difference; and ז׳,
+// the ONLY envelope where the VALUES differ, because there the lie is a
+// figure rather than a drawing. Do not copy ז׳'s licence into a sixth
+// envelope without a reason as specific as its own.
 //
 // `lyingFirst` is redistributed so the liar's position is not learnable:
-// three of seven, in the order F T F T T F F. In the source it was graph 1 in
+// four of seven, in the order F T F T T F T. In the source it was graph 1 in
 // six of seven, so "always pick graph 2" scored six of seven.
 //
 // `highlight`, `showValues` and `unit` are now UNUSED by this station — the
@@ -71,11 +69,13 @@ const MONTHS_6 = ['ינו', 'פבר', 'מרץ', 'אפר', 'מאי', 'יונ'];
 const MONTHS_12 = ['ינו', 'פבר', 'מרץ', 'אפר', 'מאי', 'יונ', 'יול', 'אוג', 'ספט', 'אוק', 'נוב', 'דצמ'];
 const weeks = n => Array.from({ length: n }, (_, i) => 'ש' + (i + 1));
 
-// ז׳'s four crossings and their shares of the traffic, transcribed from the
-// source image behind the old ב׳. They sum to 108, not 100, and that is the
-// envelope rather than a transcription error — see the note on ז׳ below.
+// ז׳'s four crossings. The crossing names are Lotem's, from the source image
+// behind the old ב׳. The two splits differ in ONE figure: אסאל אל-וורד is
+// 22 in the real report and 27 in the false one, which is what takes the
+// total from 100 to 105.
 const CROSSINGS = ["ג'נתא", 'קוסייא', 'אסאל אל-וורד', 'ציר צפוני'];
-const SHARES = [38, 35, 27, 8];
+const SPLIT_REAL  = [38, 32, 22, 8];   // 100
+const SPLIT_FALSE = [38, 32, 27, 8];   // 105
 
 export const ENVELOPES = [
   {
@@ -261,43 +261,44 @@ export const ENVELOPES = [
               arrow: { from: 0, to: 11 } }
   },
   {
-    // FALSE FRAMING. Lotem's suggestion, 2026-09-22: "לשים גרף עוגה שהסכום
-    // הוא 105% ולא 100% והשני תקין". Built with one change to her framing:
-    // BOTH CHARTS CARRY THE SAME TRUE FIGURES, and the pie is the lie. Two
-    // pies with different percentages would be two different data sets, which
-    // is the fault ד׳ was just repaired for.
+    // A PIE THAT CANNOT EXIST. Lotem's suggestion, 2026-09-22: "לשים גרף עוגה
+    // שהסכום הוא 105% ולא 100% והשני תקין", built as she described it.
     //
-    // THE NUMBERS ARE LOTEM'S OWN, from the source image behind the old ב׳:
-    // 38 / 35 / 27 / 8. docs/build-spec.md recorded that they sum to 108 and
-    // not 100 and listed it as a question for her — "either the categories
-    // overlap or one figure is off". The categories overlap: a convoy that
-    // splits uses more than one crossing and is counted at each. So the
-    // inconsistency in her own spreadsheet IS the envelope, and the open
-    // question closes by being taught rather than corrected.
+    // THE TWO CHARTS DO NOT CARRY THE SAME FIGURES, and that is deliberate.
+    // An earlier build of this envelope forced them to, on the grounds that
+    // the station's intro promised identical data in both graphs. That
+    // promise was written here, not taken from the source, and Hadas removed
+    // it on 2026-09-22: "the point is to have one graph answering the
+    // question and one graph lying about it." The intro line now says the two
+    // graphs describe the same thing, which is true of all seven.
     //
-    // The bars claim nothing. They are four independent measurements and
-    // adding them is the reader's business. The pie claims the four ARE the
-    // whole, and a closed circle cannot be argued with. Every figure printed
-    // on it is true; the shape around them is false.
+    // ז׳ IS THEREFORE THE ONE ENVELOPE WHERE THE VALUES DIFFER. Everywhere
+    // else the lie is in the drawing and the numbers are untouched; here the
+    // lie is a figure that makes the chart impossible. 38 + 32 + 22 + 8 is
+    // exactly 100 and can be a division of one whole. 38 + 32 + 27 + 8 is 105
+    // and cannot: a pie is a whole cut into parts, so parts totalling more
+    // than the whole describe nothing. Only אסאל אל-וורד moves, 22 to 27,
+    // so there is exactly one thing to find.
     //
-    // Conveniently for a group under a clock, 38 + 35 + 27 already makes
-    // exactly 100, so the fourth crossing is visibly surplus rather than
-    // needing four numbers held at once.
+    // The question is answered by adding four small numbers on each chart,
+    // and that IS the skill — a breakdown that does not total the whole is
+    // the most common broken chart there is. It is the only envelope here
+    // whose tell is arithmetic rather than something you see. If it plays
+    // flat, the lever is a bigger gap than five points, not a redrawn pie.
     //
-    // WEAKEST POINT, AND IT IS REAL: this is the only envelope in the set
-    // whose tell is arithmetic rather than something you see. Normalising the
-    // slices is deliberate — see renderPie — so the circle always closes and
-    // nothing looks broken. If it plays too subtle, the lever is a larger
-    // overshoot, not a redrawn pie.
+    // BOTH CIRCLES CLOSE, because renderPie normalises — see the note there.
+    // Drawing 105% at literal angles would make the last slice lap over the
+    // first, which reads as a broken render rather than as a false report,
+    // and no real tool does it. The shape looks fine on both. The numbers are
+    // where the lie lives.
     id: 'ז׳',
     title: 'נתח התנועה לפי מעבר',
-    question: 'האם כל שיירה נספרה במעבר אחד בלבד?',
-    hint: 'חברו את ארבעת המספרים בכל גרף. מה אמור לצאת?',
-    trick: 'עוגה מציגה את ארבעת המעברים כחלוקה של שלם אחד, אבל הנתונים מסתכמים ב-108% — שיירה שהתפצלה נספרה בשני מעברים',
-    lyingFirst: false,
-    honest: { kind: 'bars', labels: CROSSINGS, values: SHARES, yFloor: 0, yCeil: 40,
-              showValues: true, unit: '%', shade: true },
-    lying:  { kind: 'pie',  labels: CROSSINGS, values: SHARES, unit: '%' }
+    question: 'האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?',
+    hint: 'חברו את ארבעת המספרים בכל גרף בנפרד.',
+    trick: 'העוגה מציגה חלוקה של שלם אחד, אבל האחוזים שלה מסתכמים ב-105% — חלקים שגדולים מהשלם לא מתארים כלום',
+    lyingFirst: true,
+    honest: { kind: 'pie', labels: CROSSINGS, values: SPLIT_REAL,  unit: '%' },
+    lying:  { kind: 'pie', labels: CROSSINGS, values: SPLIT_FALSE, unit: '%' }
   }
 ];
 

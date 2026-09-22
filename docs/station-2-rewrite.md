@@ -343,3 +343,26 @@ Putting `ממוצע 5` on both charts fixes both halves with one change:
 The question moved with it, from `האם קצב החצייה היה קבוע?` to `האם היו חודשים שבהם חצו יותר מחמש שיירות?` — a judgement about constancy that invited "roughly, yes" replaced by a fact checkable against the rule now on both charts. Two bars clear it on the honest chart; none can on the liar.
 
 **Worth generalising, for whoever adds an envelope next:** the four tests in this doc do not catch what was wrong here. A fifth belongs beside them — *the lying chart must carry something a reader can see on it*. An envelope where the liar is indistinguishable from a well-formed chart is only solvable by guessing which of two plausible pictures is the record.
+
+---
+
+## ז׳: Lotem's pie, and the rule that had to go first
+
+Added 2026-09-22 from Lotem's WhatsApp note: *"לשים גרף עוגה שהסכום הוא 105% ולא 100% והשני תקין"*. She sent two ideas; the second, a constant 20% rise against 20/22, was dropped — as described it has no lie in it, only two different series, and compound growth never looks constant on a linear axis anyway.
+
+**The first build of ז׳ was wrong, and the reason is worth keeping.** It forced both charts to carry identical figures and made the pie's *form* the lie — a pie beside a bar chart, same numbers, the pie falsely asserting the four crossings were exclusive shares of one whole. Hadas rejected it on sight: the question could not be answered by looking at either chart, because nothing on the face of either one was wrong. A claim about what data *means* is not visible, so no question can read off it.
+
+That constraint came from this doc, not from the source. **"Both charts show exactly the same data" appears nowhere in Lotem's material** — it was written here, put on screen in the station's intro, and enforced for two weeks. Hadas removed it: *"forget about station 2's promise. that was your decision. the point is to have one graph answering the question and one graph lying about it."*
+
+So ז׳ is now what she suggested. Two pies, four crossings, one figure moved:
+
+| | ג'נתא | קוסייא | אסאל אל-וורד | ציר צפוני | total |
+|---|---|---|---|---|---|
+| honest | 38% | 32% | **22%** | 8% | **100** |
+| lying | 38% | 32% | **27%** | 8% | **105** |
+
+`האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?` One pie answers yes, the other no, and the one that answers no is impossible: a pie is a whole cut into parts.
+
+**The intro line changed with it**, from `שני הגרפים מציגים בדיוק את אותם נתונים` to `מתארים את אותו דבר`, which is true of all seven. Identical figures stay the default for the other six, and ז׳'s licence should not be copied without a reason as specific as its own: change a figure casually and you have two unrelated reports rather than one deception.
+
+**Known weakness:** the only envelope whose tell is arithmetic. Four small numbers, twice. The lever if it plays flat is a bigger gap than five points.

@@ -175,7 +175,7 @@ The ceiling matters: the event runs on laptops and tablets, so 20px is where it 
 
 ## Station 2 — rewritten, and the data is no longer the source's
 
-Six envelopes, each holding two charts of identical data where one has been arranged to mislead. The group picks the honest chart in all six. **Digit 2, `rule: 'literal'`, stated outright by the source and unmoved by the rewrite.** Password `אופק`. Full reasoning: [station-2-rewrite.md](station-2-rewrite.md); the history it replaces: [station-2-clarity.md](station-2-clarity.md).
+Seven envelopes, each holding two charts of the same subject where one has been arranged to mislead. The group picks the honest chart in all seven. **Digit 2, `rule: 'literal'`, stated outright by the source and unmoved by the rewrite.** Password `אופק`. Full reasoning: [station-2-rewrite.md](station-2-rewrite.md); the history it replaces: [station-2-clarity.md](station-2-clarity.md).
 
 **REWRITTEN 2026-09-21. The transcription rule is retired.** Every series used to be transcribed from Lotem's chart images and nothing was invented; Hadas walked all seven envelopes on 2026-09-10 (*"not too hard, just not clear. I think it needs a complete overhaul"*), and on 2026-09-17 she took the chart data as hers to change. The images stay in [`docs/source-charts/`](source-charts/) as the record of where this started, and three of the six still run Lotem's lesson — ב׳ omission, ג׳ reordering, ו׳ the arrow.
 
@@ -208,7 +208,11 @@ An envelope also ships only if the question is one an analyst in מחלקת ני
 
 ### The one-difference rule
 
-**The two charts of a pair differ in exactly one way** — same kind, same labels, same values, one distortion parameter. Two exceptions, both deliberate: the omission envelopes, where the liar legitimately carries fewer categories, and ד׳'s `refLine`, which is an honest annotation rather than a second lie.
+**The two charts of a pair differ in exactly one way** — same kind, same labels, one distortion parameter. Three exceptions, all deliberate: the omission envelopes, where the liar legitimately carries fewer categories; ד׳'s `refLine`, an honest annotation rather than a second lie; and ז׳, the one envelope where **a figure differs**, because there the lie is a number rather than a drawing.
+
+**"Both charts show identical data" was never a source rule — it was written here, and Hadas removed it on 2026-09-22:** *"the point is to have one graph answering the question and one graph lying about it."* The constraint had been enforced for two weeks and it killed the first build of ז׳. The station's on-screen intro said `שני הגרפים מציגים בדיוק את אותם נתונים` and now says `מתארים את אותו דבר`, which is true of all seven.
+
+It remains the right default for six of the seven, and ז׳'s licence should not be copied without a reason as specific as its own — changing a figure is how you get two unrelated reports instead of one deception.
 
 **This is why ד׳ is drawn bars-against-bars and not bars-against-a-filled-line**, which is what the rewrite doc specified. That pairing differs in four ways at once — kind, `flatten`, `area` and `refLine` — and five equal bars say `קצב קבוע` at least as well as a flat line does. `area` loses its last user, which is a cheaper price than a broken invariant. In the old build ב׳ had the same problem: honest bars against a lying line, so the pair differed in chart type *and* category count and a group could not tell which difference was the lie.
 
@@ -230,9 +234,11 @@ It also closes the shortcut the honest-only version opened. *"Pick the one with 
 
 Pass or fail and nothing else, per `נראות התחנות`. **`maxAttempts: 3`**, capped 2026-09-21 at Hadas's call; it ran uncapped until then, and the station module had no cap handling at all, so this was wiring as well as a number.
 
-**Three rather than two, and station 2 is where that distinction matters most: it is the only station that gives no partial feedback whatsoever.** Station 4 is also `revealWhichWrong: false` but still shows how many each chosen question filtered; 1, 3, 5, 6 and 7 all mark the parts right or wrong. Here a rejection says "no" and stops, so a second attempt is not informed by the first in any way — the group simply re-reads. An attempt therefore buys less here than anywhere else in the app.
+**Three rather than two, and station 2 is where that distinction matters most: it is the only station that gives no partial feedback whatsoever.** Station 4 is also `revealWhichWrong: false` but still shows how many each chosen question filtered; 1, 3, 5 and 6 all mark the parts right or wrong. Here a rejection says "no" and stops, so a second attempt is not informed by the first in any way — the group simply re-reads. An attempt therefore buys less here than anywhere else in the app.
 
-The other half of it is that **a submission is six independent judgements graded together.** At 90% confidence per envelope a clean sweep is 53%; two attempts take that to roughly 78% and three to roughly 89%. Ending the station that teaches careful reading on one slip across twelve charts is the wrong trade. Guessing is not the risk a cap defends against here — six binary choices is 64 combinations, so three tries is a 4.7% guess either way; the cap exists so a stuck group cannot burn the whole slot resubmitting.
+The other half of it is that **a submission is seven independent judgements graded together**, and ז׳'s arrival made that worse rather than better. At 90% confidence per envelope a clean sweep is 48%; two attempts take that to roughly 73% and three to roughly 86%. Ending the station that teaches careful reading on one slip across fourteen charts is the wrong trade. Guessing is not the risk a cap defends against here — seven binary choices is 128 combinations, so three tries is a 2.3% guess; the cap exists so a stuck group cannot burn the whole slot resubmitting.
+
+**Worth re-reading if an eighth envelope is ever proposed.** Each one added drags the clean-sweep odds down, and three attempts is already carrying a station with no partial feedback at all.
 
 **Running out is not a dead end.** `closeStation('attempts')` hands over the digit so the code still completes, scores 0, and leaves the station struck through in the ribbon — the same treatment as running out of clock.
 
@@ -250,11 +256,23 @@ The other half of it is that **a submission is six independent judgements graded
 
 ### The liar's position is not learnable
 
-The lying chart was GRAPH 1 in six of the source's seven envelopes, so "always pick graph 2" scored six of seven. It is redistributed: **three of six, in the order F T F T T F**, nothing alternating and no run longer than two. **The key is 1, 2, 1, 2, 2, 1**, derived from `honestPosition` rather than written down anywhere.
+The lying chart was GRAPH 1 in six of the source's seven envelopes, so "always pick graph 2" scored six of seven. It is redistributed: **four of seven, in the order F T F T T F T**, nothing alternating and no run longer than two. **The key is 1, 2, 1, 2, 2, 1, 2**, derived from `honestPosition` rather than written down anywhere.
 
 The source's numeric chain, `5+4+3+4+4+4+5 = 29 → 2`, is unused: it does not derive from its own answers, and `נראות התחנות` replaces the numeric task with click-the-honest-chart. The digit is simply 2.
 
 **A note on the source images themselves:** GRAPH 1 is titled in red and GRAPH 2 in blue, and red marks the liar in six of the seven. That is a facilitator aid, but if those images are ever put in front of participants the title colour gives the answer away. The app re-draws them, so it does not inherit the problem.
+
+### ז׳ — the pie that cannot exist
+
+Lotem's suggestion, 2026-09-22: *"לשים גרף עוגה שהסכום הוא 105% ולא 100% והשני תקין"*, built as she described it. Two pies over the same four crossings; one figure differs, אסאל אל-וורד at 22 against 27, taking the total from 100 to 105.
+
+**A pie is a whole cut into parts, so parts totalling 105% describe nothing.** That chart is impossible rather than merely misleading, which makes this the sixth class of lie and the only one where the fault is in a figure rather than in the drawing. Question: `האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?` — one pie answers yes, the other no.
+
+**Both circles close**, because `renderPie` normalises. Drawing 105% at literal angles would lap the last slice over the first, which reads as a broken render rather than as a false report, and no real charting tool does it. The shape looks fine on both; the numbers are where the lie lives.
+
+**Its weakness, on the record: this is the only envelope whose tell is arithmetic rather than something you see.** Four small numbers, twice. If it plays flat the lever is a bigger gap than five points, not a redrawn pie. An earlier build tried to avoid the arithmetic by making the pie's *form* the only lie, with identical figures on both charts and a bar chart as the honest twin — Hadas rejected it, correctly: with nothing wrong on the face of either chart, the question could not be answered by looking at them.
+
+**The renderer gained `kind: 'pie'`** — normalised slices, one hue stepped by opacity (four flat slices in a single colour are unreadable, and a second hue inside one chart would break the pair-shares-a-colour rule), and a legend down the right where a Hebrew reader starts.
 
 ### Verified on build, 2026-09-21
 
