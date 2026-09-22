@@ -147,31 +147,50 @@ export const ENVELOPES = [
     //
     // BOTH CHARTS ARE BARS. The rewrite doc specified bars against a filled
     // line, which differs in four ways at once (kind, flatten, area, refLine)
-    // and breaks the one-difference rule this file runs on. Five equal bars
-    // say קצב קבוע at least as well as a flat line does. `area` loses its
-    // last user, which is a cheaper price than the broken invariant.
+    // and breaks the one-difference rule this file runs on.
     //
-    // THE refLine IS ON THE HONEST CHART ONLY — Hadas's explicit call,
-    // 2026-09-21, after seeing a version with it on both. It is what tells
-    // the group that 5 is the average rather than an arbitrary number, and on
-    // the liar it would be redundant since that whole series already sits at
-    // 5. This is the one envelope where the honest chart carries a mark the
-    // liar does not, so "pick the one with the dashed line" works HERE. It
-    // does not generalise — ו׳'s liar is the one with the extra mark, and in
-    // ב׳ and ה׳ the liar has less — but watch it in play-testing.
+    // THE ממוצע 5 RULE IS ON BOTH CHARTS — Hadas, 2026-09-22, reversing the
+    // honest-only version of the day before. This is the fix for the only
+    // envelope that did not work, and the reason is worth keeping:
     //
-    // showValues was dropped from the honest chart: the bars are visibly
-    // different heights without the numbers, and a second honest-only
-    // annotation widens the asymmetry for no gain.
+    // `flatten` REPLACES every value, so unlike every other envelope here the
+    // two charts share nothing a group can see. א׳ keeps its bars and moves
+    // the axis, ב׳ and ה׳ keep theirs and drop some, ג׳ keeps and reorders,
+    // ו׳ keeps and draws on top — in all five the liar carries a visible
+    // TELL and the pair reads as one data set twice. ד׳ had neither: five
+    // equal bars is a perfectly well-formed chart, so it looked like a second
+    // measurement rather than the same one aggregated. Hadas: "it still looks
+    // like two different sets of data."
+    //
+    // The shared rule fixes both halves at once. It is the bridge — both
+    // charts agree the average is 5, so they are visibly about one thing —
+    // and it is the tell, because on the liar every bar top sits EXACTLY on
+    // the average line, which is what "this is the average, not the data"
+    // looks like. The redundancy that was the argument against putting it
+    // there is precisely what gives it away.
+    //
+    // It also closes the shortcut the honest-only version opened: "pick the
+    // one with the dashed line" no longer decides anything, and ד׳ becomes
+    // the cleanest pair in the set — `flatten` is now the ONLY difference.
+    //
+    // THE QUESTION ASKS FOR A FACT ABOVE THE LINE, not for a judgement about
+    // constancy. האם קצב החצייה היה קבוע invited "roughly, yes";
+    // months above five is checkable against the rule now drawn on both
+    // charts. Honest: פבר and אפר poke above it. Liar: nothing does,
+    // because nothing can. That is exactly what an average destroys.
+    //
+    // showValues stays off. The bars are read against the rule, which is the
+    // skill, and printing 5,5,5,5,5 would hand the answer over.
     id: 'ד׳',
     title: 'שיירות שחצו — ינואר עד מאי',
-    question: 'האם קצב החצייה היה קבוע?',
+    question: 'האם היו חודשים שבהם חצו יותר מחמש שיירות?',
     hint: 'כמה ערכים שונים מציג כל גרף?',
-    trick: 'הגרף מצייר את הממוצע החודשי, 5, כאילו הוא הנתון של כל אחד מהחודשים',
+    trick: 'הגרף מצייר את הממוצע החודשי, 5, כאילו הוא הנתון של כל אחד מהחודשים — כל העמודות יושבות בדיוק על קו הממוצע',
     lyingFirst: true,
     honest: { kind: 'bars', labels: MONTHS_5, values: [3, 6, 4, 7, 5], yFloor: 0, yCeil: 10,
               refLine: { value: 5, label: 'ממוצע 5' } },
-    lying:  { kind: 'bars', labels: MONTHS_5, values: [3, 6, 4, 7, 5], yFloor: 0, yCeil: 10, flatten: true }
+    lying:  { kind: 'bars', labels: MONTHS_5, values: [3, 6, 4, 7, 5], yFloor: 0, yCeil: 10, flatten: true,
+              refLine: { value: 5, label: 'ממוצע 5' } }
   },
   {
     // OMISSION, truncated endpoint. The second instance of the doubled class,

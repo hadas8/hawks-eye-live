@@ -325,3 +325,21 @@ The eight-month variant that keeps the zeros was considered and rejected: half t
 **On the record:** eight months of literally nothing was a bigger thing to conceal than eight months of near-nothing, so the lie is a notch less theatrical. An honest chart that reads as broken is the worse problem.
 
 **One consequence to know about.** ב׳ was the only envelope carrying a zero, and the renderer's zero-height rule — a 1px stub on a zero month is an incident that did not happen — was added for it. Nothing in the app exercises that rule now. It stays, `src/lib/chart.js` says why, and the suite asserts it against `renderChart` directly rather than through the DOM.
+
+---
+
+## ד׳ again: the average rule goes on both charts
+
+Applied 2026-09-22. The spec puts the `refLine` on the honest chart only and flags ד׳ as "the single most shortcut-prone envelope of the six" — worth watching in play-testing. It did not survive Hadas looking at it a second time: *"it still looks like two different sets of data."*
+
+**That is not a question problem and could not have been fixed by rewording.** `flatten` is the only distortion in the set that replaces every value, so ד׳ was the only envelope where the two charts shared nothing a group could see, and the only one whose lying chart carried no visible tell — five equal bars is a perfectly well-formed chart. Compare the other five, where the liar always shows its hand: a truncated axis, skipped months, scrambled week labels, a series that stops at the peak, an arrow drawn on top.
+
+Putting `ממוצע 5` on both charts fixes both halves with one change:
+
+- **the bridge** — both charts agree the average is 5, so the pair reads as one data set again;
+- **the tell** — on the liar every bar top sits exactly on that line, which is the visual signature of an average standing in for data. The redundancy the spec gave as the reason to keep it off the liar is what gives the liar away;
+- **the shortcut closes** — "pick the one with the dashed line" decides nothing now, and `flatten` becomes the only difference in the pair, the cleanest of the six.
+
+The question moved with it, from `האם קצב החצייה היה קבוע?` to `האם היו חודשים שבהם חצו יותר מחמש שיירות?` — a judgement about constancy that invited "roughly, yes" replaced by a fact checkable against the rule now on both charts. Two bars clear it on the honest chart; none can on the liar.
+
+**Worth generalising, for whoever adds an envelope next:** the four tests in this doc do not catch what was wrong here. A fifth belongs beside them — *the lying chart must carry something a reader can see on it*. An envelope where the liar is indistinguishable from a well-formed chart is only solvable by guessing which of two plausible pictures is the record.

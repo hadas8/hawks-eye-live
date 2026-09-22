@@ -212,7 +212,19 @@ An envelope also ships only if the question is one an analyst in מחלקת ני
 
 **This is why ד׳ is drawn bars-against-bars and not bars-against-a-filled-line**, which is what the rewrite doc specified. That pairing differs in four ways at once — kind, `flatten`, `area` and `refLine` — and five equal bars say `קצב קבוע` at least as well as a flat line does. `area` loses its last user, which is a cheaper price than a broken invariant. In the old build ב׳ had the same problem: honest bars against a lying line, so the pair differed in chart type *and* category count and a group could not tell which difference was the lie.
 
-**ד׳'s `refLine` is on the honest chart only**, Hadas's call 2026-09-21. It is what tells the group that 5 is the average rather than an arbitrary number, and on the liar it would be redundant. That makes ד׳ the one envelope where the honest chart carries a mark the liar does not, so *"pick the one with the dashed line"* works there. It does not generalise — ו׳'s liar is the one with the extra mark, and in ב׳ and ה׳ the liar has less — but it is the most shortcut-prone envelope of the six.
+### ד׳'s average rule goes on BOTH charts, and this is the fix for the one envelope that did not work
+
+Honest-only for a day, reversed 2026-09-22 after Hadas looked at it again: *"it still looks like two different sets of data."* She was right, and changing the question would not have fixed it, because the fault was structural.
+
+**`flatten` is the only distortion here that REPLACES every value.** Every other envelope keeps its bars and does something to them — א׳ moves the axis, ב׳ and ה׳ drop some, ג׳ reorders, ו׳ draws on top — so in all five the pair visibly reads as one data set twice AND the liar carries a tell you can see on it: a strange axis, skipped months, scrambled labels, a series that stops, an arrow. ד׳ had neither. Five equal bars is a perfectly well-formed chart, and with nothing shared between the two, it read as a second measurement rather than the same one aggregated.
+
+**The shared rule repairs both halves at once.** It is the bridge — both charts agree the average is 5, so they are visibly about one thing — and it is the tell, because on the liar every bar top sits *exactly* on the average line, which is what "this is the average, not the data" looks like. The redundancy that was the argument for keeping it off the liar is precisely what gives the liar away.
+
+It also closes the shortcut the honest-only version opened. *"Pick the one with the dashed line"* no longer decides anything, and **ד׳ is now the cleanest pair in the set: `flatten` is the only difference between its two charts.**
+
+**The question moved with it**, from `האם קצב החצייה היה קבוע?` to `האם היו חודשים שבהם חצו יותר מחמש שיירות?`. The old one asked for a judgement about constancy and invited "roughly, yes". The new one is a fact checkable against the rule now drawn on both charts: two bars clear it on the honest chart, none can on the liar. That is exactly what an average destroys.
+
+`showValues` stays off. The bars are read against the rule, which is the skill, and printing 5,5,5,5,5 would hand the answer over.
 
 ### Feedback, and the attempt cap
 
