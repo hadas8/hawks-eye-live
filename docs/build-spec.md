@@ -266,7 +266,13 @@ The source's numeric chain, `5+4+3+4+4+4+5 = 29 → 2`, is unused: it does not d
 
 Lotem's suggestion, 2026-09-22: *"לשים גרף עוגה שהסכום הוא 105% ולא 100% והשני תקין"*, built as she described it. Two pies over the same four crossings; one figure differs, אסאל אל-וורד at 22 against 27, taking the total from 100 to 105.
 
-**A pie is a whole cut into parts, so parts totalling 105% describe nothing.** That chart is impossible rather than merely misleading, which makes this the sixth class of lie and the only one where the fault is in a figure rather than in the drawing. Question: `האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?` — one pie answers yes, the other no.
+**A pie is a whole cut into parts, so parts totalling 105% describe nothing.** That chart is impossible rather than merely misleading, which makes this the sixth class of lie and the only one where the fault is in a figure rather than in the drawing.
+
+**The question asks about the convoys, not about the arithmetic.** It was `האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?` and Hadas cut it — *"bad question"* — for three reasons that all hold: it hands over the method instead of asking anything, no analyst would put it, and, decisively, a reader of the lying chart came away knowing **the chart** was broken rather than believing something untrue about **the traffic**. It is now `האם באסאל אל-וורד עברו יותר מרבע מהשיירות?` — 22% says no, 27% says yes, and 22 is the truth.
+
+**That is now the fifth test an envelope has to pass**, written into `src/data/station-2.js` beside the other four: a careful reader of the lying chart must end up believing something untrue about the world. Both ד׳ and ז׳ failed it in their first builds, which is why it is worth stating rather than assuming.
+
+22 and 27 straddle 25 on purpose, so one figure moving is enough to change the answer. Neither pie answers by eye — 22% and 25.7% of a circle look alike — so the group reads the labels and then has to work out which report can be real. **The total is what settles it**, and the hint points there without saying what they will find.
 
 **Both circles close**, because `renderPie` normalises. Drawing 105% at literal angles would lap the last slice over the first, which reads as a broken render rather than as a false report, and no real charting tool does it. The shape looks fine on both; the numbers are where the lie lives.
 

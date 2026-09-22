@@ -1,6 +1,6 @@
-// Station 2 — הגרפים המשקרים. Six envelopes, each holding two charts of the
-// same data where one has been arranged to mislead; the group picks the
-// honest one in every pair. The digit is 2 and does not move.
+// Station 2 — הגרפים המשקרים. Seven envelopes, each holding two charts
+// of the same subject where one has been arranged to mislead; the group picks
+// the honest one in every pair. The digit is 2 and does not move.
 //
 // REWRITTEN 2026-09-21 from docs/station-2-rewrite.md, which supersedes
 // docs/station-2-clarity.md. THE TRANSCRIPTION RULE IS RETIRED. The series
@@ -12,7 +12,7 @@
 //
 // ── THE RULE FOR ADDING AN ENVELOPE ──────────────────────────────────────
 //
-// A chart can be made to state something false in five ways, and that is the
+// A chart can be made to state something false in six ways, and that is the
 // whole list in this renderer's vocabulary:
 //
 //   broken encoding    bar length stops meaning value        yFloor
@@ -22,8 +22,9 @@
 //   false annotation   a mark on top asserts what data denies  arrow, false refLine
 //   IMPOSSIBLE DATA    the parts do not make the whole       kind: 'pie'
 //
-// One envelope per class, and OMISSION IS DELIBERATELY DOUBLED to reach six
-// (ב׳ hunts for gaps in the middle, ה׳ checks where the axis stops).
+// One envelope per class, and OMISSION IS DELIBERATELY DOUBLED — ב׳ hunts for
+// gaps in the middle of a series, ה׳ checks where it stops — which with the
+// sixth class makes seven envelopes.
 //
 // The sixth class is Lotem's, added 2026-09-22, and it is the only one where
 // the LIE IS IN A FIGURE rather than in the drawing. A pie is a whole cut
@@ -47,22 +48,28 @@
 //   3. The question is not answerable without reading the charts.
 //   4. The hint names a place to look, never what is wrong there and never
 //      the rule. Every hint below points at something BOTH charts have.
+//   5. A CAREFUL READER OF THE LYING CHART MUST END UP BELIEVING SOMETHING
+//      UNTRUE ABOUT THE TRAFFIC. Not "the chart is broken" — that is a true
+//      observation about a picture, and a question that elicits it is asking
+//      about arithmetic rather than about convoys. ז׳'s first question,
+//      האם החלוקה מסתכמת ב-100%, failed exactly here and Hadas cut it.
 //
 // THE TWO CHARTS OF A PAIR DIFFER IN EXACTLY ONE WAY — same kind, same
 // labels, one distortion parameter. Three exceptions, all deliberate: the two
 // omission envelopes, where the liar legitimately carries fewer categories;
 // ד׳'s refLine, an honest annotation rather than a second difference; and ז׳,
 // the ONLY envelope where the VALUES differ, because there the lie is a
-// figure rather than a drawing. Do not copy ז׳'s licence into a sixth
+// figure rather than a drawing. Do not copy ז׳'s licence into an eighth
 // envelope without a reason as specific as its own.
 //
 // `lyingFirst` is redistributed so the liar's position is not learnable:
 // four of seven, in the order F T F T T F T. In the source it was graph 1 in
 // six of seven, so "always pick graph 2" scored six of seven.
 //
-// `highlight`, `showValues` and `unit` are now UNUSED by this station — the
-// colour envelope was cut and ד׳ dropped its printed values. They are general
+// `highlight` and `showValues` are UNUSED by this station — the colour
+// envelope was cut and ד׳ dropped its printed values. They are general
 // renderer capabilities and stay; removing them is a separate decision.
+// `unit` is used, by ז׳'s two pies.
 
 const MONTHS_5 = ['ינו', 'פבר', 'מרץ', 'אפר', 'מאי'];
 const MONTHS_6 = ['ינו', 'פבר', 'מרץ', 'אפר', 'מאי', 'יונ'];
@@ -280,11 +287,27 @@ export const ENVELOPES = [
     // than the whole describe nothing. Only אסאל אל-וורד moves, 22 to 27,
     // so there is exactly one thing to find.
     //
-    // The question is answered by adding four small numbers on each chart,
-    // and that IS the skill — a breakdown that does not total the whole is
-    // the most common broken chart there is. It is the only envelope here
-    // whose tell is arithmetic rather than something you see. If it plays
-    // flat, the lever is a bigger gap than five points, not a redrawn pie.
+    // THE QUESTION ASKS ABOUT THE CONVOYS, NOT ABOUT THE ARITHMETIC. It was
+    // האם החלוקה מסתכמת ב-100% and Hadas cut it: "bad question". She is
+    // right, and the reason generalises. That version handed over the method
+    // instead of asking anything, it is not a question an analyst would ever
+    // put, and — the deciding fault — a reader of the lying chart came away
+    // knowing the CHART was broken rather than believing something untrue
+    // about the traffic. Every other envelope here leaves a careful reader of
+    // the liar holding a false belief about the world. This one now does too:
+    // אסאל אל-וורד carries 22% of the traffic, and the false report says
+    // more than a quarter.
+    //
+    // 22 and 27 straddle 25 on purpose, so the two charts answer the question
+    // differently while only one figure moves. Neither answers it by eye —
+    // 22% and 25.7% of a circle look alike — so the group reads the labels,
+    // which is the point, and then has to work out which report can be real.
+    // THE TOTAL IS WHAT SETTLES IT, and the hint points there without saying
+    // what they will find.
+    //
+    // It is still the only envelope whose tell is arithmetic rather than
+    // something you see. If it plays flat, the lever is a bigger gap than
+    // five points, not a redrawn pie.
     //
     // BOTH CIRCLES CLOSE, because renderPie normalises — see the note there.
     // Drawing 105% at literal angles would make the last slice lap over the
@@ -293,8 +316,8 @@ export const ENVELOPES = [
     // where the lie lives.
     id: 'ז׳',
     title: 'נתח התנועה לפי מעבר',
-    question: 'האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?',
-    hint: 'חברו את ארבעת המספרים בכל גרף בנפרד.',
+    question: 'האם באסאל אל-וורד עברו יותר מרבע מהשיירות?',
+    hint: 'מה מקבלים כשמחברים את כל האחוזים בכל גרף?',
     trick: 'העוגה מציגה חלוקה של שלם אחד, אבל האחוזים שלה מסתכמים ב-105% — חלקים שגדולים מהשלם לא מתארים כלום',
     lyingFirst: true,
     honest: { kind: 'pie', labels: CROSSINGS, values: SPLIT_REAL,  unit: '%' },

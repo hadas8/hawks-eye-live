@@ -361,7 +361,11 @@ So ז׳ is now what she suggested. Two pies, four crossings, one figure moved:
 | honest | 38% | 32% | **22%** | 8% | **100** |
 | lying | 38% | 32% | **27%** | 8% | **105** |
 
-`האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?` One pie answers yes, the other no, and the one that answers no is impossible: a pie is a whole cut into parts.
+**The question took two goes as well.** The first was `האם החלוקה בין ארבעת המעברים מסתכמת ב-100%?` and Hadas cut it in two words: *"bad question"*. She was right. It handed over the method instead of asking anything, it is not a question an analyst would put, and — the fault that matters — a reader of the lying pie came away knowing the *chart* was broken rather than believing something untrue about the *traffic*. Every other envelope leaves a careful reader of the liar holding a false belief about the world.
+
+It is now `האם באסאל אל-וורד עברו יותר מרבע מהשיירות?` — the honest pie says no at 22%, the false one says yes at 27%, and 22 is the truth. 22 and 27 straddle 25 on purpose, so moving one figure is enough to flip the answer. Neither pie answers it by eye, since 22% and 25.7% of a circle look alike; the group reads the labels, and then the totals decide which report can be real.
+
+**A fifth test now sits beside the other four in `src/data/station-2.js`:** a careful reader of the lying chart must end up believing something untrue about the world, not merely notice that a picture is broken. ד׳ and ז׳ both failed it in their first builds. It is the test that would have caught either one before Hadas had to.
 
 **The intro line changed with it**, from `שני הגרפים מציגים בדיוק את אותם נתונים` to `מתארים את אותו דבר`, which is true of all seven. Identical figures stay the default for the other six, and ז׳'s licence should not be copied without a reason as specific as its own: change a figure casually and you have two unrelated reports rather than one deception.
 
